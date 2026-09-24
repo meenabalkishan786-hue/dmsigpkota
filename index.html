@@ -14,8 +14,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+  <!-- Firebase Scripts (Compat Version) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <script>
@@ -61,7 +65,7 @@
 </head>
 <body class="text-slate-800 antialiased min-h-screen flex flex-col bg-slate-100 font-hindi">
 
-  <!-- ================= TOP HEADER ================= -->
+  <!-- TOP HEADER -->
   <header class="bg-police-900 text-white border-b-4 border-police-gold shadow-lg sticky top-0 z-40 no-print">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
       
@@ -79,9 +83,8 @@
       </div>
 
       <div class="flex flex-col md:flex-row items-center justify-between py-3 gap-3">
-        <!-- Left: IG Photo & Title -->
         <div class="flex items-center space-x-3.5 w-full md:w-auto">
-          <div class="relative flex-shrink-0 cursor-pointer group" title="फोटो बदलने अथवा लोड करने हेतु क्लिक करें" onclick="document.getElementById('igPhotoInput').click();">
+          <div class="relative flex-shrink-0 cursor-pointer group" title="फोटो बदलने हेतु क्लिक करें" onclick="document.getElementById('igPhotoInput').click();">
             <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full p-1 bg-gradient-to-tr from-police-gold via-yellow-200 to-police-khaki shadow-lg border-2 border-police-gold overflow-hidden relative">
               <img 
                 id="igProfilePhoto"
@@ -115,12 +118,11 @@
               दैनिक कार्य प्रगति एवं निगरानी प्रणाली
             </h1>
             <p class="text-[11px] text-slate-300">
-              शाखावार दैनिक कार्य, डाक निस्तारण व मॉनिटरिंग पोर्टल
+              शाखावार दैनिक कार्य, डाक निस्तारण व मॉनिटरिंग पोर्टल (Live Cloud Synced)
             </p>
           </div>
         </div>
 
-        <!-- Right: Current Login Context -->
         <div id="headerAuthBadge" class="hidden w-full md:w-auto flex items-center justify-between md:justify-end gap-2.5 bg-police-800/90 px-3 py-2 rounded-lg border border-police-700">
           <div class="text-left pr-2 border-r border-police-700">
             <div class="flex items-center gap-1.5">
@@ -157,7 +159,7 @@
     </div>
   </div>
 
-  <!-- ================= 1. LOGIN GATEWAY ================= -->
+  <!-- LOGIN GATEWAY -->
   <section id="loginPageSection" class="flex-grow flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl shadow-xl max-w-md w-full border-t-4 border-police-gold overflow-hidden">
       
@@ -243,10 +245,9 @@
     </div>
   </section>
 
-  <!-- ================= 2 & 3. DASHBOARD MAIN CONTAINER ================= -->
+  <!-- DASHBOARD MAIN CONTAINER -->
   <main id="portalDashboardSection" class="hidden flex-grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-5">
     
-    <!-- User Scope Banner -->
     <div class="mb-4 bg-white rounded-xl p-3.5 border border-slate-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 no-print">
       <div class="flex items-center gap-3">
         <div class="w-9 h-9 rounded-full bg-police-800 text-police-gold flex items-center justify-center font-bold text-xs shadow">
@@ -401,13 +402,11 @@
             <span>नया कार्य दर्ज करें</span>
           </button>
 
-          <!-- 100% Hindi Devanagari Landscape Print -->
           <button id="printPdfDirectBtn" title="शुद्ध हिंदी लैंडस्केप प्रतिवेदन प्रिंट करें" class="bg-slate-800 hover:bg-slate-900 text-white font-medium text-xs sm:text-sm px-3 py-2 rounded-lg flex items-center gap-1.5 shadow transition">
             <i data-lucide="printer" class="w-4 h-4 text-police-goldlight"></i>
             <span>प्रतिवेदन प्रिंट (PDF)</span>
           </button>
 
-          <!-- Download Dropdown -->
           <div class="relative inline-block text-left" id="downloadDropdownWrap">
             <button id="downloadDropdownBtn" type="button" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs sm:text-sm px-3 py-2 rounded-lg flex items-center gap-1.5 shadow transition">
               <i data-lucide="download" class="w-4 h-4"></i>
@@ -416,7 +415,6 @@
             </button>
             
             <div id="downloadMenu" class="hidden absolute right-0 mt-1 w-48 rounded-lg shadow-xl bg-white ring-1 ring-black ring-opacity-5 z-50 py-1 font-medium">
-              <!-- True Hindi Canvas PDF -->
               <button id="downloadPdfBtn" class="w-full text-left px-3.5 py-2.5 text-xs text-slate-700 hover:bg-police-50 hover:text-police-900 flex items-center gap-2 border-b border-slate-100">
                 <i data-lucide="file-text" class="w-4 h-4 text-rose-600"></i>
                 <div>
@@ -498,7 +496,7 @@
           * एक बार कार्य पूर्ण होकर लॉक होने के बाद संशोधन की शक्ति केवल एडमिन के पास रहेगी।
         </div>
         <div class="font-medium text-police-700">
-          सुरक्षित स्थानीय डेटा (Auto-Saved in Browser)
+          सुरक्षित केंद्रीय क्लाउड डेटा (Firebase Synced)
         </div>
       </div>
 
@@ -520,9 +518,8 @@
 
   </main>
 
-  <!-- ================= 100% PURE HINDI PRINT & PDF TEMPLATE (LANDSCAPE) ================= -->
+  <!-- 100% PURE HINDI PRINT & PDF TEMPLATE -->
   <div id="printableLandscapeReport" class="hidden print:block bg-white p-4 text-slate-900 font-hindi">
-    <!-- Official Letterhead -->
     <div class="border-b-2 border-slate-800 pb-3 mb-3 text-center">
       <h2 class="text-xl font-extrabold tracking-wide uppercase">कार्यालय महानिरीक्षक पुलिस, कोटा रेंज (राजस्थान)</h2>
       <h3 class="text-base font-bold text-slate-700 mt-0.5">दैनिक कार्य प्रगति एवं अनुश्रवण प्रतिवेदन</h3>
@@ -533,7 +530,6 @@
       </div>
     </div>
 
-    <!-- Exact Hindi Table -->
     <table class="w-full border-collapse border border-slate-400 text-xs">
       <thead>
         <tr class="bg-slate-100 text-slate-900 font-bold border-b border-slate-400">
@@ -552,7 +548,6 @@
       </tbody>
     </table>
 
-    <!-- Signature Footer -->
     <div class="mt-8 flex justify-between items-end text-xs font-bold px-4">
       <div>
         <p>हस्ताक्षर शाखा प्रभारी</p>
@@ -564,7 +559,7 @@
     </div>
   </div>
 
-  <!-- ================= MODAL: MULTI-ROW TASK ENTRY ================= -->
+  <!-- MODAL: MULTI-ROW TASK ENTRY -->
   <div id="taskModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3 overflow-y-auto no-print">
     <div class="bg-white rounded-xl shadow-2xl max-w-3xl w-full border-t-4 border-police-700 overflow-hidden my-8">
       
@@ -642,7 +637,7 @@
     </div>
   </div>
 
-  <!-- ================= MODAL: ADMIN CREATES BRANCH ID ================= -->
+  <!-- MODAL: ADMIN CREATES BRANCH ID -->
   <div id="adminCreateBranchModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3 overflow-y-auto no-print">
     <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full border-t-4 border-police-gold overflow-hidden my-8">
       
@@ -719,7 +714,7 @@
     </div>
   </div>
 
-  <!-- ================= MODAL: BRANCH USER CHANGES OWN PASSWORD ================= -->
+  <!-- MODAL: BRANCH USER CHANGES OWN PASSWORD -->
   <div id="changePasswordModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3 overflow-y-auto no-print">
     <div class="bg-white rounded-xl shadow-2xl max-w-sm w-full border-t-4 border-police-700 overflow-hidden my-8">
       
@@ -768,7 +763,7 @@
     </div>
   </div>
 
-  <!-- ================= MOVING BOTTOM FOOTER (MARQUEE) ================= -->
+  <!-- MOVING BOTTOM FOOTER -->
   <footer class="mt-auto bg-police-950 text-white border-t-2 border-police-gold overflow-hidden py-2 no-print z-30 shadow-inner">
     <marquee behavior="scroll" direction="left" scrollamount="6" class="text-xs sm:text-sm font-semibold tracking-wide flex items-center">
       <span class="text-police-goldlight">⭐ This site made by Bal Kishan Assistant Programmer IGP Kota ⭐</span>
@@ -779,8 +774,38 @@
     </marquee>
   </footer>
 
-  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <!-- JAVASCRIPT & CLOUD REALTIME SYNC LOGIC -->
   <script>
+    // 1. FIREBASE CONFIGURATION (Connected to your created Database)
+    const firebaseConfig = {
+      databaseURL: "https://igp-kota-dms-default-rtdb.firebaseio.com"
+    };
+
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.database();
+    const usersRef = db.ref('users');
+    const tasksRef = db.ref('tasks');
+
+    const DEFAULT_ADMIN = {
+      id: 'admin-master',
+      role: 'Admin',
+      name: 'श्रीमान महानिरीक्षक (Admin)',
+      rank: 'IPS',
+      mobile: '9928165827',
+      email: 'ig.kota@rajpolice.gov.in',
+      pin: '7865',
+      password: '7865',
+      branch: 'समस्त शाखाएं (ALL)'
+    };
+
+    let users = [];
+    let tasks = [];
+    let currentUser = null;
+
+    const SESSION_KEY = 'ig_police_session_active';
     const IG_PHOTO_STORAGE_KEY = 'ig_kota_saved_avatar_data_url';
 
     function initIGPhoto() {
@@ -826,26 +851,6 @@
       reader.readAsDataURL(file);
     }
 
-    const USERS_KEY = 'ig_police_users_v18';
-    const TASKS_KEY = 'ig_police_tasks_v18';
-    const SESSION_KEY = 'ig_police_session_v18';
-
-    const DEFAULT_ADMIN = {
-      id: 'admin-master',
-      role: 'Admin',
-      name: 'श्रीमान महानिरीक्षक (Admin)',
-      rank: 'IPS',
-      mobile: '9928165827',
-      email: 'ig.kota@rajpolice.gov.in',
-      pin: '7865',
-      password: '7865',
-      branch: 'समस्त शाखाएं (ALL)'
-    };
-
-    let users = [];
-    let tasks = [];
-    let currentUser = null;
-
     function formatToIndianDate(dateStr) {
       if (!dateStr) return '-';
       const parts = dateStr.split('-');
@@ -880,31 +885,45 @@
       return { minDateStr, maxDateStr };
     }
 
+    // 2. REAL-TIME CLOUD LISTENERS (Firebase)
     function initSystem() {
       initIGPhoto();
-
-      const storedUsers = localStorage.getItem(USERS_KEY);
-      if (storedUsers) {
-        try { users = JSON.parse(storedUsers); } catch(e) { users = []; }
-      }
-      
-      const adminExists = users.some(u => u.mobile === DEFAULT_ADMIN.mobile && u.role === 'Admin');
-      if (!adminExists) {
-        users.push(DEFAULT_ADMIN);
-        saveUsers();
-      }
-
-      const storedTasks = localStorage.getItem(TASKS_KEY);
-      if (storedTasks) {
-        try { tasks = JSON.parse(storedTasks); } catch(e) { tasks = []; }
-      } else {
-        tasks = [];
-        saveTasks();
-      }
-
       updateDateTime();
       setInterval(updateDateTime, 1000);
 
+      // Listen for Users in Cloud
+      usersRef.on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          users = Object.values(data);
+        } else {
+          users = [];
+        }
+
+        // Ensure Default Admin Exists in Cloud
+        const adminFound = users.some(u => u.mobile === DEFAULT_ADMIN.mobile && u.role === 'Admin');
+        if (!adminFound) {
+          usersRef.child(DEFAULT_ADMIN.id).set(DEFAULT_ADMIN);
+        }
+
+        checkActiveSession();
+      });
+
+      // Listen for Tasks in Cloud
+      tasksRef.on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          tasks = Object.values(data);
+        } else {
+          tasks = [];
+        }
+        if (currentUser) {
+          refreshDashboardData();
+        }
+      });
+    }
+
+    function checkActiveSession() {
       const activeMobile = localStorage.getItem(SESSION_KEY);
       if (activeMobile) {
         const found = users.find(u => u.mobile === activeMobile);
@@ -914,15 +933,9 @@
           return;
         }
       }
-      showLoginView();
-    }
-
-    function saveUsers() {
-      localStorage.setItem(USERS_KEY, JSON.stringify(users));
-    }
-
-    function saveTasks() {
-      localStorage.setItem(TASKS_KEY, JSON.stringify(tasks));
+      if (!currentUser) {
+        showLoginView();
+      }
     }
 
     function updateDateTime() {
@@ -1225,17 +1238,9 @@
         tr.className = `hover:bg-slate-50 transition border-b border-slate-200 ${task.status === 'COMPLETED' ? 'bg-emerald-50/20' : ''}`;
         tr.innerHTML = `
           <td class="py-3 px-3 text-center font-mono text-xs font-bold text-slate-500">${index + 1}</td>
-          
-          <td class="py-3 px-3 font-mono font-bold text-police-900 text-xs">
-            ${formatToIndianDate(task.taskDate)}
-          </td>
-
+          <td class="py-3 px-3 font-mono font-bold text-police-900 text-xs">${formatToIndianDate(task.taskDate)}</td>
           <td class="py-3 px-3 font-bold text-slate-800 text-xs">${task.branch}</td>
-          
-          <td class="py-3 px-4 text-xs sm:text-sm font-medium text-slate-900 leading-relaxed">
-            ${task.description}
-          </td>
-
+          <td class="py-3 px-4 text-xs sm:text-sm font-medium text-slate-900 leading-relaxed">${task.description}</td>
           <td class="py-3 px-3 text-xs font-semibold text-slate-700">${task.assignee || '-'}</td>
           <td class="py-3 px-3">${priorityBadge}</td>
           <td class="py-3 px-3 font-mono text-xs text-slate-600">${formatToIndianDate(task.dueDate)}</td>
@@ -1363,40 +1368,38 @@
     };
 
     window.branchCompleteAndLock = function(taskId) {
-      const idx = tasks.findIndex(t => t.id === taskId);
-      if (idx !== -1) {
+      const now = new Date();
+      const day = String(now.getDate()).padStart(2, '0');
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const year = now.getFullYear();
+      const completedAt = `${day}/${month}/${year} ${now.toLocaleTimeString('hi-IN', { hour: '2-digit', minute: '2-digit' })}`;
+
+      tasksRef.child(taskId).update({
+        status: 'COMPLETED',
+        isLocked: true,
+        completedAt: completedAt
+      }).then(() => {
+        showToast('कार्य पूर्ण एवं लॉक', 'यह कार्य सफलतापूर्वक पूर्ण कर लॉक कर दिया गया है।');
+      });
+    };
+
+    window.adminToggleStatus = function(taskId, newStatus) {
+      const updates = { status: newStatus };
+      if (newStatus === 'COMPLETED') {
         const now = new Date();
         const day = String(now.getDate()).padStart(2, '0');
         const month = String(now.getMonth() + 1).padStart(2, '0');
         const year = now.getFullYear();
-        tasks[idx].status = 'COMPLETED';
-        tasks[idx].isLocked = true;
-        tasks[idx].completedAt = `${day}/${month}/${year} ${now.toLocaleTimeString('hi-IN', { hour: '2-digit', minute: '2-digit' })}`;
-        saveTasks();
-        refreshDashboardData();
-        showToast('कार्य पूर्ण एवं लॉक', 'यह कार्य सफलतापूर्वक पूर्ण कर लॉक कर दिया गया है।');
+        updates.isLocked = true;
+        updates.completedAt = `${day}/${month}/${year}`;
+      } else {
+        updates.isLocked = false;
+        updates.completedAt = null;
       }
-    };
 
-    window.adminToggleStatus = function(taskId, newStatus) {
-      const idx = tasks.findIndex(t => t.id === taskId);
-      if (idx !== -1) {
-        tasks[idx].status = newStatus;
-        if (newStatus === 'COMPLETED') {
-          const now = new Date();
-          const day = String(now.getDate()).padStart(2, '0');
-          const month = String(now.getMonth() + 1).padStart(2, '0');
-          const year = now.getFullYear();
-          tasks[idx].isLocked = true;
-          tasks[idx].completedAt = `${day}/${month}/${year}`;
-        } else {
-          tasks[idx].isLocked = false;
-          tasks[idx].completedAt = null;
-        }
-        saveTasks();
-        refreshDashboardData();
+      tasksRef.child(taskId).update(updates).then(() => {
         showToast('एडमिन संशोधन संपन्न', `स्थिति बदलकर ${newStatus === 'COMPLETED' ? 'पूर्ण' : 'लंबित/अनलॉक'} कर दी गई है।`);
-      }
+      });
     };
 
     window.saveAdminInstruction = function(taskId) {
@@ -1404,13 +1407,11 @@
       const val = (input.value || '').trim();
       if (!val) return;
 
-      const idx = tasks.findIndex(t => t.id === taskId);
-      if (idx !== -1) {
-        tasks[idx].adminInstructions = val;
-        saveTasks();
-        refreshDashboardData();
+      tasksRef.child(taskId).update({
+        adminInstructions: val
+      }).then(() => {
         showToast('निर्देश प्रेषित', 'शाखा के लिए कार्यवाही निर्देश दर्ज कर दिए गए हैं।');
-      }
+      });
     };
 
     window.deleteTask = function(taskId) {
@@ -1418,10 +1419,9 @@
         showToast('अनाधिकृत', 'केवल एडमिन को कार्य हटाने का अधिकार है।');
         return;
       }
-      tasks = tasks.filter(t => t.id !== taskId);
-      saveTasks();
-      refreshDashboardData();
-      showToast('हटाया गया', 'कार्य पंजिका से हटा दिया गया है।');
+      tasksRef.child(taskId).remove().then(() => {
+        showToast('हटाया गया', 'कार्य पंजिका से हटा दिया गया है।');
+      });
     };
 
     const taskRowsContainer = document.getElementById('taskRowsContainer');
@@ -1571,22 +1571,24 @@
       }
 
       if (editId) {
-        const idx = tasks.findIndex(t => t.id === editId);
-        if (idx !== -1) {
-          tasks[idx].branch = branch;
-          tasks[idx].taskDate = taskDate;
-          tasks[idx].description = descriptions[0];
-          tasks[idx].assignee = assignee;
-          tasks[idx].priority = priority;
-          tasks[idx].dueDate = dueDate;
-        }
-        showToast('संशोधित', 'कार्य अद्यतन हो गया है।');
+        tasksRef.child(editId).update({
+          branch: branch,
+          taskDate: taskDate,
+          description: descriptions[0],
+          assignee: assignee,
+          priority: priority,
+          dueDate: dueDate
+        }).then(() => {
+          showToast('संशोधित', 'कार्य अद्यतन हो गया है।');
+        });
       } else {
         const now = new Date();
         const createdDateFormatted = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
+        
         descriptions.forEach((desc, i) => {
+          const newTaskId = 'tsk-' + Date.now() + '-' + i;
           const newTask = {
-            id: 'tsk-' + Date.now() + '-' + i,
+            id: newTaskId,
             branch: branch,
             taskDate: taskDate,
             description: desc,
@@ -1598,16 +1600,15 @@
             adminInstructions: '',
             createdAt: createdDateFormatted
           };
-          tasks.unshift(newTask);
+          tasksRef.child(newTaskId).set(newTask);
         });
-        showToast('सुरक्षित', `${descriptions.length} कार्य दर्ज किए गए।`);
+        showToast('सुरक्षित', `${descriptions.length} कार्य सेंट्रल डेटाबेस में दर्ज किए गए।`);
       }
 
-      saveTasks();
       document.getElementById('taskModal').classList.add('hidden');
-      refreshDashboardData();
     });
 
+    // Admin Creates Branch ID Modal
     const adminBranchModal = document.getElementById('adminCreateBranchModal');
     const adminBranchForm = document.getElementById('adminBranchCreateForm');
 
@@ -1647,8 +1648,9 @@
         return;
       }
 
+      const newUserId = 'usr-' + mobile;
       const newBranchUser = {
-        id: 'usr-' + Date.now(),
+        id: newUserId,
         role: 'Branch',
         name: staffName,
         rank: rank,
@@ -1659,14 +1661,14 @@
         password: password
       };
 
-      users.push(newBranchUser);
-      saveUsers();
-      adminBranchModal.classList.add('hidden');
-      refreshDashboardData();
-      updateBranchDropdown();
-      showToast('शाखा आईडी निर्मित', `'${branchName}' की आईडी (${mobile}) व पासवर्ड जारी कर दिया गया।`);
+      // Save directly to Firebase
+      usersRef.child(newUserId).set(newBranchUser).then(() => {
+        adminBranchModal.classList.add('hidden');
+        showToast('शाखा आईडी निर्मित', `'${branchName}' की आईडी (${mobile}) व पासवर्ड ऑनलाइन जारी कर दिया गया।`);
+      });
     });
 
+    // Branch User Changes Password
     const changePassModal = document.getElementById('changePasswordModal');
     const changePassForm = document.getElementById('changePasswordForm');
 
@@ -1701,16 +1703,19 @@
         return;
       }
 
-      const idx = users.findIndex(u => u.mobile === currentUser.mobile);
-      if (idx !== -1) {
-        users[idx].password = newPass;
-        currentUser.password = newPass;
-        saveUsers();
-        changePassModal.classList.add('hidden');
-        showToast('सफल', 'आपका पासवर्ड सफलतापूर्वक बदल दिया गया है।');
+      const userRecord = users.find(u => u.mobile === currentUser.mobile);
+      if (userRecord) {
+        usersRef.child(userRecord.id).update({
+          password: newPass
+        }).then(() => {
+          currentUser.password = newPass;
+          changePassModal.classList.add('hidden');
+          showToast('सफल', 'आपका पासवर्ड क्लाउड में सफलतापूर्वक बदल दिया गया है।');
+        });
       }
     });
 
+    // Auth & Login
     const tabNavLogin = document.getElementById('tabNavLogin');
     const tabNavForgot = document.getElementById('tabNavForgot');
     const mainLoginForm = document.getElementById('mainLoginForm');
@@ -1750,6 +1755,7 @@
         }
       }
 
+      // Branch user verification from central cloud
       const user = users.find(u => (u.mobile === logId || u.email === logId) && u.password === pass && u.role === 'Branch');
       if (user) {
         currentUser = user;
@@ -1769,14 +1775,16 @@
       const pin = document.getElementById('forgotPin').value.trim();
       const newPass = document.getElementById('forgotNewPass').value;
 
-      const idx = users.findIndex(u => u.role === role && (u.mobile === mobile || u.email === mobile) && u.email === email && u.pin === pin);
+      const userRecord = users.find(u => u.role === role && (u.mobile === mobile || u.email === mobile) && u.email === email && u.pin === pin);
       
-      if (idx !== -1) {
-        users[idx].password = newPass;
-        saveUsers();
-        mainForgotForm.reset();
-        tabNavLogin.click();
-        showToast('पासवर्ड रीसेट सफल', `${role} का पासवर्ड बदल दिया गया है।`);
+      if (userRecord) {
+        usersRef.child(userRecord.id).update({
+          password: newPass
+        }).then(() => {
+          mainForgotForm.reset();
+          tabNavLogin.click();
+          showToast('पासवर्ड रीसेट सफल', `${role} का पासवर्ड बदल दिया गया है।`);
+        });
       } else {
         showToast('सत्यापन विफल', 'दर्ज की गई आईडी, ईमेल अथवा सुरक्षा पिन का मिलान नहीं हुआ।');
       }
@@ -1787,6 +1795,7 @@
       showToast('लॉगआउट', 'सत्र समाप्त हो गया है।');
     });
 
+    // Date Range (From - To) & Reset Listeners
     document.getElementById('filterFromDate').addEventListener('change', refreshDashboardData);
     document.getElementById('filterToDate').addEventListener('change', refreshDashboardData);
 
@@ -1805,6 +1814,7 @@
     document.getElementById('filterPriority').addEventListener('change', refreshDashboardData);
     document.getElementById('searchInput').addEventListener('input', refreshDashboardData);
 
+    // EXPORT & REPORT SYSTEM
     const downloadDropdownBtn = document.getElementById('downloadDropdownBtn');
     const downloadMenu = document.getElementById('downloadMenu');
 
