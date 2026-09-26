@@ -190,20 +190,20 @@
             <div>
               <label class="block text-xs font-bold text-slate-700 mb-1">उपयोगकर्ता रोल (Role) *</label>
               <select id="loginRoleSelect" required class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-semibold">
-                <option value="Admin">Admin (व्यवस्थापक)</option>
+                <option value="Admin" selected>Admin (व्यवस्थापक)</option>
                 <option value="IG_Sir">IG Sir (महानिरीक्षक महोदय)</option>
-                <option value="Branch" selected>Branch (शाखा प्रभारी)</option>
+                <option value="Branch">Branch (शाखा प्रभारी)</option>
               </select>
             </div>
 
             <div>
               <label class="block text-xs font-bold text-slate-700 mb-1">लॉग इन ID (मोबाइल/आईडी) *</label>
-              <input type="text" id="loginIdInput" required placeholder="आईडी अथवा मोबाइल दर्ज करें" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-mono">
+              <input type="text" id="loginIdInput" required value="9928165827" placeholder="आईडी अथवा मोबाइल दर्ज करें" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-mono font-bold">
             </div>
 
             <div>
               <label class="block text-xs font-bold text-slate-700 mb-1">पासवर्ड *</label>
-              <input type="password" id="loginPassInput" required placeholder="••••••••" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
+              <input type="password" id="loginPassInput" required value="7865" placeholder="••••••••" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
             </div>
 
             <button type="submit" class="w-full py-2 bg-police-700 hover:bg-police-800 text-white font-bold text-xs rounded-lg shadow transition flex items-center justify-center gap-1.5">
@@ -216,29 +216,29 @@
           <form id="sideForgotForm" class="space-y-2.5 hidden">
             <div>
               <label class="block text-xs font-bold text-slate-700 mb-1">रोल चुनें</label>
-              <select id="forgotRoleSelect" class="w-full text-xs rounded border p-1.5">
-                <option value="Branch">Branch (शाखा)</option>
-                <option value="IG_Sir">IG Sir (आईजी महोदय)</option>
+              <select id="forgotRoleSelect" class="w-full text-xs rounded border p-1.5 font-bold">
                 <option value="Admin">Admin (एडमिन)</option>
+                <option value="IG_Sir">IG Sir (आईजी महोदय)</option>
+                <option value="Branch">Branch (शाखा)</option>
               </select>
             </div>
             <div>
-              <label class="block text-[11px] font-bold text-slate-700">पंजीकृत मोबाइल *</label>
-              <input type="text" id="forgotMobile" required placeholder="10 अंक" class="w-full text-xs rounded border p-1.5 font-mono">
+              <label class="block text-[11px] font-bold text-slate-700">पंजीकृत मोबाइल ID *</label>
+              <input type="text" id="forgotMobile" required placeholder="मोबाइल नंबर दर्ज करें" class="w-full text-xs rounded border p-1.5 font-mono">
             </div>
             <div>
-              <label class="block text-[11px] font-bold text-slate-700">पंजीकृत ईमेल *</label>
-              <input type="email" id="forgotEmail" required placeholder="email@rajpolice.gov.in" class="w-full text-xs rounded border p-1.5">
+              <label class="block text-[11px] font-bold text-slate-700">पंजीकृत ईमेल ID *</label>
+              <input type="email" id="forgotEmail" required placeholder="email@rajpolice.gov.in" class="w-full text-xs rounded border p-1.5 font-mono">
             </div>
             <div>
               <label class="block text-[11px] font-bold text-slate-700">सुरक्षा पिन *</label>
-              <input type="password" id="forgotPin" required placeholder="4 अंक" class="w-full text-xs rounded border p-1.5 font-mono">
+              <input type="password" id="forgotPin" required placeholder="सुरक्षा पिन (उदा. 7865)" class="w-full text-xs rounded border p-1.5 font-mono">
             </div>
             <div>
               <label class="block text-[11px] font-bold text-slate-700">नया पासवर्ड *</label>
-              <input type="password" id="forgotNewPass" required placeholder="नया पासवर्ड" class="w-full text-xs rounded border p-1.5">
+              <input type="password" id="forgotNewPass" required placeholder="नया पासवर्ड दर्ज करें" class="w-full text-xs rounded border p-1.5">
             </div>
-            <button type="submit" class="w-full py-1.5 bg-police-700 text-white font-bold text-xs rounded shadow">
+            <button type="submit" class="w-full py-2 bg-police-700 hover:bg-police-800 text-white font-bold text-xs rounded shadow transition">
               पासवर्ड रीसेट करें
             </button>
           </form>
@@ -258,25 +258,21 @@
           </div>
 
           <div class="space-y-2">
-            <!-- Open Dashboard Button -->
             <button onclick="switchTab('monitoringDashboard')" class="w-full py-2 bg-police-800 hover:bg-police-900 text-police-gold font-bold text-xs rounded-lg shadow flex items-center justify-center gap-1.5 transition">
               <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
               <span>निगरानी डैशबोर्ड खोलें</span>
             </button>
 
-            <!-- Admin Super Control Panel Button (Only Admin) -->
             <button id="adminSuperControlBtn" onclick="openAdminControlModal()" class="hidden w-full py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs rounded-lg shadow flex items-center justify-center gap-1.5 transition">
               <i data-lucide="shield-check" class="w-4 h-4"></i>
               <span>एडमिन सुपर कंट्रोल विंडो</span>
             </button>
 
-            <!-- Change Own Password -->
             <button onclick="document.getElementById('changePasswordModal').classList.remove('hidden')" class="w-full py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded border border-slate-300 flex items-center justify-center gap-1">
               <i data-lucide="key" class="w-3.5 h-3.5"></i>
               <span>अपना पासवर्ड बदलें</span>
             </button>
 
-            <!-- Logout -->
             <button id="sideLogoutBtn" class="w-full py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold text-xs rounded border border-rose-200 flex items-center justify-center gap-1 transition">
               <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
               <span>सत्र समाप्त (Logout)</span>
@@ -322,8 +318,6 @@
         <!-- AUTO-SLIDING CAROUSEL -->
         <div class="relative bg-slate-900 rounded-2xl overflow-hidden shadow-xl border border-slate-200 h-64 sm:h-80 md:h-96">
           <div id="carouselContainer" class="relative w-full h-full">
-            
-            <!-- Slide 1: Range Briefing -->
             <div class="carousel-item active relative w-full h-full">
               <div class="w-full h-full bg-gradient-to-r from-police-950 via-police-900 to-police-800 flex items-center p-6 sm:p-10 text-white">
                 <div class="max-w-xl space-y-3">
@@ -338,7 +332,6 @@
               </div>
             </div>
 
-            <!-- Slide 2: Digital Monitoring -->
             <div class="carousel-item relative w-full h-full">
               <div class="w-full h-full bg-gradient-to-r from-police-900 via-slate-900 to-police-950 flex items-center p-6 sm:p-10 text-white">
                 <div class="max-w-xl space-y-3">
@@ -352,10 +345,8 @@
                 </div>
               </div>
             </div>
-
           </div>
 
-          <!-- Carousel Controls -->
           <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/40 hover:bg-black/70 text-white transition">
             <i data-lucide="chevron-left" class="w-5 h-5"></i>
           </button>
@@ -366,8 +357,6 @@
 
         <!-- IG MESSAGE & RANGE JURISDICTION CARDS -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          <!-- IG Message Card -->
           <div class="md:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
             <div class="space-y-3">
               <div class="flex items-center space-x-2 text-police-800">
@@ -384,7 +373,6 @@
             </div>
           </div>
 
-          <!-- Jurisdiction Summary -->
           <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-3">
             <h3 class="font-bold text-sm text-police-900 flex items-center gap-1.5 border-b pb-2">
               <i data-lucide="map-pin" class="w-4 h-4 text-police-gold"></i> रेंज कार्यक्षेत्र (Jurisdiction)
@@ -412,7 +400,6 @@
               </li>
             </ul>
           </div>
-
         </div>
 
       </section>
@@ -442,9 +429,7 @@
                   <th class="p-3 w-28 text-center">डाउनलोड</th>
                 </tr>
               </thead>
-              <tbody id="ordersTableBody" class="divide-y divide-slate-100">
-                <!-- Dynamically Rendered -->
-              </tbody>
+              <tbody id="ordersTableBody" class="divide-y divide-slate-100"></tbody>
             </table>
           </div>
         </div>
@@ -461,7 +446,6 @@
               </h2>
               <p class="text-xs text-slate-500">कोटा रेंज पुलिस की महत्वपूर्ण उपलब्धियां, जनसंवाद व अभियान</p>
             </div>
-            <!-- Filter Pills -->
             <div class="flex gap-1.5 text-xs font-bold">
               <button onclick="filterMedia('ALL')" class="media-filter-btn active px-3 py-1 rounded bg-police-700 text-white" id="mf-ALL">सभी</button>
               <button onclick="filterMedia('NEWS')" class="media-filter-btn px-3 py-1 rounded bg-slate-100 text-slate-600 hover:bg-slate-200" id="mf-NEWS">समाचार (News)</button>
@@ -470,9 +454,7 @@
             </div>
           </div>
 
-          <div id="mediaCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-5">
-            <!-- Dynamically Rendered -->
-          </div>
+          <div id="mediaCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-5"></div>
         </div>
       </section>
 
@@ -498,9 +480,7 @@
                   <th class="p-3 w-56">आधिकारिक ईमेल</th>
                 </tr>
               </thead>
-              <tbody id="contactsTableBody" class="divide-y divide-slate-100">
-                <!-- Dynamically Rendered -->
-              </tbody>
+              <tbody id="contactsTableBody" class="divide-y divide-slate-100"></tbody>
             </table>
           </div>
         </div>
@@ -667,7 +647,6 @@
   <div id="adminControlModal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm hidden flex items-center justify-center p-3 overflow-y-auto no-print">
     <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full border-t-4 border-amber-600 overflow-hidden my-6">
       
-      <!-- Modal Header -->
       <div class="px-6 py-4 bg-police-950 text-white flex items-center justify-between">
         <div class="flex items-center space-x-2.5">
           <i data-lucide="shield-check" class="w-6 h-6 text-police-gold"></i>
@@ -681,7 +660,6 @@
         </button>
       </div>
 
-      <!-- Control Panel Tabs -->
       <div class="flex border-b bg-slate-50 text-xs font-bold px-6 pt-3 gap-2">
         <button onclick="switchAdminSubTab('users')" id="ast-users" class="admin-sub-tab active py-2 px-4 border-b-2 border-police-700 text-police-800 bg-white rounded-t-lg">
           <i data-lucide="users" class="w-3.5 h-3.5 inline mr-1"></i> यूजर क्रेडेंशियल्स (IG & Branches)
@@ -698,8 +676,7 @@
       </div>
 
       <div class="p-6 max-h-[70vh] overflow-y-auto">
-        
-        <!-- SUB-TAB 1: USER PASSWORDS & ID CONTROL (IG & BRANCHES) -->
+        <!-- SUB-TAB 1: USER PASSWORDS & ID CONTROL -->
         <div id="as-content-users" class="admin-sub-content space-y-4">
           <div class="bg-amber-50 p-3 rounded-lg border border-amber-200 text-xs text-amber-900">
             <strong>सुरक्षा नियम:</strong> एडमिन के अतिरिक्त <strong>IG Sir</strong> एवं समस्त <strong>Branches</strong> के लॉगिन पासवर्ड, मोबाइल आईडी व सुरक्षा पिन को एडमिन यहाँ से सीधे बदल या रीसेट कर सकता है।
@@ -717,14 +694,12 @@
                   <th class="p-2.5 text-center">कार्यवाही</th>
                 </tr>
               </thead>
-              <tbody id="adminUsersListBody" class="divide-y">
-                <!-- Dynamically Rendered -->
-              </tbody>
+              <tbody id="adminUsersListBody" class="divide-y"></tbody>
             </table>
           </div>
         </div>
 
-        <!-- SUB-TAB 2: UPLOAD ORDER / CIRCULAR -->
+        <!-- SUB-TAB 2: UPLOAD ORDER -->
         <div id="as-content-orders" class="admin-sub-content hidden space-y-4">
           <form id="adminUploadOrderForm" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-slate-50 p-4 rounded-xl border">
             <div>
@@ -745,13 +720,13 @@
             </div>
             <div class="flex items-end">
               <button type="submit" class="w-full py-2 bg-police-700 hover:bg-police-800 text-white font-bold rounded shadow">
-                + आदेश वेबसाइट पर प्रकाशित करें
+                + आदेश प्रकाशित करें
               </button>
             </div>
           </form>
         </div>
 
-        <!-- SUB-TAB 3: UPLOAD MEDIA / EVENT / GALLERY -->
+        <!-- SUB-TAB 3: UPLOAD MEDIA -->
         <div id="as-content-media" class="admin-sub-content hidden space-y-4">
           <form id="adminUploadMediaForm" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-slate-50 p-4 rounded-xl border">
             <div>
@@ -764,41 +739,41 @@
             </div>
             <div>
               <label class="block font-bold mb-1">शीर्षक *</label>
-              <input type="text" id="admMedTitle" required placeholder="समाचार अथवा कार्यक्रम का शीर्षक" class="w-full p-2 border rounded bg-white">
+              <input type="text" id="admMedTitle" required placeholder="शीर्षक दर्ज करें" class="w-full p-2 border rounded bg-white">
             </div>
             <div class="sm:col-span-2">
               <label class="block font-bold mb-1">विस्तृत विवरण</label>
               <textarea id="admMedDesc" rows="2" placeholder="संक्षिप्त विवरण दर्ज करें..." class="w-full p-2 border rounded bg-white"></textarea>
             </div>
             <div>
-              <label class="block font-bold mb-1">फ़ोटो / इमेज लिंक (Image URL)</label>
+              <label class="block font-bold mb-1">फ़ोटो लिंक (Image URL)</label>
               <input type="text" id="admMedImgUrl" placeholder="https://..." class="w-full p-2 border rounded bg-white font-mono">
             </div>
             <div class="flex items-end">
               <button type="submit" class="w-full py-2 bg-police-700 hover:bg-police-800 text-white font-bold rounded shadow">
-                + मीडिया कार्ड प्रकाशित करें
+                + प्रकाशित करें
               </button>
             </div>
           </form>
         </div>
 
-        <!-- SUB-TAB 4: MANAGE CONTACT LIST -->
+        <!-- SUB-TAB 4: MANAGE CONTACTS -->
         <div id="as-content-contacts" class="admin-sub-content hidden space-y-4">
           <form id="adminAddContactForm" class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs bg-slate-50 p-4 rounded-xl border">
             <div>
               <label class="block font-bold mb-1">पदनाम / कार्यालय *</label>
-              <input type="text" id="admCntDesignation" required placeholder="उदा. पुलिस अधीक्षक, कोटा शहर" class="w-full p-2 border rounded bg-white">
+              <input type="text" id="admCntDesignation" required placeholder="उदा. पुलिस अधीक्षक..." class="w-full p-2 border rounded bg-white">
             </div>
             <div>
               <label class="block font-bold mb-1">अधिकारी का नाम</label>
-              <input type="text" id="admCntName" placeholder="उदा. श्री..." class="w-full p-2 border rounded bg-white">
+              <input type="text" id="admCntName" placeholder="श्री..." class="w-full p-2 border rounded bg-white">
             </div>
             <div>
               <label class="block font-bold mb-1">सीयूजी मोबाइल *</label>
               <input type="text" id="admCntPhone" required placeholder="9414000000" class="w-full p-2 border rounded bg-white font-mono">
             </div>
             <div class="sm:col-span-2">
-              <label class="block font-bold mb-1">आधिकारिक ईमेल आईडी</label>
+              <label class="block font-bold mb-1">ईमेल आईडी</label>
               <input type="email" id="admCntEmail" placeholder="sp.kota@rajpolice.gov.in" class="w-full p-2 border rounded bg-white font-mono">
             </div>
             <div class="flex items-end">
@@ -808,7 +783,6 @@
             </div>
           </form>
         </div>
-
       </div>
     </div>
   </div>
@@ -861,7 +835,7 @@
     </div>
   </footer>
 
-  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <!-- ================= JAVASCRIPT & CLOUD REALTIME SYNC LOGIC ================= -->
   <script>
     // 1. FIREBASE INITIALIZATION
     const firebaseConfig = {
@@ -878,7 +852,7 @@
     const mediaRef = db.ref('media');
     const contactsRef = db.ref('contacts');
 
-    // 2. DEFAULT USERS (ADMIN & IG SIR)
+    // 2. HARDCODED MASTER ADMIN & IG SIR (Cannot be overridden/corrupted)
     const DEFAULT_ADMIN = {
       id: 'usr-admin',
       role: 'Admin',
@@ -903,7 +877,7 @@
       branch: 'कोटा रेंज (महानिरीक्षक)'
     };
 
-    let users = [];
+    let users = [DEFAULT_ADMIN, DEFAULT_IG];
     let tasks = [];
     let orders = [];
     let mediaList = [];
@@ -913,13 +887,10 @@
     const SESSION_KEY = 'ig_police_session_active';
     const IG_PHOTO_STORAGE_KEY = 'ig_kota_saved_avatar_data_url';
 
-    // Carousel state
     let currentSlide = 0;
 
     function initCarousel() {
-      setInterval(() => {
-        nextSlide();
-      }, 5000);
+      setInterval(() => { nextSlide(); }, 5000);
     }
 
     function nextSlide() {
@@ -938,7 +909,6 @@
       slides[currentSlide].classList.add('active');
     }
 
-    // Tab Switcher
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('.nav-tab-btn').forEach(btn => {
@@ -1005,7 +975,7 @@
       return `${year}-${month}-${day}`;
     }
 
-    // Real-time Cloud Data Listeners
+    // Real-time Cloud Listeners
     function initSystem() {
       initIGPhoto();
       initCarousel();
@@ -1015,13 +985,21 @@
       // Listen for Users
       usersRef.on('value', (snapshot) => {
         const data = snapshot.val();
-        users = data ? Object.values(data) : [];
-
-        // Ensure Admin and IG Sir accounts exist in Firebase
-        if (!users.some(u => u.role === 'Admin')) {
+        if (data) {
+          const cloudUsers = Object.values(data);
+          // Always ensure Admin exists
+          users = cloudUsers;
+          if (!users.some(u => u.role === 'Admin')) {
+            users.unshift(DEFAULT_ADMIN);
+            usersRef.child(DEFAULT_ADMIN.id).set(DEFAULT_ADMIN);
+          }
+          if (!users.some(u => u.role === 'IG_Sir')) {
+            users.push(DEFAULT_IG);
+            usersRef.child(DEFAULT_IG.id).set(DEFAULT_IG);
+          }
+        } else {
+          users = [DEFAULT_ADMIN, DEFAULT_IG];
           usersRef.child(DEFAULT_ADMIN.id).set(DEFAULT_ADMIN);
-        }
-        if (!users.some(u => u.role === 'IG_Sir')) {
           usersRef.child(DEFAULT_IG.id).set(DEFAULT_IG);
         }
 
@@ -1057,6 +1035,29 @@
         if (contactsList.length === 0) seedInitialContacts();
         renderContactsList();
       });
+
+      setupTabToggle();
+    }
+
+    function setupTabToggle() {
+      const loginTab = document.getElementById('sideTabLogin');
+      const forgotTab = document.getElementById('sideTabForgot');
+      const loginForm = document.getElementById('sideLoginForm');
+      const forgotForm = document.getElementById('sideForgotForm');
+
+      loginTab.addEventListener('click', () => {
+        loginTab.className = 'flex-1 py-1.5 text-center bg-white rounded shadow-sm text-police-900 font-extrabold';
+        forgotTab.className = 'flex-1 py-1.5 text-center text-slate-500 hover:text-police-700';
+        loginForm.classList.remove('hidden');
+        forgotForm.classList.add('hidden');
+      });
+
+      forgotTab.addEventListener('click', () => {
+        forgotTab.className = 'flex-1 py-1.5 text-center bg-white rounded shadow-sm text-police-900 font-extrabold';
+        loginTab.className = 'flex-1 py-1.5 text-center text-slate-500 hover:text-police-700';
+        forgotForm.classList.remove('hidden');
+        loginForm.classList.add('hidden');
+      });
     }
 
     function seedInitialContacts() {
@@ -1081,10 +1082,14 @@
       document.getElementById('todayFullDate').textContent = `दिनांक: ${day}/${month}/${year}`;
     }
 
-    // Session Checking
     function checkActiveSession() {
       const activeMobile = localStorage.getItem(SESSION_KEY);
       if (activeMobile) {
+        if (activeMobile === DEFAULT_ADMIN.mobile) {
+          currentUser = DEFAULT_ADMIN;
+          updateSidebarUI(true);
+          return;
+        }
         const found = users.find(u => u.mobile === activeMobile);
         if (found) {
           currentUser = found;
@@ -1098,23 +1103,16 @@
     function updateSidebarUI(isLoggedIn) {
       const loginBlock = document.getElementById('sidebarLoginBlock');
       const sessionBlock = document.getElementById('sidebarUserSessionBlock');
-      const headerAuthBadge = document.getElementById('headerAuthBadge');
       const adminSuperBtn = document.getElementById('adminSuperControlBtn');
 
       if (isLoggedIn && currentUser) {
         loginBlock.classList.add('hidden');
         sessionBlock.classList.remove('hidden');
-        headerAuthBadge.classList.remove('hidden');
-
-        document.getElementById('headerUserName').textContent = currentUser.name;
-        document.getElementById('headerUserRank').textContent = currentUser.rank;
-        document.getElementById('headerUserBranch').textContent = currentUser.branch;
 
         document.getElementById('sessionUserName').textContent = currentUser.name;
         document.getElementById('sessionUserRoleBadge').textContent = currentUser.role;
         document.getElementById('sessionUserBranch').textContent = currentUser.branch;
 
-        // Admin Only Super Power Button
         if (currentUser.role === 'Admin') {
           adminSuperBtn.classList.remove('hidden');
         } else {
@@ -1123,19 +1121,29 @@
       } else {
         loginBlock.classList.remove('hidden');
         sessionBlock.classList.add('hidden');
-        headerAuthBadge.classList.add('hidden');
         adminSuperBtn.classList.add('hidden');
       }
       lucide.createIcons();
     }
 
-    // 3. AUTH LOGIC (Admin, IG Sir, Branch)
+    // 3. SECURE AUTH LOGIN (ADMIN: 9928165827 / 7865 ALWAYS GUARANTEED)
     document.getElementById('sideLoginForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const role = document.getElementById('loginRoleSelect').value;
       const logId = document.getElementById('loginIdInput').value.trim();
-      const pass = document.getElementById('loginPassInput').value;
+      const pass = document.getElementById('loginPassInput').value.trim();
 
+      // Master Admin Direct Authenticator
+      if (role === 'Admin' && (logId === '9928165827' || logId === DEFAULT_ADMIN.email) && pass === '7865') {
+        currentUser = DEFAULT_ADMIN;
+        localStorage.setItem(SESSION_KEY, currentUser.mobile);
+        updateSidebarUI(true);
+        switchTab('monitoringDashboard');
+        showToast('एडमिन लॉगिन सफल', 'कार्यालय महानिरीक्षक पुलिस, कोटा रेंज एडमिन पोर्टल');
+        return;
+      }
+
+      // Cloud Authenticator (IG Sir & Branches)
       const user = users.find(u => u.role === role && (u.mobile === logId || u.email === logId) && u.password === pass);
 
       if (user) {
@@ -1149,8 +1157,42 @@
       }
     });
 
+    // 4. FORGOT PASSWORD HANDLER
+    document.getElementById('sideForgotForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const role = document.getElementById('forgotRoleSelect').value;
+      const mobile = document.getElementById('forgotMobile').value.trim();
+      const email = document.getElementById('forgotEmail').value.trim();
+      const pin = document.getElementById('forgotPin').value.trim();
+      const newPass = document.getElementById('forgotNewPass').value.trim();
+
+      // Master Admin Reset Verification
+      if (role === 'Admin') {
+        if (mobile === '9928165827' && pin === '7865') {
+          DEFAULT_ADMIN.password = newPass;
+          usersRef.child(DEFAULT_ADMIN.id).update({ password: newPass });
+          showToast('पासवर्ड रीसेट सफल', 'एडमिन पासवर्ड अद्यतन कर दिया गया है।');
+          document.getElementById('sideTabLogin').click();
+          return;
+        } else {
+          showToast('सत्यापन विफल', 'एडमिन मोबाइल अथवा सुरक्षा पिन (7865) अमान्य है।');
+          return;
+        }
+      }
+
+      // IG Sir & Branch Reset Verification
+      const targetUser = users.find(u => u.role === role && u.mobile === mobile && u.pin === pin);
+      if (targetUser) {
+        usersRef.child(targetUser.id).update({ password: newPass }).then(() => {
+          showToast('पासवर्ड रीसेट सफल', `${role} का पासवर्ड बदल दिया गया है।`);
+          document.getElementById('sideTabLogin').click();
+        });
+      } else {
+        showToast('सत्यापन विफल', 'दर्ज किया गया मोबाइल नंबर अथवा सुरक्षा पिन मेल नहीं खाता।');
+      }
+    });
+
     document.getElementById('sideLogoutBtn').addEventListener('click', logoutUser);
-    document.getElementById('logoutBtn').addEventListener('click', logoutUser);
 
     function logoutUser() {
       currentUser = null;
@@ -1160,7 +1202,7 @@
       showToast('लॉगआउट', 'सत्र समाप्त हो गया है।');
     }
 
-    // 4. ADMIN SUPER CONTROL PANEL HANDLERS
+    // 5. ADMIN CONTROL PANEL MODAL
     function openAdminControlModal() {
       if (currentUser?.role !== 'Admin') {
         showToast('अनाधिकृत', 'केवल एडमिन को यह अधिकार है।');
@@ -1190,7 +1232,6 @@
       lucide.createIcons();
     }
 
-    // Render User Credentials List in Admin Panel
     function renderAdminUsersControlList() {
       const tbody = document.getElementById('adminUsersListBody');
       if (!tbody) return;
@@ -1199,15 +1240,15 @@
       users.forEach(u => {
         const isAdminSelf = (u.role === 'Admin');
         const tr = document.createElement('tr');
-        tr.className = isAdminSelf ? 'bg-amber-50/40' : 'hover:bg-slate-50';
+        tr.className = isAdminSelf ? 'bg-amber-50/40 font-bold' : 'hover:bg-slate-50';
 
         tr.innerHTML = `
           <td class="p-2.5 font-bold ${u.role === 'IG_Sir' ? 'text-police-700' : u.role === 'Admin' ? 'text-amber-800' : 'text-slate-700'}">${u.role}</td>
           <td class="p-2.5 font-semibold">${u.branch}</td>
-          <td class="p-2.5">${u.name} (${u.rank})</td>
+          <td class="p-2.5">${u.name} (${u.rank || '-'})</td>
           <td class="p-2.5 font-mono">${u.mobile}</td>
           <td class="p-2.5 font-mono font-bold text-slate-800">
-            ${isAdminSelf ? '•••••••• (सुरक्षित)' : `<input type="text" id="passEdit-${u.id}" value="${u.password}" class="border rounded px-2 py-1 text-xs w-28 bg-white font-mono">`}
+            ${isAdminSelf ? '7865 (स्थिर)' : `<input type="text" id="passEdit-${u.id}" value="${u.password}" class="border rounded px-2 py-1 text-xs w-28 bg-white font-mono font-bold">`}
           </td>
           <td class="p-2.5 text-center">
             ${isAdminSelf ? '<span class="text-slate-400 italic">स्वतः सुरक्षित</span>' : `
@@ -1238,7 +1279,7 @@
         return;
       }
       usersRef.child(userId).update({ password: newPass }).then(() => {
-        showToast('पासवर्ड अपडेटेड', 'यूजर का पासवर्ड सफलतापूर्वक बदल दिया गया है।');
+        showToast('पासवर्ड अपडेटेड', 'यूजर का पासवर्ड क्लाउड में अद्यतन हो गया है।');
       });
     };
 
@@ -1250,7 +1291,7 @@
       }
     };
 
-    // Admin Uploads Order
+    // Orders Upload
     document.getElementById('adminUploadOrderForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const newOrder = {
@@ -1266,7 +1307,7 @@
       });
     });
 
-    // Admin Uploads Media
+    // Media Upload
     document.getElementById('adminUploadMediaForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const newMedia = {
@@ -1283,7 +1324,7 @@
       });
     });
 
-    // Admin Adds Contact
+    // Contacts Upload
     document.getElementById('adminAddContactForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const newContact = {
@@ -1299,7 +1340,7 @@
       });
     });
 
-    // 5. PUBLIC SECTIONS RENDERING
+    // 6. PUBLIC SECTIONS RENDERING
     function renderOrdersList() {
       const tbody = document.getElementById('ordersTableBody');
       if (!tbody) return;
@@ -1403,7 +1444,7 @@
       lucide.createIcons();
     }
 
-    // 6. DASHBOARD & TASK REGISTER
+    // 7. TASK REGISTER & MONITORING DASHBOARD
     function refreshDashboardData() {
       const filtered = getFilteredTasks();
       const tbody = document.getElementById('taskTableBody');
@@ -1536,7 +1577,6 @@
       }
     };
 
-    // Helper Toast
     function showToast(title, msg) {
       const toast = document.getElementById('toastNotification');
       document.getElementById('toastTitle').textContent = title;
