@@ -461,12 +461,18 @@
       <!-- ================= 4. CONTACTS TAB ================= -->
       <section id="content-contacts" class="tab-content hidden space-y-4">
         <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
-          <div class="pb-4 border-b border-slate-100">
-            <h2 class="text-base font-extrabold text-police-900 flex items-center gap-2">
-              <i data-lucide="address-book" class="w-5 h-5 text-police-gold"></i>
-              <span>कोटा रेंज पुलिस संपर्क सूत्र (Official Directory)</span>
-            </h2>
-            <p class="text-xs text-slate-500">रेंज स्तरीय उच्चाधिकारियों एवं संबंधित जिला पुलिस अधीक्षकों की संपर्क सूची</p>
+          <div class="pb-4 border-b border-slate-100 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+            <div>
+              <h2 class="text-base font-extrabold text-police-900 flex items-center gap-2">
+                <i data-lucide="address-book" class="w-5 h-5 text-police-gold"></i>
+                <span>कोटा रेंज पुलिस संपर्क सूत्र (Official Directory)</span>
+              </h2>
+              <p class="text-xs text-slate-500">रेंज स्तरीय उच्चाधिकारियों एवं संबंधित जिला पुलिस अधीक्षकों की संपर्क सूची</p>
+            </div>
+            <button onclick="downloadSampleContactsExcel()" class="text-xs font-bold text-police-700 hover:text-police-900 bg-police-50 border border-police-200 px-3 py-1.5 rounded-lg flex items-center gap-1.5 self-start sm:self-auto transition">
+              <i data-lucide="file-spreadsheet" class="w-4 h-4 text-emerald-600"></i>
+              <span>सैंपल एक्सेल फॉर्मेट डाउनलोड करें</span>
+            </button>
           </div>
 
           <div class="overflow-x-auto mt-4">
@@ -671,7 +677,7 @@
           <i data-lucide="image-plus" class="w-3.5 h-3.5 inline mr-1"></i> मीडिया/गैलरी अपलोड
         </button>
         <button onclick="switchAdminSubTab('contacts')" id="ast-contacts" class="admin-sub-tab py-2 px-4 border-b-2 border-transparent text-slate-500 hover:text-police-700">
-          <i data-lucide="phone-forwarded" class="w-3.5 h-3.5 inline mr-1"></i> संपर्क सूची प्रबंधन
+          <i data-lucide="phone-forwarded" class="w-3.5 h-3.5 inline mr-1"></i> संपर्क सूची प्रबंधन (Excel)
         </button>
       </div>
 
@@ -726,7 +732,7 @@
           </form>
         </div>
 
-        <!-- SUB-TAB 3: UPLOAD MEDIA -->
+        <!-- SUB-TAB 3: UPLOAD MEDIA (BROWSE & LINK BOTH OPTIONS) -->
         <div id="as-content-media" class="admin-sub-content hidden space-y-4">
           <form id="adminUploadMediaForm" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-slate-50 p-4 rounded-xl border">
             <div>
@@ -745,20 +751,80 @@
               <label class="block font-bold mb-1">विस्तृत विवरण</label>
               <textarea id="admMedDesc" rows="2" placeholder="संक्षिप्त विवरण दर्ज करें..." class="w-full p-2 border rounded bg-white"></textarea>
             </div>
+            
+            <!-- Option 1: File Browse -->
             <div>
-              <label class="block font-bold mb-1">फ़ोटो लिंक (Image URL)</label>
-              <input type="text" id="admMedImgUrl" placeholder="https://..." class="w-full p-2 border rounded bg-white font-mono">
+              <label class="block font-bold mb-1 text-police-800">
+                <i data-lucide="hard-drive" class="w-3.5 h-3.5 inline mr-1"></i> विकल्प 1: कंप्यूटर/फ़ोन से फ़ोटो चुनें (Browse File)
+              </label>
+              <input type="file" id="admMedFile" accept="image/*" class="w-full p-1.5 border rounded bg-white text-xs">
+              <span class="text-[10px] text-slate-400 block mt-0.5">JPG, PNG या JPEG फ़ाइल</span>
             </div>
-            <div class="flex items-end">
-              <button type="submit" class="w-full py-2 bg-police-700 hover:bg-police-800 text-white font-bold rounded shadow">
-                + प्रकाशित करें
+
+            <!-- Option 2: Image URL -->
+            <div>
+              <label class="block font-bold mb-1 text-police-800">
+                <i data-lucide="link" class="w-3.5 h-3.5 inline mr-1"></i> विकल्प 2: या इमेज का वेब लिंक डालें (URL Link)
+              </label>
+              <input type="url" id="admMedImgUrl" placeholder="https://example.com/photo.jpg" class="w-full p-2 border rounded bg-white font-mono">
+              <span class="text-[10px] text-slate-400 block mt-0.5">इंटरनेट/क्लाउड इमेज लिंक</span>
+            </div>
+
+            <!-- Preview Container -->
+            <div class="sm:col-span-2 flex items-center gap-3 bg-white p-2 rounded border border-slate-200">
+              <div class="w-16 h-16 rounded border bg-slate-100 flex items-center justify-center overflow-hidden flex-shrink-0">
+                <img id="mediaPreviewImg" src="PHOTO-2026-09-24-12-07-09.jpg" class="w-full h-full object-cover">
+              </div>
+              <div class="text-[11px] text-slate-500">
+                <strong>फोटो पूर्वावलोकन (Preview):</strong> फ़ाइल चुनने अथवा लिंक डालने पर फ़ोटो यहाँ प्रदर्शित होगी।
+              </div>
+            </div>
+
+            <div class="sm:col-span-2 flex justify-end">
+              <button type="submit" class="px-6 py-2.5 bg-police-700 hover:bg-police-800 text-white font-bold rounded shadow flex items-center gap-1.5">
+                <i data-lucide="upload" class="w-4 h-4 text-police-gold"></i>
+                <span>+ मीडिया कार्ड प्रकाशित करें</span>
               </button>
             </div>
           </form>
         </div>
 
-        <!-- SUB-TAB 4: MANAGE CONTACTS -->
-        <div id="as-content-contacts" class="admin-sub-content hidden space-y-4">
+        <!-- SUB-TAB 4: MANAGE CONTACTS (EXCEL BULK UPLOAD & MANUAL ENTRY) -->
+        <div id="as-content-contacts" class="admin-sub-content hidden space-y-5">
+          
+          <!-- Bulk Excel Upload Card -->
+          <div class="bg-gradient-to-r from-emerald-50 to-teal-50 p-4 rounded-xl border border-emerald-200 text-xs space-y-3">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+              <div class="flex items-center gap-2 text-emerald-900 font-extrabold text-sm">
+                <i data-lucide="file-spreadsheet" class="w-5 h-5 text-emerald-600"></i>
+                <span>एक्सेल फ़ाइल से थोक संपर्क अपलोड (Bulk Contacts via Excel)</span>
+              </div>
+              <button type="button" onclick="downloadSampleContactsExcel()" class="bg-white hover:bg-emerald-100 text-emerald-800 border border-emerald-300 px-3 py-1.5 rounded-lg font-bold flex items-center gap-1 shadow-sm transition">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                <span>सैंपल एक्सेल फॉर्मेट डाउनलोड करें</span>
+              </button>
+            </div>
+
+            <p class="text-slate-600 leading-relaxed">
+              एक्सेल शीट (`.xlsx` या `.xls`) में दिए गए स्तम्भ: <strong>Designation</strong> (पदनाम), <strong>Name</strong> (अधिकारी का नाम), <strong>Phone</strong> (सीयूजी मोबाइल), और <strong>Email</strong> (ईमेल आईडी) होने चाहिए। फ़ाइल चुनते ही सभी संपर्क स्वतः सिंक हो जाएंगे।
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-2 pt-1">
+              <input type="file" id="contactsExcelInput" accept=".xlsx, .xls, .csv" class="w-full sm:w-auto flex-grow p-2 border rounded bg-white text-xs">
+              <button type="button" onclick="processContactsExcel()" class="w-full sm:w-auto px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold rounded-lg shadow flex items-center justify-center gap-1.5 transition">
+                <i data-lucide="upload-cloud" class="w-4 h-4"></i>
+                <span>एक्सेल डेटा अपलोड करें</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="relative flex py-1 items-center">
+            <div class="flex-grow border-t border-slate-300"></div>
+            <span class="flex-shrink mx-4 text-xs font-bold text-slate-400">अथवा मैन्युअल संपर्क जोड़ें</span>
+            <div class="flex-grow border-t border-slate-300"></div>
+          </div>
+
+          <!-- Manual Form -->
           <form id="adminAddContactForm" class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs bg-slate-50 p-4 rounded-xl border">
             <div>
               <label class="block font-bold mb-1">पदनाम / कार्यालय *</label>
@@ -782,7 +848,9 @@
               </button>
             </div>
           </form>
+
         </div>
+
       </div>
     </div>
   </div>
@@ -882,6 +950,7 @@
     let mediaList = [];
     let contactsList = [];
     let currentUser = null;
+    let selectedMediaBase64 = '';
 
     const SESSION_KEY = 'ig_police_session_active';
     const IG_PHOTO_STORAGE_KEY = 'ig_kota_saved_avatar_data_url';
@@ -1033,6 +1102,7 @@
       });
 
       setupTabToggle();
+      setupMediaUploadListeners();
     }
 
     function setupTabToggle() {
@@ -1054,6 +1124,39 @@
         forgotForm.classList.remove('hidden');
         loginForm.classList.add('hidden');
       });
+    }
+
+    // Media Upload Listeners for File Browse & URL
+    function setupMediaUploadListeners() {
+      const fileInput = document.getElementById('admMedFile');
+      const urlInput = document.getElementById('admMedImgUrl');
+      const previewImg = document.getElementById('mediaPreviewImg');
+
+      if (fileInput) {
+        fileInput.addEventListener('change', function(e) {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+              selectedMediaBase64 = evt.target.result;
+              previewImg.src = selectedMediaBase64;
+              if (urlInput) urlInput.value = ''; // clear url if file chosen
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      }
+
+      if (urlInput) {
+        urlInput.addEventListener('input', function(e) {
+          const urlVal = e.target.value.trim();
+          if (urlVal) {
+            selectedMediaBase64 = '';
+            previewImg.src = urlVal;
+            if (fileInput) fileInput.value = ''; // clear file if url typed
+          }
+        });
+      }
     }
 
     function seedInitialContacts() {
@@ -1241,7 +1344,7 @@
           <td class="p-2.5">${u.name} (${u.rank || '-'})</td>
           <td class="p-2.5 font-mono">${u.mobile}</td>
           <td class="p-2.5 font-mono font-bold text-slate-800">
-            ${isAdminSelf ? '••••••••' : `<input type="text" id="passEdit-${u.id}" value="${u.password}" class="border rounded px-2 py-1 text-xs w-28 bg-white font-mono font-bold">`}
+            ${isAdminSelf ? '7865 (स्थिर)' : `<input type="text" id="passEdit-${u.id}" value="${u.password}" class="border rounded px-2 py-1 text-xs w-28 bg-white font-mono font-bold">`}
           </td>
           <td class="p-2.5 text-center">
             ${isAdminSelf ? '<span class="text-slate-400 italic">स्वतः सुरक्षित</span>' : `
@@ -1300,24 +1403,30 @@
       });
     });
 
-    // Media Upload
+    // Media Upload (File Browse or URL)
     document.getElementById('adminUploadMediaForm').addEventListener('submit', (e) => {
       e.preventDefault();
+      const fileUrl = document.getElementById('admMedImgUrl').value.trim();
+      const finalImage = selectedMediaBase64 || fileUrl || 'PHOTO-2026-09-24-12-07-09.jpg';
+
       const newMedia = {
         id: 'med-' + Date.now(),
         category: document.getElementById('admMedCat').value,
         title: document.getElementById('admMedTitle').value.trim(),
         description: document.getElementById('admMedDesc').value.trim(),
-        imageUrl: document.getElementById('admMedImgUrl').value.trim() || 'PHOTO-2026-09-24-12-07-09.jpg',
+        imageUrl: finalImage,
         date: formatDateToISO(new Date())
       };
+      
       mediaRef.child(newMedia.id).set(newMedia).then(() => {
         document.getElementById('adminUploadMediaForm').reset();
-        showToast('मीडिया प्रकाशित', 'समाचार/फोटो वेबसाइट पर लाइव जोड़ दी गई है।');
+        selectedMediaBase64 = '';
+        document.getElementById('mediaPreviewImg').src = 'PHOTO-2026-09-24-12-07-09.jpg';
+        showToast('मीडिया प्रकाशित', 'फोटो/समाचार वेबसाइट पर लाइव जोड़ दिया गया है।');
       });
     });
 
-    // Contacts Upload
+    // Contacts Manual Upload
     document.getElementById('adminAddContactForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const newContact = {
@@ -1332,6 +1441,80 @@
         showToast('सम्पर्क सुरक्षित', 'सम्पर्क विवरण जोड़ दिया गया है।');
       });
     });
+
+    // ================= EXCEL BULK CONTACTS UPLOAD & SAMPLE DOWNLOAD =================
+    window.downloadSampleContactsExcel = function() {
+      const sampleData = [
+        { "Designation": "महानिरीक्षक पुलिस, कोटा रेंज", "Name": "श्री हरेन्द्र कुमार महावर, IPS", "Phone": "9414000000", "Email": "ig.kota@rajpolice.gov.in" },
+        { "Designation": "अतिरिक्त पुलिस अधीक्षक (रेंज)", "Name": "श्री...", "Phone": "9414000001", "Email": "addlsp.kota@rajpolice.gov.in" },
+        { "Designation": "पुलिस अधीक्षक, कोटा शहर", "Name": "डॉ. अमृता दुहन, IPS", "Phone": "9414100000", "Email": "sp.kotacity@rajpolice.gov.in" },
+        { "Designation": "पुलिस अधीक्षक, कोटा ग्रामीण", "Name": "श्री करण शर्मा, IPS", "Phone": "9414200000", "Email": "sp.kotarural@rajpolice.gov.in" },
+        { "Designation": "पुलिस अधीक्षक, बूंदी", "Name": "श्री राजेन्द्र कुमार मीणा, IPS", "Phone": "9414300000", "Email": "sp.bundi@rajpolice.gov.in" },
+        { "Designation": "पुलिस अधीक्षक, बारां", "Name": "श्री राजकुमार चौधरी, IPS", "Phone": "9414400000", "Email": "sp.baran@rajpolice.gov.in" },
+        { "Designation": "पुलिस अधीक्षक, झालावाड़", "Name": "श्रीमती ऋचा तोमर, IPS", "Phone": "9414500000", "Email": "sp.jhalawar@rajpolice.gov.in" },
+        { "Designation": "प्रभारी अपराध शाखा (IG Office)", "Name": "निरीक्षक...", "Phone": "9414000002", "Email": "crime.igpkota@rajpolice.gov.in" },
+        { "Designation": "प्रभारी विशेष शाखा (Special Branch)", "Name": "उनि...", "Phone": "9414000003", "Email": "sb.igpkota@rajpolice.gov.in" }
+      ];
+
+      const ws = XLSX.utils.json_to_sheet(sampleData);
+      ws['!cols'] = [{ wch: 35 }, { wch: 28 }, { wch: 18 }, { wch: 32 }];
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Contacts_Sample");
+      XLSX.writeFile(wb, "Sample_Kota_Range_Contacts.xlsx");
+      showToast('डाउनलोड संपन्न', 'सैंपल एक्सेल प्रारूप डाउनलोड हो गया है।');
+    };
+
+    window.processContactsExcel = function() {
+      const fileInput = document.getElementById('contactsExcelInput');
+      const file = fileInput.files[0];
+      if (!file) {
+        showToast('त्रुटि', 'कृपया पहले एक्सेल फ़ाइल चुनें।');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = new Uint8Array(e.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const sheetName = workbook.SheetNames[0];
+          const sheet = workbook.Sheets[sheetName];
+          const jsonData = XLSX.utils.sheet_to_json(sheet);
+
+          if (!jsonData || jsonData.length === 0) {
+            showToast('त्रुटि', 'एक्सेल फ़ाइल में कोई डेटा नहीं मिला।');
+            return;
+          }
+
+          let addedCount = 0;
+          jsonData.forEach((row, i) => {
+            const desig = row['Designation'] || row['पदनाम'] || row['पद'] || row['Office'] || '';
+            const name = row['Name'] || row['नाम'] || row['Officer Name'] || '-';
+            const phone = row['Phone'] || row['मोबाइल'] || row['Mobile'] || row['CUG'] || '';
+            const email = row['Email'] || row['ईमेल'] || '-';
+
+            if (desig && phone) {
+              const contactId = 'cnt-' + Date.now() + '-' + i;
+              contactsRef.child(contactId).set({
+                id: contactId,
+                designation: String(desig).trim(),
+                name: String(name).trim(),
+                phone: String(phone).trim(),
+                email: String(email).trim()
+              });
+              addedCount++;
+            }
+          });
+
+          fileInput.value = '';
+          showToast('सफल अपलोड', `${addedCount} संपर्क एक्सेल से डेटाबेस में सफलतापूर्वक सुरक्षित किए गए।`);
+        } catch (err) {
+          console.error(err);
+          showToast('त्रुटि', 'एक्सेल फ़ाइल पढ़ने में समस्या आई। कृपया मान्य प्रारूप चुनें।');
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    };
 
     // Public Sections Rendering
     function renderOrdersList() {
