@@ -186,24 +186,24 @@
           </div>
 
           <!-- Login Form (Admin, IG Sir, Branch) -->
-          <form id="sideLoginForm" class="space-y-3">
+          <form id="sideLoginForm" class="space-y-3" autocomplete="off">
             <div>
               <label class="block text-xs font-bold text-slate-700 mb-1">उपयोगकर्ता रोल (Role) *</label>
               <select id="loginRoleSelect" required class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-semibold">
-                <option value="Admin" selected>Admin (व्यवस्थापक)</option>
+                <option value="Branch" selected>Branch (शाखा प्रभारी)</option>
                 <option value="IG_Sir">IG Sir (महानिरीक्षक महोदय)</option>
-                <option value="Branch">Branch (शाखा प्रभारी)</option>
+                <option value="Admin">Admin (व्यवस्थापक)</option>
               </select>
             </div>
 
             <div>
               <label class="block text-xs font-bold text-slate-700 mb-1">लॉग इन ID (मोबाइल/आईडी) *</label>
-              <input type="text" id="loginIdInput" required value="9928165827" placeholder="आईडी अथवा मोबाइल दर्ज करें" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-mono font-bold">
+              <input type="text" id="loginIdInput" required placeholder="आईडी अथवा मोबाइल दर्ज करें" autocomplete="off" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-mono">
             </div>
 
             <div>
               <label class="block text-xs font-bold text-slate-700 mb-1">पासवर्ड *</label>
-              <input type="password" id="loginPassInput" required value="7865" placeholder="••••••••" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
+              <input type="password" id="loginPassInput" required placeholder="••••••••" autocomplete="new-password" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
             </div>
 
             <button type="submit" class="w-full py-2 bg-police-700 hover:bg-police-800 text-white font-bold text-xs rounded-lg shadow transition flex items-center justify-center gap-1.5">
@@ -213,30 +213,30 @@
           </form>
 
           <!-- Forgot Password Form -->
-          <form id="sideForgotForm" class="space-y-2.5 hidden">
+          <form id="sideForgotForm" class="space-y-2.5 hidden" autocomplete="off">
             <div>
               <label class="block text-xs font-bold text-slate-700 mb-1">रोल चुनें</label>
               <select id="forgotRoleSelect" class="w-full text-xs rounded border p-1.5 font-bold">
-                <option value="Admin">Admin (एडमिन)</option>
+                <option value="Branch" selected>Branch (शाखा)</option>
                 <option value="IG_Sir">IG Sir (आईजी महोदय)</option>
-                <option value="Branch">Branch (शाखा)</option>
+                <option value="Admin">Admin (एडमिन)</option>
               </select>
             </div>
             <div>
               <label class="block text-[11px] font-bold text-slate-700">पंजीकृत मोबाइल ID *</label>
-              <input type="text" id="forgotMobile" required placeholder="मोबाइल नंबर दर्ज करें" class="w-full text-xs rounded border p-1.5 font-mono">
+              <input type="text" id="forgotMobile" required placeholder="मोबाइल नंबर दर्ज करें" autocomplete="off" class="w-full text-xs rounded border p-1.5 font-mono">
             </div>
             <div>
               <label class="block text-[11px] font-bold text-slate-700">पंजीकृत ईमेल ID *</label>
-              <input type="email" id="forgotEmail" required placeholder="email@rajpolice.gov.in" class="w-full text-xs rounded border p-1.5 font-mono">
+              <input type="email" id="forgotEmail" required placeholder="email@rajpolice.gov.in" autocomplete="off" class="w-full text-xs rounded border p-1.5 font-mono">
             </div>
             <div>
               <label class="block text-[11px] font-bold text-slate-700">सुरक्षा पिन *</label>
-              <input type="password" id="forgotPin" required placeholder="सुरक्षा पिन (उदा. 7865)" class="w-full text-xs rounded border p-1.5 font-mono">
+              <input type="password" id="forgotPin" required placeholder="4 अंकों का पिन दर्ज करें" autocomplete="new-password" class="w-full text-xs rounded border p-1.5 font-mono">
             </div>
             <div>
               <label class="block text-[11px] font-bold text-slate-700">नया पासवर्ड *</label>
-              <input type="password" id="forgotNewPass" required placeholder="नया पासवर्ड दर्ज करें" class="w-full text-xs rounded border p-1.5">
+              <input type="password" id="forgotNewPass" required placeholder="नया पासवर्ड दर्ज करें" autocomplete="new-password" class="w-full text-xs rounded border p-1.5">
             </div>
             <button type="submit" class="w-full py-2 bg-police-700 hover:bg-police-800 text-white font-bold text-xs rounded shadow transition">
               पासवर्ड रीसेट करें
@@ -643,7 +643,7 @@
 
   </div>
 
-  <!-- ================= ADMIN SUPER CONTROL MODAL (ALL POWERS) ================= -->
+  <!-- ================= ADMIN SUPER CONTROL MODAL ================= -->
   <div id="adminControlModal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm hidden flex items-center justify-center p-3 overflow-y-auto no-print">
     <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full border-t-4 border-amber-600 overflow-hidden my-6">
       
@@ -837,7 +837,6 @@
 
   <!-- ================= JAVASCRIPT & CLOUD REALTIME SYNC LOGIC ================= -->
   <script>
-    // 1. FIREBASE INITIALIZATION
     const firebaseConfig = {
       databaseURL: "https://igp-kota-dms-default-rtdb.firebaseio.com"
     };
@@ -852,7 +851,7 @@
     const mediaRef = db.ref('media');
     const contactsRef = db.ref('contacts');
 
-    // 2. HARDCODED MASTER ADMIN & IG SIR (Cannot be overridden/corrupted)
+    // Secure Master Credentials
     const DEFAULT_ADMIN = {
       id: 'usr-admin',
       role: 'Admin',
@@ -927,7 +926,6 @@
       lucide.createIcons();
     }
 
-    // Photo Loader
     function initIGPhoto() {
       const img = document.getElementById('igProfilePhoto');
       const placeholder = document.getElementById('photoPlaceholder');
@@ -975,7 +973,6 @@
       return `${year}-${month}-${day}`;
     }
 
-    // Real-time Cloud Listeners
     function initSystem() {
       initIGPhoto();
       initCarousel();
@@ -987,7 +984,6 @@
         const data = snapshot.val();
         if (data) {
           const cloudUsers = Object.values(data);
-          // Always ensure Admin exists
           users = cloudUsers;
           if (!users.some(u => u.role === 'Admin')) {
             users.unshift(DEFAULT_ADMIN);
@@ -1126,14 +1122,14 @@
       lucide.createIcons();
     }
 
-    // 3. SECURE AUTH LOGIN (ADMIN: 9928165827 / 7865 ALWAYS GUARANTEED)
+    // Login Authentication (Admin, IG Sir, Branch)
     document.getElementById('sideLoginForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const role = document.getElementById('loginRoleSelect').value;
       const logId = document.getElementById('loginIdInput').value.trim();
       const pass = document.getElementById('loginPassInput').value.trim();
 
-      // Master Admin Direct Authenticator
+      // Master Admin Authenticator
       if (role === 'Admin' && (logId === '9928165827' || logId === DEFAULT_ADMIN.email) && pass === '7865') {
         currentUser = DEFAULT_ADMIN;
         localStorage.setItem(SESSION_KEY, currentUser.mobile);
@@ -1157,7 +1153,7 @@
       }
     });
 
-    // 4. FORGOT PASSWORD HANDLER
+    // Forgot Password Handler
     document.getElementById('sideForgotForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const role = document.getElementById('forgotRoleSelect').value;
@@ -1166,7 +1162,6 @@
       const pin = document.getElementById('forgotPin').value.trim();
       const newPass = document.getElementById('forgotNewPass').value.trim();
 
-      // Master Admin Reset Verification
       if (role === 'Admin') {
         if (mobile === '9928165827' && pin === '7865') {
           DEFAULT_ADMIN.password = newPass;
@@ -1180,7 +1175,6 @@
         }
       }
 
-      // IG Sir & Branch Reset Verification
       const targetUser = users.find(u => u.role === role && u.mobile === mobile && u.pin === pin);
       if (targetUser) {
         usersRef.child(targetUser.id).update({ password: newPass }).then(() => {
@@ -1202,7 +1196,6 @@
       showToast('लॉगआउट', 'सत्र समाप्त हो गया है।');
     }
 
-    // 5. ADMIN CONTROL PANEL MODAL
     function openAdminControlModal() {
       if (currentUser?.role !== 'Admin') {
         showToast('अनाधिकृत', 'केवल एडमिन को यह अधिकार है।');
@@ -1248,7 +1241,7 @@
           <td class="p-2.5">${u.name} (${u.rank || '-'})</td>
           <td class="p-2.5 font-mono">${u.mobile}</td>
           <td class="p-2.5 font-mono font-bold text-slate-800">
-            ${isAdminSelf ? '7865 (स्थिर)' : `<input type="text" id="passEdit-${u.id}" value="${u.password}" class="border rounded px-2 py-1 text-xs w-28 bg-white font-mono font-bold">`}
+            ${isAdminSelf ? '••••••••' : `<input type="text" id="passEdit-${u.id}" value="${u.password}" class="border rounded px-2 py-1 text-xs w-28 bg-white font-mono font-bold">`}
           </td>
           <td class="p-2.5 text-center">
             ${isAdminSelf ? '<span class="text-slate-400 italic">स्वतः सुरक्षित</span>' : `
@@ -1340,7 +1333,7 @@
       });
     });
 
-    // 6. PUBLIC SECTIONS RENDERING
+    // Public Sections Rendering
     function renderOrdersList() {
       const tbody = document.getElementById('ordersTableBody');
       if (!tbody) return;
@@ -1444,7 +1437,7 @@
       lucide.createIcons();
     }
 
-    // 7. TASK REGISTER & MONITORING DASHBOARD
+    // Task Register & Monitoring Dashboard
     function refreshDashboardData() {
       const filtered = getFilteredTasks();
       const tbody = document.getElementById('taskTableBody');
