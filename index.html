@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>कार्यालय महानिरीक्षक पुलिस, कोटा रेंज - दैनिक कार्य प्रगति एवं निगरानी प्रणाली</title>
+  <title>कार्यालय महानिरीक्षक पुलिस, कोटा रेंज (राजस्थान) - आधिकारिक वेब पोर्टल</title>
+  
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <!-- SheetJS for Excel (.xlsx) -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <!-- html2canvas & jsPDF for 100% accurate Hindi Devanagari PDF -->
+  <!-- html2canvas & jsPDF for Hindi Landscape PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -50,7 +51,7 @@
   <style>
     body {
       font-family: 'Mukta', 'Inter', sans-serif;
-      background-color: #f1f5f9;
+      background-color: #f8fafc;
     }
     @page {
       size: landscape;
@@ -61,695 +62,780 @@
       #printableLandscapeReport { display: block !important; }
       body { background: #fff !important; }
     }
+    .carousel-item {
+      display: none;
+      transition: opacity 0.6s ease-in-out;
+    }
+    .carousel-item.active {
+      display: block;
+    }
   </style>
 </head>
-<body class="text-slate-800 antialiased min-h-screen flex flex-col bg-slate-100 font-hindi">
+<body class="text-slate-800 antialiased min-h-screen flex flex-col font-hindi">
 
-  <!-- TOP HEADER -->
-  <header class="bg-police-900 text-white border-b-4 border-police-gold shadow-lg sticky top-0 z-40 no-print">
-    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+  <!-- ================= TOP GOVT STRIP ================= -->
+  <div class="bg-police-950 text-police-goldlight text-xs py-1 px-4 border-b border-police-800 flex justify-between items-center no-print">
+    <div class="flex items-center space-x-2">
+      <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span class="font-medium">राजस्थान पुलिस | गृह विभाग, राजस्थान सरकार</span>
+    </div>
+    <div class="flex items-center space-x-4">
+      <div id="liveClock" class="font-mono text-slate-200 font-bold bg-police-900 px-2 py-0.5 rounded border border-police-700">--:--:-- IST</div>
+      <div id="todayFullDate" class="hidden sm:inline-block font-semibold text-amber-200"></div>
+    </div>
+  </div>
+
+  <!-- ================= OFFICIAL HEADER ================= -->
+  <header class="bg-police-900 text-white border-b-4 border-police-gold shadow-md sticky top-0 z-40 no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
       
-      <div class="flex items-center justify-between py-1.5 border-b border-police-700/60 text-xs text-police-goldlight">
-        <div class="flex items-center space-x-2">
-          <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span class="font-medium tracking-wide">राजस्थान पुलिस | कार्यालय महानिरीक्षक पुलिस, कोटा रेंज (कोटा)</span>
-        </div>
-        <div class="flex items-center space-x-3 text-right">
-          <div id="liveClock" class="font-mono text-xs text-slate-200 font-bold bg-police-800/90 px-2 py-0.5 rounded border border-police-700">
-            --:--:-- IST
+      <!-- Emblem & Title -->
+      <div class="flex items-center space-x-3.5 w-full md:w-auto">
+        <div class="relative flex-shrink-0 cursor-pointer group" title="आईजी साहब की फोटो" onclick="document.getElementById('igPhotoInput').click();">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full p-1 bg-gradient-to-tr from-police-gold via-yellow-200 to-police-khaki shadow-lg border-2 border-police-gold overflow-hidden relative">
+            <img 
+              id="igProfilePhoto"
+              src="IG Sir photo.jpg" 
+              alt="श्री हरेन्द्र कुमार महावर, IPS" 
+              class="w-full h-full object-cover object-top rounded-full bg-police-800"
+            />
+            <div id="photoPlaceholder" class="hidden w-full h-full rounded-full bg-police-800 flex flex-col items-center justify-center text-police-gold text-center">
+              <i data-lucide="camera" class="w-6 h-6"></i>
+              <span class="text-[8px] font-bold">फोटो चुनें</span>
+            </div>
+            <div class="absolute inset-0 bg-black/40 rounded-full flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition duration-200">
+              <i data-lucide="camera" class="w-4 h-4 text-police-gold"></i>
+              <span class="text-[8px] font-bold">बदलें</span>
+            </div>
           </div>
-          <div id="todayFullDate" class="hidden sm:inline-block text-xs font-semibold text-amber-200"></div>
+          <div class="absolute -bottom-1 -right-1 bg-police-800 border border-police-gold text-police-gold p-0.5 rounded-full shadow">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+          </div>
+        </div>
+        <input type="file" id="igPhotoInput" accept="image/*" class="hidden" onchange="handlePhotoUpload(event)">
+
+        <div>
+          <div class="text-xs sm:text-sm font-extrabold text-police-goldlight leading-tight">
+            श्री हरेन्द्र कुमार महावर, IPS
+          </div>
+          <div class="text-[11px] sm:text-xs text-amber-200 font-medium">
+            महानिरीक्षक पुलिस, कोटा रेंज (कोटा, बूंदी, बारां, झालावाड़)
+          </div>
+          <h1 class="text-base sm:text-xl font-extrabold tracking-tight text-white mt-0.5">
+            कार्यालय महानिरीक्षक पुलिस, कोटा रेंज
+          </h1>
         </div>
       </div>
 
-      <div class="flex flex-col md:flex-row items-center justify-between py-3 gap-3">
-        <div class="flex items-center space-x-3.5 w-full md:w-auto">
-          <div class="relative flex-shrink-0 cursor-pointer group" title="फोटो बदलने हेतु क्लिक करें" onclick="document.getElementById('igPhotoInput').click();">
-            <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full p-1 bg-gradient-to-tr from-police-gold via-yellow-200 to-police-khaki shadow-lg border-2 border-police-gold overflow-hidden relative">
-              <img 
-                id="igProfilePhoto"
-                src="IG Sir photo.jpg" 
-                alt="श्री हरेन्द्र कुमार महावर, IPS" 
-                class="w-full h-full object-cover object-top rounded-full bg-police-800"
-              />
-              <div id="photoPlaceholder" class="hidden w-full h-full rounded-full bg-police-800 flex flex-col items-center justify-center text-police-gold text-center">
-                <i data-lucide="camera" class="w-6 h-6"></i>
-                <span class="text-[8px] font-bold">फोटो चुनें</span>
-              </div>
-              <div class="absolute inset-0 bg-black/40 rounded-full flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition duration-200">
-                <i data-lucide="camera" class="w-4 h-4 text-police-gold"></i>
-                <span class="text-[8px] font-bold">बदलें</span>
-              </div>
-            </div>
-            <div class="absolute -bottom-1 -right-1 bg-police-800 border border-police-gold text-police-gold p-0.5 rounded-full shadow">
-              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-            </div>
-          </div>
-          <input type="file" id="igPhotoInput" accept="image/*" class="hidden" onchange="handlePhotoUpload(event)">
+      <!-- Main Navigation Menu -->
+      <nav class="flex items-center flex-wrap gap-1 sm:gap-2">
+        <button onclick="switchTab('home')" class="nav-tab-btn active px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-police-700 text-police-gold border border-police-600 transition" id="tab-home">
+          <i data-lucide="home" class="w-4 h-4 inline-block mr-1"></i> मुख्य पृष्ठ
+        </button>
+        <button onclick="switchTab('orders')" class="nav-tab-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold hover:bg-police-800 text-slate-200 transition" id="tab-orders">
+          <i data-lucide="file-text" class="w-4 h-4 inline-block mr-1"></i> आदेश व परिपत्र
+        </button>
+        <button onclick="switchTab('media')" class="nav-tab-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold hover:bg-police-800 text-slate-200 transition" id="tab-media">
+          <i data-lucide="image" class="w-4 h-4 inline-block mr-1"></i> मीडिया व समाचार
+        </button>
+        <button onclick="switchTab('contacts')" class="nav-tab-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold hover:bg-police-800 text-slate-200 transition" id="tab-contacts">
+          <i data-lucide="phone-call" class="w-4 h-4 inline-block mr-1"></i> संपर्क सूत्र
+        </button>
+      </nav>
 
-          <div>
-            <div class="text-[13px] sm:text-base font-extrabold text-police-goldlight leading-tight">
-              श्री हरेन्द्र कुमार महावर, IPS
-            </div>
-            <div class="text-[11px] sm:text-xs text-amber-200 font-medium leading-tight mt-0.5">
-              महानिरीक्षक पुलिस कोटा, रेंज कोटा (राज.)
-            </div>
-            <h1 class="text-base sm:text-xl font-extrabold tracking-tight text-white mt-1 flex items-center gap-2">
-              दैनिक कार्य प्रगति एवं निगरानी प्रणाली
-            </h1>
-            <p class="text-[11px] text-slate-300">
-              शाखावार दैनिक कार्य, डाक निस्तारण व मॉनिटरिंग पोर्टल (Live Cloud Synced)
-            </p>
-          </div>
-        </div>
-
-        <div id="headerAuthBadge" class="hidden w-full md:w-auto flex items-center justify-between md:justify-end gap-2.5 bg-police-800/90 px-3 py-2 rounded-lg border border-police-700">
-          <div class="text-left pr-2 border-r border-police-700">
-            <div class="flex items-center gap-1.5">
-              <span id="headerUserName" class="text-xs font-bold text-white">--</span>
-              <span id="headerUserRank" class="text-[10px] bg-police-700 text-police-gold px-1.5 py-0.5 rounded font-medium">--</span>
-            </div>
-            <div id="headerUserBranch" class="text-[11px] text-police-goldlight font-semibold truncate max-w-[190px]">
-              --
-            </div>
-          </div>
-          <button id="changePassBtn" title="पासवर्ड बदलें" class="px-2 py-1.5 text-xs bg-police-700 hover:bg-police-600 text-police-goldlight rounded border border-police-600 transition flex items-center gap-1">
-            <i data-lucide="key" class="w-3.5 h-3.5"></i>
-            <span class="hidden sm:inline">पासवर्ड बदलें</span>
-          </button>
-          <button id="logoutBtn" title="लॉगआउट करें" class="px-2 py-1.5 text-xs bg-red-900/70 hover:bg-red-800 text-red-200 rounded border border-red-700/60 transition flex items-center gap-1">
-            <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
-            <span>लॉगआउट</span>
-          </button>
-        </div>
-
-      </div>
     </div>
   </header>
 
-  <!-- Notification Banner -->
-  <div class="bg-amber-100 border-b border-amber-300 text-amber-950 px-4 py-2 text-xs font-semibold flex items-center shadow-sm no-print">
+  <!-- ================= MARQUEE TICKER ================= -->
+  <div class="bg-amber-100 border-b border-amber-300 text-amber-950 px-4 py-1.5 text-xs font-semibold flex items-center shadow-sm no-print">
     <div class="max-w-7xl mx-auto w-full flex items-center gap-2">
       <span class="bg-amber-800 text-white text-[10px] font-bold px-2 py-0.5 rounded flex items-center gap-1 flex-shrink-0">
-        <i data-lucide="bell" class="w-3 h-3"></i> आदेश / निर्देश
+        <i data-lucide="bell" class="w-3 h-3"></i> नवीनतम सूचना
       </span>
-      <span class="truncate">
-        समस्त शाखा प्रभारी अपनी शाखा की दैनिक प्रगति, डाक निस्तारण की स्थिति समयबद्ध रूप से दर्ज व अद्यतन (Update) करें।
-      </span>
+      <marquee behavior="scroll" direction="left" scrollamount="6" class="text-xs font-semibold text-slate-800">
+        कोटा रेंज पुलिस: निष्पक्ष अनुसंधान, त्वरित न्याय एवं संवेदनशील जनसेवा हेतु सदैव तत्पर | समस्त शाखा प्रभारी दैनिक कार्य विवरण समय पर अद्यतन करें |
+      </marquee>
     </div>
   </div>
 
-  <!-- LOGIN GATEWAY -->
-  <section id="loginPageSection" class="flex-grow flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl shadow-xl max-w-md w-full border-t-4 border-police-gold overflow-hidden">
-      
-      <div class="px-6 py-4 bg-police-900 text-white text-center">
-        <h2 class="text-base font-bold text-police-goldlight">पोर्टल प्रवेश (Login Gateway)</h2>
-        <p class="text-xs text-slate-300">कार्यालय महानिरीक्षक पुलिस, कोटा रेंज</p>
-      </div>
-
-      <div class="flex border-b border-slate-200 bg-slate-50 text-xs font-bold">
-        <button id="tabNavLogin" type="button" class="flex-1 py-3 text-center border-b-2 border-police-700 text-police-800 bg-white">
-          लॉग इन (Login)
-        </button>
-        <button id="tabNavForgot" type="button" class="flex-1 py-3 text-center border-b-2 border-transparent text-slate-500 hover:text-police-700">
-          पासवर्ड भूल गए?
-        </button>
-      </div>
-
-      <div class="p-6">
-        <form id="mainLoginForm" class="space-y-4">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">
-              रोल (Role) <span class="text-red-500">*</span>
-            </label>
-            <select id="loginRoleSelect" required class="w-full text-xs sm:text-sm rounded-lg border border-slate-300 p-2.5 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-semibold">
-              <option value="Admin">Admin (महानिरीक्षक / एडमिन)</option>
-              <option value="Branch" selected>Branch (शाखा प्रभारी)</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">
-              लॉग इन ID (मोबाइल नंबर) <span class="text-red-500">*</span>
-            </label>
-            <input type="text" id="loginIdInput" required placeholder="लॉग इन आईडी दर्ज करें" autocomplete="username" class="w-full text-xs sm:text-sm rounded-lg border border-slate-300 p-2.5 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-mono">
-          </div>
-
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">
-              पासवर्ड (Password) <span class="text-red-500">*</span>
-            </label>
-            <input type="password" id="loginPassInput" required placeholder="••••••••" autocomplete="current-password" class="w-full text-xs sm:text-sm rounded-lg border border-slate-300 p-2.5 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
-          </div>
-
-          <button type="submit" class="w-full py-2.5 bg-police-700 hover:bg-police-800 text-white font-bold text-xs sm:text-sm rounded-lg shadow transition flex items-center justify-center gap-1.5 mt-2">
-            <i data-lucide="log-in" class="w-4 h-4 text-police-gold"></i>
-            <span>सुरक्षित लॉग इन करें</span>
-          </button>
-
-          <p class="text-[11px] text-slate-500 text-center mt-2 italic">
-            * नई शाखा आईडी केवल एडमिन (महानिरीक्षक कार्यालय) द्वारा जारी की जाती है।
-          </p>
-        </form>
-
-        <form id="mainForgotForm" class="space-y-3 hidden">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">खाता प्रकार <span class="text-red-500">*</span></label>
-            <select id="forgotRoleSelect" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-semibold">
-              <option value="Branch">शाखा खाता (Branch)</option>
-              <option value="Admin">एडमिन खाता (Admin)</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">पंजीकृत ID / मोबाइल <span class="text-red-500">*</span></label>
-            <input type="text" id="forgotMobile" required placeholder="आईडी / मोबाइल नंबर" class="w-full text-xs rounded-lg border border-slate-300 p-2.5 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-mono">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">पंजीकृत ईमेल आई-डी <span class="text-red-500">*</span></label>
-            <input type="email" id="forgotEmail" required placeholder="ईमेल आईडी" class="w-full text-xs rounded-lg border border-slate-300 p-2.5 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-mono">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">सुरक्षा पिन <span class="text-red-500">*</span></label>
-            <input type="password" id="forgotPin" required placeholder="सुरक्षा पिन" class="w-full text-xs rounded-lg border border-slate-300 p-2.5 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-mono">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">नया पासवर्ड <span class="text-red-500">*</span></label>
-            <input type="password" id="forgotNewPass" required placeholder="नया पासवर्ड दर्ज करें" class="w-full text-xs rounded-lg border border-slate-300 p-2.5 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
-          </div>
-          <button type="submit" class="w-full py-2 bg-police-700 hover:bg-police-800 text-white font-bold text-xs rounded-lg shadow transition">
-            पासवर्ड रीसेट करें
-          </button>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- DASHBOARD MAIN CONTAINER -->
-  <main id="portalDashboardSection" class="hidden flex-grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-5">
+  <!-- ================= MAIN BODY LAYOUT ================= -->
+  <div class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
     
-    <div class="mb-4 bg-white rounded-xl p-3.5 border border-slate-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 no-print">
-      <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-full bg-police-800 text-police-gold flex items-center justify-center font-bold text-xs shadow">
-          <i data-lucide="user-check" class="w-4 h-4"></i>
-        </div>
-        <div>
-          <div class="text-xs font-bold text-slate-800 flex items-center gap-2">
-            <span id="scopeUserName">--</span>
-            <span id="scopeUserRank" class="text-[10px] px-2 py-0.5 bg-slate-100 text-slate-700 rounded-full font-mono border">--</span>
-          </div>
-          <div class="text-[11px] text-slate-500 font-medium">
-            सक्रिय कार्यक्षेत्र: <span id="scopeUserBranch" class="font-bold text-police-800">--</span>
-          </div>
-        </div>
-      </div>
+    <!-- ================= LEFT SIDEBAR (OFFICE MONITORING SYSTEM LOGIN) ================= -->
+    <aside class="lg:col-span-4 xl:col-span-3 space-y-4 no-print">
       
-      <div class="flex items-center gap-2">
-        <button id="adminCreateBranchBtn" class="hidden bg-police-800 hover:bg-police-900 text-police-gold text-xs font-bold px-3 py-1.5 rounded-lg border border-police-gold/50 shadow flex items-center gap-1.5 transition">
-          <i data-lucide="user-plus" class="w-4 h-4"></i>
-          <span>+ नई शाखा ID बनाएं</span>
-        </button>
-
-        <div id="scopeBadgeTag" class="text-xs font-bold px-3 py-1 rounded-lg bg-blue-50 text-blue-800 border border-blue-200">
-          --
-        </div>
-      </div>
-    </div>
-
-    <!-- KPI Statistics -->
-    <section class="grid grid-cols-2 lg:grid-cols-5 gap-3.5 mb-6 no-print">
-      <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 flex flex-col justify-between">
-        <div class="flex items-center justify-between mb-1">
-          <span class="text-xs font-semibold text-slate-500 uppercase">कुल पंजीकृत कार्य</span>
-          <span class="p-1.5 rounded-lg bg-blue-50 text-blue-700"><i data-lucide="clipboard-list" class="w-4 h-4"></i></span>
-        </div>
-        <div class="flex items-baseline space-x-1">
-          <span class="text-2xl sm:text-3xl font-extrabold text-slate-800" id="kpiTotal">0</span>
-          <span class="text-xs text-slate-500">प्रकरण</span>
-        </div>
-        <div class="mt-2 text-[11px] text-slate-400" id="kpiScopeSubtitle">समस्त शाखाओं के कुल कार्य</div>
-      </div>
-
-      <div class="bg-white rounded-xl p-4 shadow-sm border-l-4 border-l-emerald-600 border border-slate-200 flex flex-col justify-between">
-        <div class="flex items-center justify-between mb-1">
-          <span class="text-xs font-bold text-emerald-700 uppercase flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> पूर्ण कार्य
-          </span>
-          <span class="p-1.5 rounded-lg bg-emerald-50 text-emerald-700"><i data-lucide="check" class="w-4 h-4"></i></span>
-        </div>
-        <div>
-          <span class="text-2xl sm:text-3xl font-extrabold text-emerald-700" id="kpiCompleted">0</span>
-        </div>
-        <div class="mt-2 text-[11px] text-emerald-800">सफलतापूर्वक निस्तारित</div>
-      </div>
-
-      <div class="bg-white rounded-xl p-4 shadow-sm border-l-4 border-l-rose-600 border border-slate-200 flex flex-col justify-between">
-        <div class="flex items-center justify-between mb-1">
-          <span class="text-xs font-bold text-rose-700 uppercase flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-rose-500 inline-block"></span> अपूर्ण / लंबित
-          </span>
-          <span class="p-1.5 rounded-lg bg-rose-50 text-rose-700"><i data-lucide="alert-circle" class="w-4 h-4"></i></span>
-        </div>
-        <div>
-          <span class="text-2xl sm:text-3xl font-extrabold text-rose-700" id="kpiPending">0</span>
-        </div>
-        <div class="mt-2 text-[11px] text-rose-800">कार्यवाही प्रतीक्षित</div>
-      </div>
-
-      <div class="bg-white rounded-xl p-4 shadow-sm border-l-4 border-l-amber-500 border border-slate-200 flex flex-col justify-between">
-        <div class="flex items-center justify-between mb-1">
-          <span class="text-xs font-bold text-amber-700 uppercase flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span> प्रक्रियाधीन
-          </span>
-          <span class="p-1.5 rounded-lg bg-amber-50 text-amber-700"><i data-lucide="clock" class="w-4 h-4"></i></span>
-        </div>
-        <div>
-          <span class="text-2xl sm:text-3xl font-extrabold text-amber-600" id="kpiProgress">0</span>
-        </div>
-        <div class="mt-2 text-[11px] text-amber-800">कार्रवाई जारी</div>
-      </div>
-
-      <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 flex flex-col justify-between col-span-2 lg:col-span-1">
-        <div class="flex items-center justify-between mb-1">
-          <span class="text-xs font-semibold text-slate-500 uppercase">निस्तारण प्रतिशत</span>
-          <span class="text-xs font-bold text-police-700 font-mono" id="ratePercentage">0%</span>
-        </div>
-        <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden my-2">
-          <div id="progressBar" class="bg-emerald-500 h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
-        </div>
-        <div class="flex justify-between items-center text-[10px] text-slate-400">
-          <span>0%</span>
-          <span>लक्ष्य: 100%</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Filters Bar -->
-    <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 mb-6 no-print">
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-        
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-2.5 flex-grow">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">दिनांक से (From)</label>
-            <input type="date" id="filterFromDate" class="w-full text-xs sm:text-sm rounded-lg border border-slate-300 py-1.5 px-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-mono">
+      <!-- Monitoring Portal Trigger Card -->
+      <div class="bg-white rounded-2xl shadow-md border-t-4 border-police-700 overflow-hidden">
+        <div class="bg-police-900 text-white p-4 text-center">
+          <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-police-800 text-police-gold flex items-center justify-center border border-police-gold/40">
+            <i data-lucide="shield-alert" class="w-6 h-6"></i>
           </div>
-
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">दिनांक तक (To)</label>
-            <input type="date" id="filterToDate" class="w-full text-xs sm:text-sm rounded-lg border border-slate-300 py-1.5 px-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-mono">
-          </div>
-
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">शाखा (Branch)</label>
-            <select id="filterBranch" class="w-full text-xs sm:text-sm rounded-lg border border-slate-300 py-2 px-2.5 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-medium">
-            </select>
-          </div>
-
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">स्थिति (Status)</label>
-            <select id="filterStatus" class="w-full text-xs sm:text-sm rounded-lg border border-slate-300 py-2 px-2.5 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
-              <option value="ALL">सभी स्थितियां</option>
-              <option value="COMPLETED">🟢 पूर्ण कार्य (Completed)</option>
-              <option value="PENDING">🔴 अपूर्ण / लंबित (Pending)</option>
-              <option value="PROGRESS">🟡 प्रक्रियाधीन (In Progress)</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">प्राथमिकता</label>
-            <select id="filterPriority" class="w-full text-xs sm:text-sm rounded-lg border border-slate-300 py-2 px-2.5 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
-              <option value="ALL">सभी प्राथमिकताएं</option>
-              <option value="URGENT">अति आवश्यक (Urgent)</option>
-              <option value="HIGH">उच्च (High)</option>
-              <option value="NORMAL">सामान्य (Normal)</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">खोजें (Search)</label>
-            <input type="text" id="searchInput" placeholder="विवरण / कर्मचारी..." class="w-full text-xs sm:text-sm rounded-lg border border-slate-300 py-2 px-2.5 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
-          </div>
+          <h2 class="text-sm font-extrabold text-police-goldlight">दैनिक कार्य प्रगति एवं निगरानी प्रणाली</h2>
+          <p class="text-[11px] text-slate-300">कार्यालय आंतरिक अनुश्रवण पोर्टल</p>
         </div>
 
-        <div class="flex items-center gap-2 flex-shrink-0 self-end lg:self-center">
-          <button id="resetDateFilterBtn" title="फ़िल्टर रीसेट करें" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs px-2.5 py-2 rounded-lg flex items-center gap-1 shadow-sm transition">
-            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-            <span>रीसेट</span>
-          </button>
-
-          <button id="openNewTaskBtn" class="bg-police-700 hover:bg-police-800 text-white font-medium text-xs sm:text-sm px-3 py-2 rounded-lg flex items-center gap-1.5 shadow transition">
-            <i data-lucide="plus-circle" class="w-4 h-4 text-police-gold"></i>
-            <span>नया कार्य दर्ज करें</span>
-          </button>
-
-          <button id="printPdfDirectBtn" title="शुद्ध हिंदी लैंडस्केप प्रतिवेदन प्रिंट करें" class="bg-slate-800 hover:bg-slate-900 text-white font-medium text-xs sm:text-sm px-3 py-2 rounded-lg flex items-center gap-1.5 shadow transition">
-            <i data-lucide="printer" class="w-4 h-4 text-police-goldlight"></i>
-            <span>प्रतिवेदन प्रिंट (PDF)</span>
-          </button>
-
-          <div class="relative inline-block text-left" id="downloadDropdownWrap">
-            <button id="downloadDropdownBtn" type="button" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs sm:text-sm px-3 py-2 rounded-lg flex items-center gap-1.5 shadow transition">
-              <i data-lucide="download" class="w-4 h-4"></i>
-              <span>डाउनलोड</span>
-              <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+        <!-- Auth Block (Logged Out State) -->
+        <div id="sidebarLoginBlock" class="p-4 space-y-3.5">
+          <div class="flex border-b border-slate-200 bg-slate-50 text-[11px] font-bold rounded-lg p-0.5">
+            <button id="sideTabLogin" type="button" class="flex-1 py-1.5 text-center bg-white rounded shadow-sm text-police-900 font-extrabold">
+              लॉग इन
             </button>
-            
-            <div id="downloadMenu" class="hidden absolute right-0 mt-1 w-48 rounded-lg shadow-xl bg-white ring-1 ring-black ring-opacity-5 z-50 py-1 font-medium">
-              <button id="downloadPdfBtn" class="w-full text-left px-3.5 py-2.5 text-xs text-slate-700 hover:bg-police-50 hover:text-police-900 flex items-center gap-2 border-b border-slate-100">
-                <i data-lucide="file-text" class="w-4 h-4 text-rose-600"></i>
-                <div>
-                  <span class="block font-bold">PDF डाउनलोड (हिंदी)</span>
-                  <span class="text-[10px] text-slate-400">Landscape A4 Format</span>
-                </div>
-              </button>
-              <button id="downloadExcelBtn" class="w-full text-left px-3.5 py-2.5 text-xs text-slate-700 hover:bg-police-50 hover:text-police-900 flex items-center gap-2">
-                <i data-lucide="file-spreadsheet" class="w-4 h-4 text-emerald-600"></i>
-                <div>
-                  <span class="block font-bold">Excel डाउनलोड</span>
-                  <span class="text-[10px] text-slate-400">MS Excel (.xlsx)</span>
-                </div>
-              </button>
+            <button id="sideTabForgot" type="button" class="flex-1 py-1.5 text-center text-slate-500 hover:text-police-700">
+              पासवर्ड भूल गए?
+            </button>
+          </div>
+
+          <!-- Login Form (Admin, IG Sir, Branch) -->
+          <form id="sideLoginForm" class="space-y-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">उपयोगकर्ता रोल (Role) *</label>
+              <select id="loginRoleSelect" required class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-semibold">
+                <option value="Admin">Admin (व्यवस्थापक)</option>
+                <option value="IG_Sir">IG Sir (महानिरीक्षक महोदय)</option>
+                <option value="Branch" selected>Branch (शाखा प्रभारी)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">लॉग इन ID (मोबाइल/आईडी) *</label>
+              <input type="text" id="loginIdInput" required placeholder="आईडी अथवा मोबाइल दर्ज करें" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-mono">
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">पासवर्ड *</label>
+              <input type="password" id="loginPassInput" required placeholder="••••••••" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
+            </div>
+
+            <button type="submit" class="w-full py-2 bg-police-700 hover:bg-police-800 text-white font-bold text-xs rounded-lg shadow transition flex items-center justify-center gap-1.5">
+              <i data-lucide="log-in" class="w-4 h-4 text-police-gold"></i>
+              <span>सुरक्षित प्रवेश करें</span>
+            </button>
+          </form>
+
+          <!-- Forgot Password Form -->
+          <form id="sideForgotForm" class="space-y-2.5 hidden">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">रोल चुनें</label>
+              <select id="forgotRoleSelect" class="w-full text-xs rounded border p-1.5">
+                <option value="Branch">Branch (शाखा)</option>
+                <option value="IG_Sir">IG Sir (आईजी महोदय)</option>
+                <option value="Admin">Admin (एडमिन)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-700">पंजीकृत मोबाइल *</label>
+              <input type="text" id="forgotMobile" required placeholder="10 अंक" class="w-full text-xs rounded border p-1.5 font-mono">
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-700">पंजीकृत ईमेल *</label>
+              <input type="email" id="forgotEmail" required placeholder="email@rajpolice.gov.in" class="w-full text-xs rounded border p-1.5">
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-700">सुरक्षा पिन *</label>
+              <input type="password" id="forgotPin" required placeholder="4 अंक" class="w-full text-xs rounded border p-1.5 font-mono">
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-700">नया पासवर्ड *</label>
+              <input type="password" id="forgotNewPass" required placeholder="नया पासवर्ड" class="w-full text-xs rounded border p-1.5">
+            </div>
+            <button type="submit" class="w-full py-1.5 bg-police-700 text-white font-bold text-xs rounded shadow">
+              पासवर्ड रीसेट करें
+            </button>
+          </form>
+        </div>
+
+        <!-- Auth Block (Logged In State) -->
+        <div id="sidebarUserSessionBlock" class="p-4 space-y-3 hidden bg-police-50/50">
+          <div class="flex items-center space-x-3 pb-3 border-b border-slate-200">
+            <div class="w-10 h-10 rounded-full bg-police-800 text-police-gold flex items-center justify-center font-bold text-sm">
+              <i data-lucide="user-check" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div id="sessionUserName" class="text-xs font-extrabold text-police-950">--</div>
+              <div id="sessionUserRoleBadge" class="text-[10px] inline-block px-1.5 py-0.5 rounded bg-police-200 text-police-800 font-bold mt-0.5">--</div>
+              <div id="sessionUserBranch" class="text-[11px] text-slate-500 font-semibold truncate max-w-[150px]">--</div>
             </div>
           </div>
 
-        </div>
+          <div class="space-y-2">
+            <!-- Open Dashboard Button -->
+            <button onclick="switchTab('monitoringDashboard')" class="w-full py-2 bg-police-800 hover:bg-police-900 text-police-gold font-bold text-xs rounded-lg shadow flex items-center justify-center gap-1.5 transition">
+              <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+              <span>निगरानी डैशबोर्ड खोलें</span>
+            </button>
 
-      </div>
-    </div>
+            <!-- Admin Super Control Panel Button (Only Admin) -->
+            <button id="adminSuperControlBtn" onclick="openAdminControlModal()" class="hidden w-full py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs rounded-lg shadow flex items-center justify-center gap-1.5 transition">
+              <i data-lucide="shield-check" class="w-4 h-4"></i>
+              <span>एडमिन सुपर कंट्रोल विंडो</span>
+            </button>
 
-    <!-- Daily Task Register Table -->
-    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-8 no-print">
-      
-      <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-        <div class="flex items-center space-x-2">
-          <span class="w-3 h-3 rounded-full bg-police-gold"></span>
-          <h2 class="font-bold text-sm sm:text-base text-police-900 tracking-wide">
-            दैनिक कार्य विवरण तालिका (Daily Task Register)
-          </h2>
-          <span id="renderedCountBadge" class="bg-police-100 text-police-800 text-xs px-2 py-0.5 rounded-full font-bold">
-            0 कार्य
-          </span>
-          <span id="appliedDateLabel" class="text-xs font-bold text-police-700 bg-amber-100 px-2.5 py-0.5 rounded hidden">
-          </span>
-        </div>
-        <div class="text-xs text-slate-600 font-medium flex items-center gap-4">
-          <span class="inline-flex items-center gap-1">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span> हरा डॉट (🟢) = पूर्ण
-          </span>
-          <span class="inline-flex items-center gap-1">
-            <span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> लाल निशान (🔴) = लंबित
-          </span>
-        </div>
-      </div>
+            <!-- Change Own Password -->
+            <button onclick="document.getElementById('changePasswordModal').classList.remove('hidden')" class="w-full py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded border border-slate-300 flex items-center justify-center gap-1">
+              <i data-lucide="key" class="w-3.5 h-3.5"></i>
+              <span>अपना पासवर्ड बदलें</span>
+            </button>
 
-      <div class="overflow-x-auto w-full">
-        <table class="w-full text-left text-xs sm:text-sm border-collapse" id="tasksTable">
-          <thead>
-            <tr class="bg-slate-100 text-slate-700 font-bold uppercase text-[11px] sm:text-xs tracking-wider border-b border-slate-300">
-              <th class="py-3 px-3 w-12 text-center">क्र.</th>
-              <th class="py-3 px-3 min-w-[110px]">कार्य दिनांक</th>
-              <th class="py-3 px-3 min-w-[130px]">शाखा (BRANCH)</th>
-              <th class="py-3 px-4 min-w-[260px]">दैनिक कार्य विवरण (TASK DETAILS)</th>
-              <th class="py-3 px-3">प्रभारी / कर्मचारी</th>
-              <th class="py-3 px-3">प्राथमिकता</th>
-              <th class="py-3 px-3">लक्ष्य तिथि</th>
-              <th class="py-3 px-3 min-w-[200px]">कार्यवाही हेतु निर्देश (Admin Directions)</th>
-              <th class="py-3 px-3 text-center">स्थिति सूचक (STATUS)</th>
-              <th class="py-3 px-3 text-right no-print min-w-[150px]">कार्यवाही (ACTIONS)</th>
-            </tr>
-          </thead>
-          <tbody id="taskTableBody" class="divide-y divide-slate-200">
-          </tbody>
-        </table>
-      </div>
-
-      <div id="noTasksState" class="py-12 text-center text-slate-400">
-        <i data-lucide="clipboard-x" class="w-12 h-12 mx-auto stroke-1 mb-2 text-slate-300"></i>
-        <p class="text-sm font-semibold text-slate-600">चयनित दिनांक रेंज / फ़िल्टर में कोई कार्य दर्ज नहीं है</p>
-        <p class="text-xs text-slate-400 mt-1">
-          'रीसेट' बटन दबाएं अथवा 'नया कार्य दर्ज करें' पर क्लिक करें।
-        </p>
-      </div>
-
-      <div class="p-3 bg-slate-50 border-t border-slate-200 text-[11px] text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-2">
-        <div>
-          * एक बार कार्य पूर्ण होकर लॉक होने के बाद संशोधन की शक्ति केवल एडमिन के पास रहेगी।
-        </div>
-        <div class="font-medium text-police-700">
-          सुरक्षित केंद्रीय क्लाउड डेटा (Firebase Synced)
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Admin-Only Branch Summary Grid -->
-    <section id="adminBranchGridSection" class="mt-4 mb-8 hidden no-print">
-      <div class="flex items-center justify-between mb-3">
-        <h3 class="font-bold text-sm sm:text-base text-police-900 flex items-center gap-2">
-          <i data-lucide="layers" class="w-4 h-4 text-police-gold"></i>
-          <span>पंजीकृत शाखाओं का तुलनात्मक कार्य अवलोकन (Registered Branches Overview)</span>
-        </h3>
-        <span class="text-xs text-slate-500" id="regBranchesCountText">0 शाखाएं सक्रिय</span>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5" id="branchSummaryGrid">
-      </div>
-    </section>
-
-  </main>
-
-  <!-- 100% PURE HINDI PRINT & PDF TEMPLATE -->
-  <div id="printableLandscapeReport" class="hidden print:block bg-white p-4 text-slate-900 font-hindi">
-    <div class="border-b-2 border-slate-800 pb-3 mb-3 text-center">
-      <h2 class="text-xl font-extrabold tracking-wide uppercase">कार्यालय महानिरीक्षक पुलिस, कोटा रेंज (राजस्थान)</h2>
-      <h3 class="text-base font-bold text-slate-700 mt-0.5">दैनिक कार्य प्रगति एवं अनुश्रवण प्रतिवेदन</h3>
-      <div class="flex justify-between items-center text-xs font-semibold mt-2 px-2 border-t pt-1 border-slate-200">
-        <span id="repScopeDate">अवधि: समस्त दिनांक</span>
-        <span id="repScopeBranch">शाखा: समस्त शाखाएं</span>
-        <span id="repGeneratedTime">दिनांक: --</span>
-      </div>
-    </div>
-
-    <table class="w-full border-collapse border border-slate-400 text-xs">
-      <thead>
-        <tr class="bg-slate-100 text-slate-900 font-bold border-b border-slate-400">
-          <th class="border border-slate-400 p-1.5 w-10 text-center">क्र.</th>
-          <th class="border border-slate-400 p-1.5 w-24 text-center">कार्य दिनांक</th>
-          <th class="border border-slate-400 p-1.5 w-36">शाखा का नाम</th>
-          <th class="border border-slate-400 p-1.5">दैनिक कार्य का विस्तृत विवरण</th>
-          <th class="border border-slate-400 p-1.5 w-32">प्रभारी / कर्मचारी</th>
-          <th class="border border-slate-400 p-1.5 w-20 text-center">प्राथमिकता</th>
-          <th class="border border-slate-400 p-1.5 w-24 text-center">लक्ष्य तिथि</th>
-          <th class="border border-slate-400 p-1.5 w-44">कार्यवाही हेतु निर्देश</th>
-          <th class="border border-slate-400 p-1.5 w-24 text-center">स्थिति</th>
-        </tr>
-      </thead>
-      <tbody id="reportTableBody">
-      </tbody>
-    </table>
-
-    <div class="mt-8 flex justify-between items-end text-xs font-bold px-4">
-      <div>
-        <p>हस्ताक्षर शाखा प्रभारी</p>
-      </div>
-      <div class="text-right">
-        <p>कार्यालय महानिरीक्षक पुलिस</p>
-        <p class="text-[11px] font-normal text-slate-600">कोटा रेंज, कोटा (राज.)</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL: MULTI-ROW TASK ENTRY -->
-  <div id="taskModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3 overflow-y-auto no-print">
-    <div class="bg-white rounded-xl shadow-2xl max-w-3xl w-full border-t-4 border-police-700 overflow-hidden my-8">
-      
-      <div class="px-5 py-3.5 bg-police-900 text-white flex items-center justify-between">
-        <div class="flex items-center space-x-2">
-          <i data-lucide="file-plus" class="w-5 h-5 text-police-gold"></i>
-          <div>
-            <h3 class="font-bold text-sm sm:text-base" id="taskModalHeading">दैनिक कार्य प्रविष्टि (Multiple Task Rows)</h3>
-            <p class="text-[10px] text-amber-200">* प्रतिबंध: कार्य केवल वर्तमान दिनांक या आगामी 2 दिनों का ही दर्ज हो सकता है।</p>
-          </div>
-        </div>
-        <button id="closeTaskModalBtn" class="text-slate-300 hover:text-white p-1 rounded-lg">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-
-      <form id="taskForm" class="p-5 space-y-4">
-        <input type="hidden" id="editTaskId" value="">
-
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">शाखा <span class="text-red-500">*</span></label>
-            <input type="text" id="modalBranch" required readonly class="w-full text-xs rounded border border-slate-300 p-2 bg-slate-100 font-bold text-police-900">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">
-              कार्य दिनांक <span class="text-red-500">*</span>
-              <span class="text-[10px] font-normal text-rose-600 block">(पिछली तिथि मान्य नहीं)</span>
-            </label>
-            <input type="date" id="modalTaskDate" required class="w-full text-xs rounded border border-slate-300 p-2 bg-white focus:ring-2 focus:ring-police-600 font-mono">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">लक्ष्य तिथि <span class="text-red-500">*</span></label>
-            <input type="date" id="modalDueDate" required class="w-full text-xs rounded border border-slate-300 p-2 bg-white focus:ring-2 focus:ring-police-600 font-mono">
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">प्रभारी / संबंधित कर्मचारी</label>
-            <input type="text" id="modalAssignee" placeholder="उदा. उनि. सुरेश कुमार" class="w-full text-xs rounded-lg border border-slate-300 p-2.5 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">प्राथमिकता <span class="text-red-500">*</span></label>
-            <select id="modalPriority" class="w-full text-xs rounded-lg border border-slate-300 p-2.5 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
-              <option value="NORMAL">सामान्य (Normal)</option>
-              <option value="HIGH">उच्च (High)</option>
-              <option value="URGENT">अति आवश्यक (Urgent)</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="border border-slate-300 rounded-lg p-3 bg-slate-50/50">
-          <div class="flex items-center justify-between mb-2">
-            <label class="block text-xs font-bold text-slate-800">
-              दैनिक कार्य का विस्तृत विवरण (1 से अधिक कार्य अलग-अलग पंक्तियों में लिखें):
-            </label>
-            <button type="button" id="addNewRowBtn" class="text-xs font-bold text-police-700 hover:text-police-900 bg-white border border-police-600 px-2.5 py-1 rounded shadow-sm flex items-center gap-1 transition">
-              <i data-lucide="plus" class="w-3.5 h-3.5"></i>
-              <span>+ कार्य पंक्ति जोड़ें</span>
+            <!-- Logout -->
+            <button id="sideLogoutBtn" class="w-full py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold text-xs rounded border border-rose-200 flex items-center justify-center gap-1 transition">
+              <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+              <span>सत्र समाप्त (Logout)</span>
             </button>
           </div>
-
-          <div id="taskRowsContainer" class="space-y-2.5 max-h-64 overflow-y-auto pr-1"></div>
         </div>
 
-        <div class="pt-3 border-t border-slate-200 flex justify-end space-x-2">
-          <button type="button" id="cancelTaskModalBtn" class="px-4 py-2 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg">रद्द करें</button>
-          <button type="submit" class="px-5 py-2 text-xs font-bold text-white bg-police-700 hover:bg-police-800 rounded-lg shadow flex items-center gap-1">
-            <i data-lucide="save" class="w-4 h-4 text-police-gold"></i>
-            <span>सुरक्षित करें</span>
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
+      </div>
 
-  <!-- MODAL: ADMIN CREATES BRANCH ID -->
-  <div id="adminCreateBranchModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3 overflow-y-auto no-print">
-    <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full border-t-4 border-police-gold overflow-hidden my-8">
-      
-      <div class="px-5 py-3.5 bg-police-900 text-white flex items-center justify-between">
-        <div class="flex items-center space-x-2">
-          <i data-lucide="shield-plus" class="w-5 h-5 text-police-gold"></i>
-          <div>
-            <h3 class="font-bold text-sm sm:text-base">नई शाखा आईडी व पासवर्ड जारी करें</h3>
-            <p class="text-[10px] text-police-goldlight">केवल एडमिन द्वारा प्राधिकृत</p>
+      <!-- Quick Police Helpline Card -->
+      <div class="bg-gradient-to-br from-slate-900 to-police-950 text-white rounded-xl p-4 shadow text-xs space-y-2 border border-police-800">
+        <h3 class="font-bold text-police-gold flex items-center gap-1.5">
+          <i data-lucide="phone" class="w-4 h-4"></i> आपातकालीन पुलिस सहायता
+        </h3>
+        <div class="grid grid-cols-2 gap-2 text-[11px] pt-1">
+          <div class="bg-police-900/80 p-2 rounded border border-police-800">
+            <span class="text-slate-400 block">पुलिस कंट्रोल रूम</span>
+            <span class="font-bold font-mono text-white text-xs">112 / 100</span>
+          </div>
+          <div class="bg-police-900/80 p-2 rounded border border-police-800">
+            <span class="text-slate-400 block">महिला हेल्पलाइन</span>
+            <span class="font-bold font-mono text-white text-xs">1090</span>
+          </div>
+          <div class="bg-police-900/80 p-2 rounded border border-police-800">
+            <span class="text-slate-400 block">साइबर हेल्पलाइन</span>
+            <span class="font-bold font-mono text-white text-xs">1930</span>
+          </div>
+          <div class="bg-police-900/80 p-2 rounded border border-police-800">
+            <span class="text-slate-400 block">चाइल्ड हेल्पलाइन</span>
+            <span class="font-bold font-mono text-white text-xs">1098</span>
           </div>
         </div>
-        <button id="closeAdminBranchModalBtn" class="text-slate-300 hover:text-white p-1 rounded-lg">
-          <i data-lucide="x" class="w-5 h-5"></i>
+      </div>
+
+    </aside>
+
+    <!-- ================= RIGHT MAIN CONTENT AREA ================= -->
+    <div class="lg:col-span-8 xl:col-span-9">
+
+      <!-- ================= 1. HOME TAB ================= -->
+      <section id="content-home" class="tab-content space-y-6">
+        
+        <!-- AUTO-SLIDING CAROUSEL -->
+        <div class="relative bg-slate-900 rounded-2xl overflow-hidden shadow-xl border border-slate-200 h-64 sm:h-80 md:h-96">
+          <div id="carouselContainer" class="relative w-full h-full">
+            
+            <!-- Slide 1: Range Briefing -->
+            <div class="carousel-item active relative w-full h-full">
+              <div class="w-full h-full bg-gradient-to-r from-police-950 via-police-900 to-police-800 flex items-center p-6 sm:p-10 text-white">
+                <div class="max-w-xl space-y-3">
+                  <span class="bg-police-gold text-police-950 text-xs font-extrabold px-2.5 py-1 rounded shadow">कोटा रेंज पुलिस विजन</span>
+                  <h2 class="text-xl sm:text-3xl font-extrabold leading-tight text-white">
+                    आमजन में विश्वास, अपराधियों में डर
+                  </h2>
+                  <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    कोटा, बूंदी, बारां एवं झालावाड़ जिलों में शांति व्यवस्था, पारदर्शी पुलिसिंग और जनसंवाद के माध्यम से अपराध नियंत्रण कोटा रेंज पुलिस की सर्वोच्च प्राथमिकता है।
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 2: Digital Monitoring -->
+            <div class="carousel-item relative w-full h-full">
+              <div class="w-full h-full bg-gradient-to-r from-police-900 via-slate-900 to-police-950 flex items-center p-6 sm:p-10 text-white">
+                <div class="max-w-xl space-y-3">
+                  <span class="bg-emerald-500 text-white text-xs font-extrabold px-2.5 py-1 rounded shadow">डिजिटल नवाचार</span>
+                  <h2 class="text-xl sm:text-3xl font-extrabold leading-tight text-white">
+                    दैनिक कार्य प्रगति एवं निगरानी प्रणाली
+                  </h2>
+                  <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    रेंज कार्यालय की समस्त शाखाओं के पत्रावलियों व प्रकरणों का समयबद्ध निस्तारण, रियल-टाइम ट्रैकिंग एवं उच्चाधिकारियों द्वारा पारदर्शी पर्यवेक्षण।
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Carousel Controls -->
+          <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/40 hover:bg-black/70 text-white transition">
+            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+          </button>
+          <button onclick="nextSlide()" class="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/40 hover:bg-black/70 text-white transition">
+            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- IG MESSAGE & RANGE JURISDICTION CARDS -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- IG Message Card -->
+          <div class="md:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="flex items-center space-x-2 text-police-800">
+                <i data-lucide="quote" class="w-5 h-5 text-police-gold"></i>
+                <h3 class="font-bold text-base text-police-900">महानिरीक्षक पुलिस का संदेश</h3>
+              </div>
+              <p class="text-xs sm:text-sm text-slate-700 leading-relaxed text-justify">
+                "कोटा रेंज पुलिस निष्पक्ष विवेचना, महिला व बाल सुरक्षा, साइबर अपराधों की रोकथाम और पीड़ित को त्वरित राहत पहुंचाने के लिए पूर्णतः समर्पित है। हमारा प्रयास है कि रेंज का प्रत्येक नागरिक निर्भय होकर पुलिस के समक्ष अपनी बात रख सके। तकनीक का सदुपयोग करते हुए दैनिक कार्यों की गुणवत्ता और जवाबदेही को नई ऊंचाइयों पर ले जाना हमारा लक्ष्य है।"
+              </p>
+            </div>
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span class="font-extrabold text-police-900">— श्री हरेन्द्र कुमार महावर, IPS</span>
+              <span class="text-slate-400">महानिरीक्षक पुलिस, कोटा रेंज</span>
+            </div>
+          </div>
+
+          <!-- Jurisdiction Summary -->
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-3">
+            <h3 class="font-bold text-sm text-police-900 flex items-center gap-1.5 border-b pb-2">
+              <i data-lucide="map-pin" class="w-4 h-4 text-police-gold"></i> रेंज कार्यक्षेत्र (Jurisdiction)
+            </h3>
+            <ul class="text-xs space-y-2 text-slate-700">
+              <li class="flex items-center justify-between py-1 border-b border-slate-100">
+                <span class="font-semibold">कोटा शहर (Kota City)</span>
+                <span class="bg-police-100 text-police-800 px-2 py-0.5 rounded text-[10px] font-bold">जिला</span>
+              </li>
+              <li class="flex items-center justify-between py-1 border-b border-slate-100">
+                <span class="font-semibold">कोटा ग्रामीण (Kota Rural)</span>
+                <span class="bg-police-100 text-police-800 px-2 py-0.5 rounded text-[10px] font-bold">जिला</span>
+              </li>
+              <li class="flex items-center justify-between py-1 border-b border-slate-100">
+                <span class="font-semibold">बूंदी (Bundi)</span>
+                <span class="bg-police-100 text-police-800 px-2 py-0.5 rounded text-[10px] font-bold">जिला</span>
+              </li>
+              <li class="flex items-center justify-between py-1 border-b border-slate-100">
+                <span class="font-semibold">बारां (Baran)</span>
+                <span class="bg-police-100 text-police-800 px-2 py-0.5 rounded text-[10px] font-bold">जिला</span>
+              </li>
+              <li class="flex items-center justify-between py-1">
+                <span class="font-semibold">झालावाड़ (Jhalawar)</span>
+                <span class="bg-police-100 text-police-800 px-2 py-0.5 rounded text-[10px] font-bold">जिला</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ================= 2. ORDERS AND CIRCULARS TAB ================= -->
+      <section id="content-orders" class="tab-content hidden space-y-4">
+        <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-2">
+            <div>
+              <h2 class="text-base font-extrabold text-police-900 flex items-center gap-2">
+                <i data-lucide="file-check" class="w-5 h-5 text-police-gold"></i>
+                <span>कार्यालय आदेश एवं परिपत्र (Orders & Circulars)</span>
+              </h2>
+              <p class="text-xs text-slate-500">महानिरीक्षक पुलिस कार्यालय द्वारा जारी महत्वपूर्ण विभागीय निर्देश व आदेश</p>
+            </div>
+            <input type="text" id="orderSearchInput" oninput="renderOrdersList()" placeholder="आदेश क्रमांक / विषय खोजें..." class="text-xs border rounded-lg p-2 bg-slate-50 focus:bg-white w-full sm:w-64">
+          </div>
+
+          <div class="overflow-x-auto mt-4">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-slate-100 text-slate-700 font-bold uppercase text-[11px] border-b">
+                  <th class="p-3 w-12 text-center">क्र.</th>
+                  <th class="p-3 w-28">दिनांक</th>
+                  <th class="p-3 w-40">आदेश क्रमांक</th>
+                  <th class="p-3">विषय / विवरण</th>
+                  <th class="p-3 w-28 text-center">डाउनलोड</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTableBody" class="divide-y divide-slate-100">
+                <!-- Dynamically Rendered -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 3. MEDIA (NEWS, EVENTS, GALLERY) TAB ================= -->
+      <section id="content-media" class="tab-content hidden space-y-4">
+        <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-2">
+            <div>
+              <h2 class="text-base font-extrabold text-police-900 flex items-center gap-2">
+                <i data-lucide="newspaper" class="w-5 h-5 text-police-gold"></i>
+                <span>मीडिया, समाचार एवं छायाचित्र दीर्घा (Media Gallery)</span>
+              </h2>
+              <p class="text-xs text-slate-500">कोटा रेंज पुलिस की महत्वपूर्ण उपलब्धियां, जनसंवाद व अभियान</p>
+            </div>
+            <!-- Filter Pills -->
+            <div class="flex gap-1.5 text-xs font-bold">
+              <button onclick="filterMedia('ALL')" class="media-filter-btn active px-3 py-1 rounded bg-police-700 text-white" id="mf-ALL">सभी</button>
+              <button onclick="filterMedia('NEWS')" class="media-filter-btn px-3 py-1 rounded bg-slate-100 text-slate-600 hover:bg-slate-200" id="mf-NEWS">समाचार (News)</button>
+              <button onclick="filterMedia('EVENTS')" class="media-filter-btn px-3 py-1 rounded bg-slate-100 text-slate-600 hover:bg-slate-200" id="mf-EVENTS">अभियान / आयोजन</button>
+              <button onclick="filterMedia('GALLERY')" class="media-filter-btn px-3 py-1 rounded bg-slate-100 text-slate-600 hover:bg-slate-200" id="mf-GALLERY">फोटो गैलरी</button>
+            </div>
+          </div>
+
+          <div id="mediaCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-5">
+            <!-- Dynamically Rendered -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 4. CONTACTS TAB ================= -->
+      <section id="content-contacts" class="tab-content hidden space-y-4">
+        <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+          <div class="pb-4 border-b border-slate-100">
+            <h2 class="text-base font-extrabold text-police-900 flex items-center gap-2">
+              <i data-lucide="address-book" class="w-5 h-5 text-police-gold"></i>
+              <span>कोटा रेंज पुलिस संपर्क सूत्र (Official Directory)</span>
+            </h2>
+            <p class="text-xs text-slate-500">रेंज स्तरीय उच्चाधिकारियों एवं संबंधित जिला पुलिस अधीक्षकों की संपर्क सूची</p>
+          </div>
+
+          <div class="overflow-x-auto mt-4">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="bg-slate-100 text-slate-700 font-bold uppercase text-[11px] border-b">
+                  <th class="p-3 w-12 text-center">क्र.</th>
+                  <th class="p-3">पदनाम / कार्यालय</th>
+                  <th class="p-3">अधिकारी का नाम</th>
+                  <th class="p-3 w-36">सीयूजी मोबाइल नंबर</th>
+                  <th class="p-3 w-56">आधिकारिक ईमेल</th>
+                </tr>
+              </thead>
+              <tbody id="contactsTableBody" class="divide-y divide-slate-100">
+                <!-- Dynamically Rendered -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 5. OFFICE MONITORING SYSTEM DASHBOARD TAB ================= -->
+      <section id="content-monitoringDashboard" class="tab-content hidden space-y-6">
+        
+        <!-- User Scope Top Bar -->
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-police-800 text-police-gold flex items-center justify-center font-bold text-xs shadow">
+              <i data-lucide="shield-check" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div class="text-xs font-bold text-slate-800 flex items-center gap-2">
+                <span id="scopeUserName">--</span>
+                <span id="scopeUserRank" class="text-[10px] px-2 py-0.5 bg-slate-100 text-slate-700 rounded font-mono border">--</span>
+              </div>
+              <div class="text-[11px] text-slate-500 font-medium">
+                सक्रिय कार्यक्षेत्र: <span id="scopeUserBranch" class="font-bold text-police-800">--</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button id="adminCreateBranchBtn" class="hidden bg-police-800 hover:bg-police-900 text-police-gold text-xs font-bold px-3 py-1.5 rounded-lg border border-police-gold/50 shadow flex items-center gap-1.5 transition">
+              <i data-lucide="user-plus" class="w-4 h-4"></i>
+              <span>+ नई शाखा ID बनाएं</span>
+            </button>
+            <div id="scopeBadgeTag" class="text-xs font-bold px-3 py-1 rounded-lg bg-blue-50 text-blue-800 border border-blue-200">
+              --
+            </div>
+          </div>
+        </div>
+
+        <!-- Filters & Action Bar -->
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-2 flex-grow text-xs">
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">दिनांक से</label>
+                <input type="date" id="filterFromDate" class="w-full rounded border border-slate-300 p-1.5 bg-slate-50 font-mono">
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">दिनांक तक</label>
+                <input type="date" id="filterToDate" class="w-full rounded border border-slate-300 p-1.5 bg-slate-50 font-mono">
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">शाखा</label>
+                <select id="filterBranch" class="w-full rounded border border-slate-300 p-1.5 bg-slate-50 font-medium"></select>
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">स्थिति</label>
+                <select id="filterStatus" class="w-full rounded border border-slate-300 p-1.5 bg-slate-50">
+                  <option value="ALL">सभी स्थितियां</option>
+                  <option value="COMPLETED">🟢 पूर्ण (Completed)</option>
+                  <option value="PENDING">🔴 लंबित (Pending)</option>
+                  <option value="PROGRESS">🟡 प्रक्रियाधीन (In Progress)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">प्राथमिकता</label>
+                <select id="filterPriority" class="w-full rounded border border-slate-300 p-1.5 bg-slate-50">
+                  <option value="ALL">सभी प्राथमिकताएं</option>
+                  <option value="URGENT">अति आवश्यक</option>
+                  <option value="HIGH">उच्च</option>
+                  <option value="NORMAL">सामान्य</option>
+                </select>
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">खोजें</label>
+                <input type="text" id="searchInput" placeholder="विवरण खोजें..." class="w-full rounded border border-slate-300 p-1.5 bg-slate-50">
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-2 flex-shrink-0 self-end lg:self-center">
+              <button id="resetDateFilterBtn" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs px-2.5 py-2 rounded-lg flex items-center gap-1 transition">
+                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                <span>रीसेट</span>
+              </button>
+              <button id="openNewTaskBtn" class="bg-police-700 hover:bg-police-800 text-white font-bold text-xs px-3 py-2 rounded-lg flex items-center gap-1 shadow transition">
+                <i data-lucide="plus-circle" class="w-4 h-4 text-police-gold"></i>
+                <span>+ नया कार्य</span>
+              </button>
+              <button id="printPdfDirectBtn" class="bg-slate-800 hover:bg-slate-900 text-white font-medium text-xs px-3 py-2 rounded-lg flex items-center gap-1 shadow transition">
+                <i data-lucide="printer" class="w-4 h-4 text-police-goldlight"></i>
+                <span>प्रिंट प्रतिवेदन</span>
+              </button>
+              
+              <!-- Download Menu -->
+              <div class="relative inline-block text-left" id="downloadDropdownWrap">
+                <button id="downloadDropdownBtn" type="button" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-3 py-2 rounded-lg flex items-center gap-1 shadow transition">
+                  <i data-lucide="download" class="w-4 h-4"></i>
+                  <span>डाउनलोड</span>
+                  <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+                </button>
+                <div id="downloadMenu" class="hidden absolute right-0 mt-1 w-44 rounded-lg shadow-xl bg-white border z-50 py-1 font-medium text-xs">
+                  <button id="downloadPdfBtn" class="w-full text-left px-3 py-2 text-slate-700 hover:bg-police-50 flex items-center gap-2 border-b">
+                    <i data-lucide="file-text" class="w-4 h-4 text-rose-600"></i>
+                    <span>PDF डाउनलोड (Landscape)</span>
+                  </button>
+                  <button id="downloadExcelBtn" class="w-full text-left px-3 py-2 text-slate-700 hover:bg-police-50 flex items-center gap-2">
+                    <i data-lucide="file-spreadsheet" class="w-4 h-4 text-emerald-600"></i>
+                    <span>Excel डाउनलोड (.xlsx)</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Task Register Table -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+          <div class="px-5 py-3.5 bg-slate-50 border-b flex justify-between items-center text-xs">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-police-gold"></span>
+              <h3 class="font-bold text-police-900 text-sm">दैनिक कार्य विवरण तालिका (Daily Task Register)</h3>
+              <span id="renderedCountBadge" class="bg-police-100 text-police-800 font-bold px-2 py-0.5 rounded-full">0 कार्य</span>
+            </div>
+            <div class="flex gap-3 text-[11px] font-semibold">
+              <span class="text-emerald-700">🟢 पूर्ण = लॉक</span>
+              <span class="text-rose-700">🔴 लंबित = प्रतीक्षित</span>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto w-full">
+            <table class="w-full text-left text-xs border-collapse" id="tasksTable">
+              <thead>
+                <tr class="bg-slate-100 text-slate-700 font-bold uppercase text-[11px] border-b">
+                  <th class="py-2.5 px-3 w-10 text-center">क्र.</th>
+                  <th class="py-2.5 px-3 w-24">कार्य दिनांक</th>
+                  <th class="py-2.5 px-3 w-32">शाखा (Branch)</th>
+                  <th class="py-2.5 px-4">दैनिक कार्य का विस्तृत विवरण</th>
+                  <th class="py-2.5 px-3 w-28">प्रभारी/कर्मचारी</th>
+                  <th class="py-2.5 px-3 w-20">प्राथमिकता</th>
+                  <th class="py-2.5 px-3 w-24">लक्ष्य तिथि</th>
+                  <th class="py-2.5 px-3 min-w-[180px]">कार्यवाही हेतु निर्देश (Admin/IG)</th>
+                  <th class="py-2.5 px-3 w-24 text-center">स्थिति</th>
+                  <th class="py-2.5 px-3 text-right no-print w-32">कार्यवाही</th>
+                </tr>
+              </thead>
+              <tbody id="taskTableBody" class="divide-y divide-slate-100"></tbody>
+            </table>
+          </div>
+
+          <div id="noTasksState" class="py-12 text-center text-slate-400">
+            <i data-lucide="clipboard-x" class="w-10 h-10 mx-auto mb-2 text-slate-300"></i>
+            <p class="font-semibold text-xs text-slate-600">कोई कार्य दर्ज नहीं मिला</p>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+  </div>
+
+  <!-- ================= ADMIN SUPER CONTROL MODAL (ALL POWERS) ================= -->
+  <div id="adminControlModal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm hidden flex items-center justify-center p-3 overflow-y-auto no-print">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full border-t-4 border-amber-600 overflow-hidden my-6">
+      
+      <!-- Modal Header -->
+      <div class="px-6 py-4 bg-police-950 text-white flex items-center justify-between">
+        <div class="flex items-center space-x-2.5">
+          <i data-lucide="shield-check" class="w-6 h-6 text-police-gold"></i>
+          <div>
+            <h3 class="font-extrabold text-base text-white">एडमिन सुपर कंट्रोल विंडो (Admin Master Control)</h3>
+            <p class="text-[11px] text-police-goldlight">यूजर आईडी, पासवर्ड, फोटो, ऑर्डर्स एवं कॉन्टैक्ट्स प्रबंधन</p>
+          </div>
+        </div>
+        <button onclick="closeAdminControlModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
+          <i data-lucide="x" class="w-6 h-6"></i>
         </button>
       </div>
 
-      <form id="adminBranchCreateForm" class="p-5 space-y-3.5">
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">
-            शाखा का नाम <span class="text-red-500">*</span>
-          </label>
-          <input type="text" id="admBranchName" required placeholder="उदा. अपराध शाखा / साइबर सेल / जनसुनवाई" class="w-full text-xs rounded-lg border border-slate-300 p-2.5 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-bold text-police-900">
-        </div>
-
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">प्रभारी का नाम <span class="text-red-500">*</span></label>
-            <input type="text" id="admStaffName" required placeholder="उदा. सुरेश कुमार" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">पद (Rank) <span class="text-red-500">*</span></label>
-            <input type="text" id="admStaffRank" required placeholder="उदा. निरीक्षक / उनि." class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">
-              मोबाइल नंबर (शाखा की Login ID) <span class="text-red-500">*</span>
-            </label>
-            <input type="tel" id="admMobile" maxlength="10" required placeholder="10 अंक" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-mono">
-          </div>
-          <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">
-              सुरक्षा पिन (4 अंक) <span class="text-red-500">*</span>
-            </label>
-            <input type="password" id="admPin" maxlength="4" required placeholder="उदा. 1234" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-mono">
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">शाखा की ईमेल आईडी <span class="text-red-500">*</span></label>
-          <input type="email" id="admEmail" required placeholder="branch.kota@rajpolice.gov.in" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-mono">
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">
-            शाखा का प्रारंभिक पासवर्ड (Initial Password) <span class="text-red-500">*</span>
-          </label>
-          <input type="text" id="admPassword" required placeholder="प्रारंभिक पासवर्ड दर्ज करें" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-mono">
-          <p class="text-[10px] text-slate-500 mt-1 italic">
-            * शाखा प्रभारी को यह पासवर्ड मिलने के बाद वे अपने डैशबोर्ड से इसे बदल सकेंगे।
-          </p>
-        </div>
-
-        <div class="pt-3 border-t border-slate-200 flex justify-end space-x-2">
-          <button type="button" id="cancelAdminBranchModalBtn" class="px-4 py-2 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg">रद्द करें</button>
-          <button type="submit" class="px-5 py-2 text-xs font-bold text-white bg-police-700 hover:bg-police-800 rounded-lg shadow flex items-center gap-1">
-            <i data-lucide="check-circle" class="w-4 h-4 text-police-gold"></i>
-            <span>आईडी जारी करें</span>
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- MODAL: BRANCH USER CHANGES OWN PASSWORD -->
-  <div id="changePasswordModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3 overflow-y-auto no-print">
-    <div class="bg-white rounded-xl shadow-2xl max-w-sm w-full border-t-4 border-police-700 overflow-hidden my-8">
-      
-      <div class="px-5 py-3.5 bg-police-900 text-white flex items-center justify-between">
-        <div class="flex items-center space-x-2">
-          <i data-lucide="key" class="w-5 h-5 text-police-gold"></i>
-          <h3 class="font-bold text-sm sm:text-base">अपना पासवर्ड बदलें</h3>
-        </div>
-        <button id="closeChangePassModalBtn" class="text-slate-300 hover:text-white p-1 rounded-lg">
-          <i data-lucide="x" class="w-5 h-5"></i>
+      <!-- Control Panel Tabs -->
+      <div class="flex border-b bg-slate-50 text-xs font-bold px-6 pt-3 gap-2">
+        <button onclick="switchAdminSubTab('users')" id="ast-users" class="admin-sub-tab active py-2 px-4 border-b-2 border-police-700 text-police-800 bg-white rounded-t-lg">
+          <i data-lucide="users" class="w-3.5 h-3.5 inline mr-1"></i> यूजर क्रेडेंशियल्स (IG & Branches)
+        </button>
+        <button onclick="switchAdminSubTab('orders')" id="ast-orders" class="admin-sub-tab py-2 px-4 border-b-2 border-transparent text-slate-500 hover:text-police-700">
+          <i data-lucide="file-plus" class="w-3.5 h-3.5 inline mr-1"></i> आदेश व परिपत्र अपलोड
+        </button>
+        <button onclick="switchAdminSubTab('media')" id="ast-media" class="admin-sub-tab py-2 px-4 border-b-2 border-transparent text-slate-500 hover:text-police-700">
+          <i data-lucide="image-plus" class="w-3.5 h-3.5 inline mr-1"></i> मीडिया/गैलरी अपलोड
+        </button>
+        <button onclick="switchAdminSubTab('contacts')" id="ast-contacts" class="admin-sub-tab py-2 px-4 border-b-2 border-transparent text-slate-500 hover:text-police-700">
+          <i data-lucide="phone-forwarded" class="w-3.5 h-3.5 inline mr-1"></i> संपर्क सूची प्रबंधन
         </button>
       </div>
 
-      <form id="changePasswordForm" class="p-5 space-y-3.5">
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">वर्तमान पासवर्ड <span class="text-red-500">*</span></label>
-          <input type="password" id="currentPassInput" required placeholder="वर्तमान पासवर्ड" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
+      <div class="p-6 max-h-[70vh] overflow-y-auto">
+        
+        <!-- SUB-TAB 1: USER PASSWORDS & ID CONTROL (IG & BRANCHES) -->
+        <div id="as-content-users" class="admin-sub-content space-y-4">
+          <div class="bg-amber-50 p-3 rounded-lg border border-amber-200 text-xs text-amber-900">
+            <strong>सुरक्षा नियम:</strong> एडमिन के अतिरिक्त <strong>IG Sir</strong> एवं समस्त <strong>Branches</strong> के लॉगिन पासवर्ड, मोबाइल आईडी व सुरक्षा पिन को एडमिन यहाँ से सीधे बदल या रीसेट कर सकता है।
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border">
+              <thead>
+                <tr class="bg-slate-100 font-bold border-b">
+                  <th class="p-2.5">रोल</th>
+                  <th class="p-2.5">शाखा / पदनाम</th>
+                  <th class="p-2.5">प्रभारी का नाम</th>
+                  <th class="p-2.5">लॉगिन ID (मोबाइल)</th>
+                  <th class="p-2.5">पासवर्ड</th>
+                  <th class="p-2.5 text-center">कार्यवाही</th>
+                </tr>
+              </thead>
+              <tbody id="adminUsersListBody" class="divide-y">
+                <!-- Dynamically Rendered -->
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">नया पासवर्ड बनाएं <span class="text-red-500">*</span></label>
-          <input type="password" id="newPassInput" required placeholder="नया पासवर्ड" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
+        <!-- SUB-TAB 2: UPLOAD ORDER / CIRCULAR -->
+        <div id="as-content-orders" class="admin-sub-content hidden space-y-4">
+          <form id="adminUploadOrderForm" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-slate-50 p-4 rounded-xl border">
+            <div>
+              <label class="block font-bold mb-1">आदेश / परिपत्र क्रमांक *</label>
+              <input type="text" id="admOrdNo" required placeholder="उदा. प.1(4)आदेश/आईजीपी/2026/142" class="w-full p-2 border rounded bg-white font-mono">
+            </div>
+            <div>
+              <label class="block font-bold mb-1">दिनांक *</label>
+              <input type="date" id="admOrdDate" required class="w-full p-2 border rounded bg-white font-mono">
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block font-bold mb-1">आदेश का विषय / विवरण *</label>
+              <textarea id="admOrdTitle" required rows="2" placeholder="आदेश का संक्षिप्त विवरण लिखें..." class="w-full p-2 border rounded bg-white"></textarea>
+            </div>
+            <div>
+              <label class="block font-bold mb-1">फ़ाइल लिंक (URL / Drive Link)</label>
+              <input type="text" id="admOrdLink" placeholder="https://..." class="w-full p-2 border rounded bg-white font-mono">
+            </div>
+            <div class="flex items-end">
+              <button type="submit" class="w-full py-2 bg-police-700 hover:bg-police-800 text-white font-bold rounded shadow">
+                + आदेश वेबसाइट पर प्रकाशित करें
+              </button>
+            </div>
+          </form>
         </div>
 
-        <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">नया पासवर्ड पुनः दर्ज करें <span class="text-red-500">*</span></label>
-          <input type="password" id="confirmPassInput" required placeholder="पुनः दर्ज करें" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
+        <!-- SUB-TAB 3: UPLOAD MEDIA / EVENT / GALLERY -->
+        <div id="as-content-media" class="admin-sub-content hidden space-y-4">
+          <form id="adminUploadMediaForm" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-slate-50 p-4 rounded-xl border">
+            <div>
+              <label class="block font-bold mb-1">मीडिया श्रेणी *</label>
+              <select id="admMedCat" class="w-full p-2 border rounded bg-white font-bold">
+                <option value="NEWS">समाचार (News)</option>
+                <option value="EVENTS">अभियान / आयोजन (Events)</option>
+                <option value="GALLERY">फोटो गैलरी (Gallery)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold mb-1">शीर्षक *</label>
+              <input type="text" id="admMedTitle" required placeholder="समाचार अथवा कार्यक्रम का शीर्षक" class="w-full p-2 border rounded bg-white">
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block font-bold mb-1">विस्तृत विवरण</label>
+              <textarea id="admMedDesc" rows="2" placeholder="संक्षिप्त विवरण दर्ज करें..." class="w-full p-2 border rounded bg-white"></textarea>
+            </div>
+            <div>
+              <label class="block font-bold mb-1">फ़ोटो / इमेज लिंक (Image URL)</label>
+              <input type="text" id="admMedImgUrl" placeholder="https://..." class="w-full p-2 border rounded bg-white font-mono">
+            </div>
+            <div class="flex items-end">
+              <button type="submit" class="w-full py-2 bg-police-700 hover:bg-police-800 text-white font-bold rounded shadow">
+                + मीडिया कार्ड प्रकाशित करें
+              </button>
+            </div>
+          </form>
         </div>
 
-        <div class="pt-3 border-t border-slate-200 flex justify-end space-x-2">
-          <button type="button" id="cancelChangePassBtn" class="px-4 py-2 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg">रद्द करें</button>
-          <button type="submit" class="px-5 py-2 text-xs font-bold text-white bg-police-700 hover:bg-police-800 rounded-lg shadow">
-            सुरक्षित करें
-          </button>
+        <!-- SUB-TAB 4: MANAGE CONTACT LIST -->
+        <div id="as-content-contacts" class="admin-sub-content hidden space-y-4">
+          <form id="adminAddContactForm" class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs bg-slate-50 p-4 rounded-xl border">
+            <div>
+              <label class="block font-bold mb-1">पदनाम / कार्यालय *</label>
+              <input type="text" id="admCntDesignation" required placeholder="उदा. पुलिस अधीक्षक, कोटा शहर" class="w-full p-2 border rounded bg-white">
+            </div>
+            <div>
+              <label class="block font-bold mb-1">अधिकारी का नाम</label>
+              <input type="text" id="admCntName" placeholder="उदा. श्री..." class="w-full p-2 border rounded bg-white">
+            </div>
+            <div>
+              <label class="block font-bold mb-1">सीयूजी मोबाइल *</label>
+              <input type="text" id="admCntPhone" required placeholder="9414000000" class="w-full p-2 border rounded bg-white font-mono">
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block font-bold mb-1">आधिकारिक ईमेल आईडी</label>
+              <input type="email" id="admCntEmail" placeholder="sp.kota@rajpolice.gov.in" class="w-full p-2 border rounded bg-white font-mono">
+            </div>
+            <div class="flex items-end">
+              <button type="submit" class="w-full py-2 bg-police-700 hover:bg-police-800 text-white font-bold rounded shadow">
+                + संपर्क विवरण जोड़ें
+              </button>
+            </div>
+          </form>
         </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: CHANGE OWN PASSWORD ================= -->
+  <div id="changePasswordModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3 no-print">
+    <div class="bg-white rounded-xl shadow-2xl max-w-sm w-full border-t-4 border-police-700 overflow-hidden">
+      <div class="px-5 py-3.5 bg-police-900 text-white flex justify-between items-center">
+        <h3 class="font-bold text-sm">अपना पासवर्ड बदलें</h3>
+        <button onclick="document.getElementById('changePasswordModal').classList.add('hidden')" class="text-slate-300 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <form id="changePasswordForm" class="p-5 space-y-3 text-xs">
+        <div>
+          <label class="block font-bold mb-1">वर्तमान पासवर्ड *</label>
+          <input type="password" id="currentPassInput" required class="w-full border p-2 rounded">
+        </div>
+        <div>
+          <label class="block font-bold mb-1">नया पासवर्ड *</label>
+          <input type="password" id="newPassInput" required class="w-full border p-2 rounded">
+        </div>
+        <div>
+          <label class="block font-bold mb-1">नया पासवर्ड पुनः दर्ज करें *</label>
+          <input type="password" id="confirmPassInput" required class="w-full border p-2 rounded">
+        </div>
+        <button type="submit" class="w-full py-2 bg-police-700 text-white font-bold rounded shadow">सुरक्षित करें</button>
       </form>
     </div>
   </div>
@@ -763,34 +849,38 @@
     </div>
   </div>
 
-  <!-- MOVING BOTTOM FOOTER -->
-  <footer class="mt-auto bg-police-950 text-white border-t-2 border-police-gold overflow-hidden py-2 no-print z-30 shadow-inner">
-    <marquee behavior="scroll" direction="left" scrollamount="6" class="text-xs sm:text-sm font-semibold tracking-wide flex items-center">
-      <span class="text-police-goldlight">⭐ This site made by Bal Kishan Assistant Programmer IGP Kota ⭐</span>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span class="text-amber-200">कार्यालय महानिरीक्षक पुलिस, कोटा रेंज (राजस्थान पुलिस)</span>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span class="text-police-goldlight">⭐ This site made by Bal Kishan Assistant Programmer IGP Kota ⭐</span>
-    </marquee>
+  <!-- ================= FOOTER ================= -->
+  <footer class="mt-auto bg-police-950 text-white border-t-2 border-police-gold py-3 no-print z-30 shadow-inner">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-2">
+      <div>
+        © 2026 कार्यालय महानिरीक्षक पुलिस, कोटा रेंज (राजस्थान पुलिस). सर्वाधिकार सुरक्षित।
+      </div>
+      <div class="text-police-goldlight font-semibold">
+        ⭐ This site made by Bal Kishan Assistant Programmer IGP Kota ⭐
+      </div>
+    </div>
   </footer>
 
-  <!-- JAVASCRIPT & CLOUD REALTIME SYNC LOGIC -->
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
-    // 1. FIREBASE CONFIGURATION (Connected to your created Database)
+    // 1. FIREBASE INITIALIZATION
     const firebaseConfig = {
       databaseURL: "https://igp-kota-dms-default-rtdb.firebaseio.com"
     };
 
-    // Initialize Firebase
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
     const db = firebase.database();
     const usersRef = db.ref('users');
     const tasksRef = db.ref('tasks');
+    const ordersRef = db.ref('orders');
+    const mediaRef = db.ref('media');
+    const contactsRef = db.ref('contacts');
 
+    // 2. DEFAULT USERS (ADMIN & IG SIR)
     const DEFAULT_ADMIN = {
-      id: 'admin-master',
+      id: 'usr-admin',
       role: 'Admin',
       name: 'श्रीमान महानिरीक्षक (Admin)',
       rank: 'IPS',
@@ -798,20 +888,79 @@
       email: 'ig.kota@rajpolice.gov.in',
       pin: '7865',
       password: '7865',
-      branch: 'समस्त शाखाएं (ALL)'
+      branch: 'समस्त शाखाएं (पर्यवेक्षण)'
+    };
+
+    const DEFAULT_IG = {
+      id: 'usr-ig',
+      role: 'IG_Sir',
+      name: 'श्री हरेन्द्र कुमार महावर (IG Sir)',
+      rank: 'IPS',
+      mobile: '9414000000',
+      email: 'ig.kota@rajpolice.gov.in',
+      pin: '1234',
+      password: 'igp@kota',
+      branch: 'कोटा रेंज (महानिरीक्षक)'
     };
 
     let users = [];
     let tasks = [];
+    let orders = [];
+    let mediaList = [];
+    let contactsList = [];
     let currentUser = null;
 
     const SESSION_KEY = 'ig_police_session_active';
     const IG_PHOTO_STORAGE_KEY = 'ig_kota_saved_avatar_data_url';
 
+    // Carousel state
+    let currentSlide = 0;
+
+    function initCarousel() {
+      setInterval(() => {
+        nextSlide();
+      }, 5000);
+    }
+
+    function nextSlide() {
+      const slides = document.querySelectorAll('.carousel-item');
+      if (!slides.length) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }
+
+    function prevSlide() {
+      const slides = document.querySelectorAll('.carousel-item');
+      if (!slides.length) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }
+
+    // Tab Switcher
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+        btn.classList.remove('active', 'bg-police-700', 'text-police-gold');
+        btn.classList.add('text-slate-200');
+      });
+
+      const activeEl = document.getElementById(`content-${tabId}`);
+      if (activeEl) activeEl.classList.remove('hidden');
+
+      const navBtn = document.getElementById(`tab-${tabId}`);
+      if (navBtn) {
+        navBtn.classList.add('active', 'bg-police-700', 'text-police-gold');
+        navBtn.classList.remove('text-slate-200');
+      }
+      lucide.createIcons();
+    }
+
+    // Photo Loader
     function initIGPhoto() {
       const img = document.getElementById('igProfilePhoto');
       const placeholder = document.getElementById('photoPlaceholder');
-      
       const savedPhoto = localStorage.getItem(IG_PHOTO_STORAGE_KEY);
       if (savedPhoto) {
         img.src = savedPhoto;
@@ -819,34 +968,25 @@
         placeholder.classList.add('hidden');
         return;
       }
-
       img.onerror = function() {
-        if (this.src.indexOf('PHOTO-2026-09-24-12-07-09.jpg') === -1) {
-          this.src = 'PHOTO-2026-09-24-12-07-09.jpg';
-        } else {
-          this.classList.add('hidden');
-          placeholder.classList.remove('hidden');
-          lucide.createIcons();
-        }
+        this.classList.add('hidden');
+        placeholder.classList.remove('hidden');
       };
     }
 
     function handlePhotoUpload(event) {
       const file = event.target.files[0];
       if (!file) return;
-
       const reader = new FileReader();
       reader.onload = function(e) {
         const base64Data = e.target.result;
         localStorage.setItem(IG_PHOTO_STORAGE_KEY, base64Data);
-
         const img = document.getElementById('igProfilePhoto');
         const placeholder = document.getElementById('photoPlaceholder');
         img.src = base64Data;
         img.classList.remove('hidden');
         placeholder.classList.add('hidden');
-
-        showToast('फोटो अपडेटेड', 'आईजी साहब का फोटो सफलतापूर्वक लोड व सुरक्षित कर दिया गया है।');
+        showToast('फोटो सुरक्षित', 'आईजी साहब का फोटो सफलतापूर्वक अपडेट हो गया है।');
       };
       reader.readAsDataURL(file);
     }
@@ -854,9 +994,7 @@
     function formatToIndianDate(dateStr) {
       if (!dateStr) return '-';
       const parts = dateStr.split('-');
-      if (parts.length === 3) {
-        return `${parts[2]}/${parts[1]}/${parts[0]}`;
-      }
+      if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
       return dateStr;
     }
 
@@ -867,75 +1005,70 @@
       return `${year}-${month}-${day}`;
     }
 
-    function applyTaskDateRestrictions() {
-      const taskDateInput = document.getElementById('modalTaskDate');
-      const dueDateInput = document.getElementById('modalDueDate');
-
-      const today = new Date();
-      const minDateStr = formatDateToISO(today);
-
-      const maxDate = new Date();
-      maxDate.setDate(today.getDate() + 2);
-      const maxDateStr = formatDateToISO(maxDate);
-
-      taskDateInput.min = minDateStr;
-      taskDateInput.max = maxDateStr;
-      dueDateInput.min = minDateStr;
-
-      return { minDateStr, maxDateStr };
-    }
-
-    // 2. REAL-TIME CLOUD LISTENERS (Firebase)
+    // Real-time Cloud Data Listeners
     function initSystem() {
       initIGPhoto();
+      initCarousel();
       updateDateTime();
       setInterval(updateDateTime, 1000);
 
-      // Listen for Users in Cloud
+      // Listen for Users
       usersRef.on('value', (snapshot) => {
         const data = snapshot.val();
-        if (data) {
-          users = Object.values(data);
-        } else {
-          users = [];
-        }
+        users = data ? Object.values(data) : [];
 
-        // Ensure Default Admin Exists in Cloud
-        const adminFound = users.some(u => u.mobile === DEFAULT_ADMIN.mobile && u.role === 'Admin');
-        if (!adminFound) {
+        // Ensure Admin and IG Sir accounts exist in Firebase
+        if (!users.some(u => u.role === 'Admin')) {
           usersRef.child(DEFAULT_ADMIN.id).set(DEFAULT_ADMIN);
         }
+        if (!users.some(u => u.role === 'IG_Sir')) {
+          usersRef.child(DEFAULT_IG.id).set(DEFAULT_IG);
+        }
 
+        renderAdminUsersControlList();
         checkActiveSession();
       });
 
-      // Listen for Tasks in Cloud
+      // Listen for Tasks
       tasksRef.on('value', (snapshot) => {
         const data = snapshot.val();
-        if (data) {
-          tasks = Object.values(data);
-        } else {
-          tasks = [];
-        }
-        if (currentUser) {
-          refreshDashboardData();
-        }
+        tasks = data ? Object.values(data) : [];
+        if (currentUser) refreshDashboardData();
+      });
+
+      // Listen for Orders
+      ordersRef.on('value', (snapshot) => {
+        const data = snapshot.val();
+        orders = data ? Object.values(data) : [];
+        renderOrdersList();
+      });
+
+      // Listen for Media
+      mediaRef.on('value', (snapshot) => {
+        const data = snapshot.val();
+        mediaList = data ? Object.values(data) : [];
+        renderMediaList('ALL');
+      });
+
+      // Listen for Contacts
+      contactsRef.on('value', (snapshot) => {
+        const data = snapshot.val();
+        contactsList = data ? Object.values(data) : [];
+        if (contactsList.length === 0) seedInitialContacts();
+        renderContactsList();
       });
     }
 
-    function checkActiveSession() {
-      const activeMobile = localStorage.getItem(SESSION_KEY);
-      if (activeMobile) {
-        const found = users.find(u => u.mobile === activeMobile);
-        if (found) {
-          currentUser = found;
-          showDashboardView();
-          return;
-        }
-      }
-      if (!currentUser) {
-        showLoginView();
-      }
+    function seedInitialContacts() {
+      const initial = [
+        { id: 'c-1', designation: 'महानिरीक्षक पुलिस, कोटा रेंज', name: 'श्री हरेन्द्र कुमार महावर, IPS', phone: '9414000000', email: 'ig.kota@rajpolice.gov.in' },
+        { id: 'c-2', designation: 'पुलिस अधीक्षक, कोटा शहर', name: 'डॉ. अमृता दुहन, IPS', phone: '9414100000', email: 'sp.kotacity@rajpolice.gov.in' },
+        { id: 'c-3', designation: 'पुलिस अधीक्षक, कोटा ग्रामीण', name: 'श्री करण शर्मा, IPS', phone: '9414200000', email: 'sp.kotarural@rajpolice.gov.in' },
+        { id: 'c-4', designation: 'पुलिस अधीक्षक, बूंदी', name: 'श्री राजेन्द्र कुमार मीणा, IPS', phone: '9414300000', email: 'sp.bundi@rajpolice.gov.in' },
+        { id: 'c-5', designation: 'पुलिस अधीक्षक, बारां', name: 'श्री राजकुमार चौधरी, IPS', phone: '9414400000', email: 'sp.baran@rajpolice.gov.in' },
+        { id: 'c-6', designation: 'पुलिस अधीक्षक, झालावाड़', name: 'श्रीमती ऋचा तोमर, IPS', phone: '9414500000', email: 'sp.jhalawar@rajpolice.gov.in' }
+      ];
+      initial.forEach(c => contactsRef.child(c.id).set(c));
     }
 
     function updateDateTime() {
@@ -944,180 +1077,334 @@
       const day = String(now.getDate()).padStart(2, '0');
       const month = String(now.getMonth() + 1).padStart(2, '0');
       const year = now.getFullYear();
-      const fullDateStr = `दिनांक: ${day}/${month}/${year}`;
-
       document.getElementById('liveClock').textContent = timeStr;
-      document.getElementById('todayFullDate').textContent = fullDateStr;
+      document.getElementById('todayFullDate').textContent = `दिनांक: ${day}/${month}/${year}`;
     }
 
-    function getRegisteredBranches() {
-      const set = new Set();
-      users.forEach(u => {
-        if (u.role === 'Branch' && u.branch) {
-          set.add(u.branch.trim());
+    // Session Checking
+    function checkActiveSession() {
+      const activeMobile = localStorage.getItem(SESSION_KEY);
+      if (activeMobile) {
+        const found = users.find(u => u.mobile === activeMobile);
+        if (found) {
+          currentUser = found;
+          updateSidebarUI(true);
+          return;
         }
-      });
-      return Array.from(set);
+      }
+      updateSidebarUI(false);
     }
 
-    function showLoginView() {
+    function updateSidebarUI(isLoggedIn) {
+      const loginBlock = document.getElementById('sidebarLoginBlock');
+      const sessionBlock = document.getElementById('sidebarUserSessionBlock');
+      const headerAuthBadge = document.getElementById('headerAuthBadge');
+      const adminSuperBtn = document.getElementById('adminSuperControlBtn');
+
+      if (isLoggedIn && currentUser) {
+        loginBlock.classList.add('hidden');
+        sessionBlock.classList.remove('hidden');
+        headerAuthBadge.classList.remove('hidden');
+
+        document.getElementById('headerUserName').textContent = currentUser.name;
+        document.getElementById('headerUserRank').textContent = currentUser.rank;
+        document.getElementById('headerUserBranch').textContent = currentUser.branch;
+
+        document.getElementById('sessionUserName').textContent = currentUser.name;
+        document.getElementById('sessionUserRoleBadge').textContent = currentUser.role;
+        document.getElementById('sessionUserBranch').textContent = currentUser.branch;
+
+        // Admin Only Super Power Button
+        if (currentUser.role === 'Admin') {
+          adminSuperBtn.classList.remove('hidden');
+        } else {
+          adminSuperBtn.classList.add('hidden');
+        }
+      } else {
+        loginBlock.classList.remove('hidden');
+        sessionBlock.classList.add('hidden');
+        headerAuthBadge.classList.add('hidden');
+        adminSuperBtn.classList.add('hidden');
+      }
+      lucide.createIcons();
+    }
+
+    // 3. AUTH LOGIC (Admin, IG Sir, Branch)
+    document.getElementById('sideLoginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const role = document.getElementById('loginRoleSelect').value;
+      const logId = document.getElementById('loginIdInput').value.trim();
+      const pass = document.getElementById('loginPassInput').value;
+
+      const user = users.find(u => u.role === role && (u.mobile === logId || u.email === logId) && u.password === pass);
+
+      if (user) {
+        currentUser = user;
+        localStorage.setItem(SESSION_KEY, currentUser.mobile);
+        updateSidebarUI(true);
+        switchTab('monitoringDashboard');
+        showToast('लॉग इन सफल', `${user.name} (${user.role})`);
+      } else {
+        showToast('लॉगिन विफल', 'गलत आईडी अथवा पासवर्ड दर्ज किया गया है।');
+      }
+    });
+
+    document.getElementById('sideLogoutBtn').addEventListener('click', logoutUser);
+    document.getElementById('logoutBtn').addEventListener('click', logoutUser);
+
+    function logoutUser() {
       currentUser = null;
       localStorage.removeItem(SESSION_KEY);
-      document.getElementById('loginPageSection').classList.remove('hidden');
-      document.getElementById('portalDashboardSection').classList.add('hidden');
-      document.getElementById('headerAuthBadge').classList.add('hidden');
-      document.getElementById('mainLoginForm').reset();
+      updateSidebarUI(false);
+      switchTab('home');
+      showToast('लॉगआउट', 'सत्र समाप्त हो गया है।');
     }
 
-    function showDashboardView() {
-      document.getElementById('loginPageSection').classList.add('hidden');
-      document.getElementById('portalDashboardSection').classList.remove('hidden');
-      document.getElementById('headerAuthBadge').classList.remove('hidden');
-
-      document.getElementById('headerUserName').textContent = currentUser.name;
-      document.getElementById('headerUserRank').textContent = currentUser.rank;
-      document.getElementById('headerUserBranch').textContent = currentUser.role === 'Admin' ? 'समस्त शाखाएं (पर्यवेक्षण)' : currentUser.branch;
-
-      document.getElementById('scopeUserName').textContent = currentUser.name;
-      document.getElementById('scopeUserRank').textContent = `${currentUser.rank} | ${currentUser.mobile}`;
-      document.getElementById('scopeUserBranch').textContent = currentUser.role === 'Admin' ? 'समस्त पंजीकृत शाखाएं' : currentUser.branch;
-      
-      const badge = document.getElementById('scopeBadgeTag');
-      const adminCreateBtn = document.getElementById('adminCreateBranchBtn');
-
-      if (currentUser.role === 'Admin') {
-        badge.textContent = 'दूसरा पृष्ठ - एडमिन डैशबोर्ड (Admin Overview)';
-        badge.className = 'text-xs font-bold px-3 py-1 rounded-lg bg-blue-50 text-blue-800 border border-blue-200';
-        document.getElementById('adminBranchGridSection').classList.remove('hidden');
-        document.getElementById('kpiScopeSubtitle').textContent = 'समस्त शाखाओं के कुल कार्य';
-        adminCreateBtn.classList.remove('hidden');
-      } else {
-        badge.textContent = `तीसरा पृष्ठ - शाखा डैशबोर्ड (${currentUser.branch})`;
-        badge.className = 'text-xs font-bold px-3 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200';
-        document.getElementById('adminBranchGridSection').classList.add('hidden');
-        document.getElementById('kpiScopeSubtitle').textContent = `${currentUser.branch} के कार्य`;
-        adminCreateBtn.classList.add('hidden');
+    // 4. ADMIN SUPER CONTROL PANEL HANDLERS
+    function openAdminControlModal() {
+      if (currentUser?.role !== 'Admin') {
+        showToast('अनाधिकृत', 'केवल एडमिन को यह अधिकार है।');
+        return;
       }
-
-      updateBranchDropdown();
-      refreshDashboardData();
+      renderAdminUsersControlList();
+      document.getElementById('adminControlModal').classList.remove('hidden');
+      lucide.createIcons();
     }
 
-    function updateBranchDropdown() {
-      const select = document.getElementById('filterBranch');
-      select.innerHTML = '';
+    function closeAdminControlModal() {
+      document.getElementById('adminControlModal').classList.add('hidden');
+    }
 
-      if (currentUser.role === 'Admin') {
-        const branches = getRegisteredBranches();
-        const optAll = document.createElement('option');
-        optAll.value = 'ALL';
-        optAll.textContent = 'समस्त पंजीकृत शाखाएं (All Active)';
-        select.appendChild(optAll);
+    function switchAdminSubTab(subTabId) {
+      document.querySelectorAll('.admin-sub-tab').forEach(b => {
+        b.classList.remove('active', 'border-police-700', 'text-police-800', 'bg-white');
+        b.classList.add('border-transparent', 'text-slate-500');
+      });
+      document.querySelectorAll('.admin-sub-content').forEach(c => c.classList.add('hidden'));
 
-        branches.forEach(b => {
-          const opt = document.createElement('option');
-          opt.value = b;
-          opt.textContent = b;
-          select.appendChild(opt);
+      const btn = document.getElementById(`ast-${subTabId}`);
+      if (btn) btn.classList.add('active', 'border-police-700', 'text-police-800', 'bg-white');
+
+      const content = document.getElementById(`as-content-${subTabId}`);
+      if (content) content.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    // Render User Credentials List in Admin Panel
+    function renderAdminUsersControlList() {
+      const tbody = document.getElementById('adminUsersListBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      users.forEach(u => {
+        const isAdminSelf = (u.role === 'Admin');
+        const tr = document.createElement('tr');
+        tr.className = isAdminSelf ? 'bg-amber-50/40' : 'hover:bg-slate-50';
+
+        tr.innerHTML = `
+          <td class="p-2.5 font-bold ${u.role === 'IG_Sir' ? 'text-police-700' : u.role === 'Admin' ? 'text-amber-800' : 'text-slate-700'}">${u.role}</td>
+          <td class="p-2.5 font-semibold">${u.branch}</td>
+          <td class="p-2.5">${u.name} (${u.rank})</td>
+          <td class="p-2.5 font-mono">${u.mobile}</td>
+          <td class="p-2.5 font-mono font-bold text-slate-800">
+            ${isAdminSelf ? '•••••••• (सुरक्षित)' : `<input type="text" id="passEdit-${u.id}" value="${u.password}" class="border rounded px-2 py-1 text-xs w-28 bg-white font-mono">`}
+          </td>
+          <td class="p-2.5 text-center">
+            ${isAdminSelf ? '<span class="text-slate-400 italic">स्वतः सुरक्षित</span>' : `
+              <div class="flex items-center justify-center gap-1">
+                <button onclick="adminSaveUserPass('${u.id}')" title="पासवर्ड सुरक्षित करें" class="px-2 py-1 bg-police-700 text-white rounded text-[11px] font-bold hover:bg-police-800">
+                  अपडेट
+                </button>
+                ${u.role !== 'IG_Sir' ? `
+                  <button onclick="adminDeleteBranchUser('${u.id}')" title="शाखा हटाएं" class="p-1 text-rose-600 hover:bg-rose-50 rounded">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                  </button>
+                ` : ''}
+              </div>
+            `}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      lucide.createIcons();
+    }
+
+    window.adminSaveUserPass = function(userId) {
+      const input = document.getElementById(`passEdit-${userId}`);
+      if (!input) return;
+      const newPass = input.value.trim();
+      if (!newPass) {
+        showToast('त्रुटि', 'पासवर्ड रिक्त नहीं हो सकता।');
+        return;
+      }
+      usersRef.child(userId).update({ password: newPass }).then(() => {
+        showToast('पासवर्ड अपडेटेड', 'यूजर का पासवर्ड सफलतापूर्वक बदल दिया गया है।');
+      });
+    };
+
+    window.adminDeleteBranchUser = function(userId) {
+      if (confirm('क्या आप इस शाखा खाते को हटाना चाहते हैं?')) {
+        usersRef.child(userId).remove().then(() => {
+          showToast('हटाया गया', 'शाखा खाता हटा दिया गया।');
         });
-        select.disabled = false;
-      } else {
-        const opt = document.createElement('option');
-        opt.value = currentUser.branch;
-        opt.textContent = currentUser.branch;
-        select.appendChild(opt);
-        select.disabled = true;
       }
-    }
+    };
 
-    function getScopedTasks() {
-      if (currentUser.role === 'Admin') {
-        const filterVal = document.getElementById('filterBranch').value;
-        if (filterVal && filterVal !== 'ALL') {
-          return tasks.filter(t => t.branch === filterVal);
-        }
-        return tasks;
-      } else {
-        return tasks.filter(t => t.branch === currentUser.branch);
+    // Admin Uploads Order
+    document.getElementById('adminUploadOrderForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const newOrder = {
+        id: 'ord-' + Date.now(),
+        orderNo: document.getElementById('admOrdNo').value.trim(),
+        orderDate: document.getElementById('admOrdDate').value,
+        title: document.getElementById('admOrdTitle').value.trim(),
+        link: document.getElementById('admOrdLink').value.trim() || '#'
+      };
+      ordersRef.child(newOrder.id).set(newOrder).then(() => {
+        document.getElementById('adminUploadOrderForm').reset();
+        showToast('आदेश प्रकाशित', 'आदेश वेबसाइट पर लाइव जोड़ दिया गया है।');
+      });
+    });
+
+    // Admin Uploads Media
+    document.getElementById('adminUploadMediaForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const newMedia = {
+        id: 'med-' + Date.now(),
+        category: document.getElementById('admMedCat').value,
+        title: document.getElementById('admMedTitle').value.trim(),
+        description: document.getElementById('admMedDesc').value.trim(),
+        imageUrl: document.getElementById('admMedImgUrl').value.trim() || 'PHOTO-2026-09-24-12-07-09.jpg',
+        date: formatDateToISO(new Date())
+      };
+      mediaRef.child(newMedia.id).set(newMedia).then(() => {
+        document.getElementById('adminUploadMediaForm').reset();
+        showToast('मीडिया प्रकाशित', 'समाचार/फोटो वेबसाइट पर लाइव जोड़ दी गई है।');
+      });
+    });
+
+    // Admin Adds Contact
+    document.getElementById('adminAddContactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const newContact = {
+        id: 'cnt-' + Date.now(),
+        designation: document.getElementById('admCntDesignation').value.trim(),
+        name: document.getElementById('admCntName').value.trim() || '-',
+        phone: document.getElementById('admCntPhone').value.trim(),
+        email: document.getElementById('admCntEmail').value.trim() || '-'
+      };
+      contactsRef.child(newContact.id).set(newContact).then(() => {
+        document.getElementById('adminAddContactForm').reset();
+        showToast('सम्पर्क सुरक्षित', 'सम्पर्क विवरण जोड़ दिया गया है।');
+      });
+    });
+
+    // 5. PUBLIC SECTIONS RENDERING
+    function renderOrdersList() {
+      const tbody = document.getElementById('ordersTableBody');
+      if (!tbody) return;
+      const search = (document.getElementById('orderSearchInput')?.value || '').toLowerCase();
+      tbody.innerHTML = '';
+
+      const filtered = orders.filter(o => 
+        (o.orderNo || '').toLowerCase().includes(search) || 
+        (o.title || '').toLowerCase().includes(search)
+      );
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400">कोई आदेश उपलब्ध नहीं है</td></tr>`;
+        return;
       }
+
+      filtered.forEach((o, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50 transition';
+        tr.innerHTML = `
+          <td class="p-3 text-center font-mono font-bold">${idx + 1}</td>
+          <td class="p-3 font-mono">${formatToIndianDate(o.orderDate)}</td>
+          <td class="p-3 font-mono font-bold text-police-900">${o.orderNo}</td>
+          <td class="p-3 font-medium leading-relaxed">${o.title}</td>
+          <td class="p-3 text-center">
+            <a href="${o.link}" target="_blank" class="inline-flex items-center gap-1 text-xs font-bold text-police-700 hover:text-police-900 bg-police-50 hover:bg-police-100 px-2.5 py-1 rounded border">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i> डाउनलोड
+            </a>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      lucide.createIcons();
     }
 
-    function getFilteredTasks() {
-      let scoped = getScopedTasks();
-      const fromDate = document.getElementById('filterFromDate').value;
-      const toDate = document.getElementById('filterToDate').value;
-      const statusFilter = document.getElementById('filterStatus').value;
-      const priorityFilter = document.getElementById('filterPriority').value;
-      const search = (document.getElementById('searchInput').value || '').trim().toLowerCase();
-
-      let result = scoped.filter(t => {
-        if (fromDate && t.taskDate && t.taskDate < fromDate) return false;
-        if (toDate && t.taskDate && t.taskDate > toDate) return false;
-
-        if (statusFilter !== 'ALL' && t.status !== statusFilter) return false;
-        if (priorityFilter !== 'ALL' && t.priority !== priorityFilter) return false;
-        if (search) {
-          const matchDesc = (t.description || '').toLowerCase().includes(search);
-          const matchAssignee = (t.assignee || '').toLowerCase().includes(search);
-          const matchInstr = (t.adminInstructions || '').toLowerCase().includes(search);
-          if (!matchDesc && !matchAssignee && !matchInstr) return false;
-        }
-        return true;
+    function filterMedia(cat) {
+      document.querySelectorAll('.media-filter-btn').forEach(b => {
+        b.classList.remove('active', 'bg-police-700', 'text-white');
+        b.classList.add('bg-slate-100', 'text-slate-600');
       });
-
-      result.sort((a, b) => {
-        const dateA = a.taskDate || '1970-01-01';
-        const dateB = b.taskDate || '1970-01-01';
-        if (dateA !== dateB) {
-          return dateB.localeCompare(dateA);
-        }
-        return (b.id || '').localeCompare(a.id || '');
-      });
-
-      return result;
+      const activeBtn = document.getElementById(`mf-${cat}`);
+      if (activeBtn) {
+        activeBtn.classList.add('active', 'bg-police-700', 'text-white');
+        activeBtn.classList.remove('bg-slate-100', 'text-slate-600');
+      }
+      renderMediaList(cat);
     }
 
+    function renderMediaList(category = 'ALL') {
+      const container = document.getElementById('mediaCardsGrid');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const filtered = category === 'ALL' ? mediaList : mediaList.filter(m => m.category === category);
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="col-span-full py-10 text-center text-slate-400">वर्तमान में कोई सामग्री उपलब्ध नहीं है।</div>`;
+        return;
+      }
+
+      filtered.forEach(m => {
+        const card = document.createElement('div');
+        card.className = 'bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between';
+        card.innerHTML = `
+          <div>
+            <div class="h-44 bg-slate-100 relative overflow-hidden">
+              <img src="${m.imageUrl}" alt="${m.title}" class="w-full h-full object-cover" onerror="this.src='PHOTO-2026-09-24-12-07-09.jpg';">
+              <span class="absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded bg-police-900/80 text-police-gold backdrop-blur-sm">
+                ${m.category === 'NEWS' ? 'समाचार' : m.category === 'EVENTS' ? 'आयोजन' : 'गैलरी'}
+              </span>
+            </div>
+            <div class="p-3.5 space-y-1.5">
+              <span class="text-[10px] text-slate-400 font-mono">${formatToIndianDate(m.date)}</span>
+              <h4 class="font-bold text-xs text-slate-900 leading-snug line-clamp-2">${m.title}</h4>
+              <p class="text-[11px] text-slate-600 line-clamp-3">${m.description || ''}</p>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    function renderContactsList() {
+      const tbody = document.getElementById('contactsTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      contactsList.forEach((c, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50 transition';
+        tr.innerHTML = `
+          <td class="p-3 text-center font-mono font-bold">${idx + 1}</td>
+          <td class="p-3 font-bold text-police-950">${c.designation}</td>
+          <td class="p-3 font-semibold text-slate-800">${c.name}</td>
+          <td class="p-3 font-mono font-bold text-police-700">${c.phone}</td>
+          <td class="p-3 font-mono text-slate-600">${c.email}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+      lucide.createIcons();
+    }
+
+    // 6. DASHBOARD & TASK REGISTER
     function refreshDashboardData() {
-      const filtered = getFilteredTasks();
-      const total = filtered.length;
-      const completed = filtered.filter(t => t.status === 'COMPLETED').length;
-      const pending = filtered.filter(t => t.status === 'PENDING').length;
-      const progress = filtered.filter(t => t.status === 'PROGRESS').length;
-      const pct = total === 0 ? 0 : Math.round((completed / total) * 100);
-
-      document.getElementById('kpiTotal').textContent = total;
-      document.getElementById('kpiCompleted').textContent = completed;
-      document.getElementById('kpiPending').textContent = pending;
-      document.getElementById('kpiProgress').textContent = progress;
-      document.getElementById('ratePercentage').textContent = pct + '%';
-      document.getElementById('progressBar').style.width = pct + '%';
-
-      const fromDate = document.getElementById('filterFromDate').value;
-      const toDate = document.getElementById('filterToDate').value;
-      const appliedDateLabel = document.getElementById('appliedDateLabel');
-
-      if (fromDate && toDate) {
-        appliedDateLabel.textContent = `अवधि: ${formatToIndianDate(fromDate)} से ${formatToIndianDate(toDate)}`;
-        appliedDateLabel.classList.remove('hidden');
-      } else if (fromDate) {
-        appliedDateLabel.textContent = `दिनांक से: ${formatToIndianDate(fromDate)}`;
-        appliedDateLabel.classList.remove('hidden');
-      } else if (toDate) {
-        appliedDateLabel.textContent = `दिनांक तक: ${formatToIndianDate(toDate)}`;
-        appliedDateLabel.classList.remove('hidden');
-      } else {
-        appliedDateLabel.classList.add('hidden');
-      }
-
-      renderTable();
-      renderPrintableReportDOM();
-
-      if (currentUser.role === 'Admin') {
-        renderAdminGrid();
-      }
-    }
-
-    function renderTable() {
       const filtered = getFilteredTasks();
       const tbody = document.getElementById('taskTableBody');
       const emptyState = document.getElementById('noTasksState');
@@ -1130,811 +1417,126 @@
         emptyState.classList.add('hidden');
       }
 
+      const isPrivileged = (currentUser?.role === 'Admin' || currentUser?.role === 'IG_Sir');
+
       filtered.forEach((task, index) => {
-        const isAdmin = currentUser.role === 'Admin';
         const isLocked = task.isLocked || false;
 
         let priorityBadge = task.priority === 'URGENT' 
-          ? '<span class="text-[11px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">अति आवश्यक</span>'
+          ? '<span class="text-[10px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">अति आवश्यक</span>'
           : task.priority === 'HIGH'
-          ? '<span class="text-[11px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">उच्च</span>'
-          : '<span class="text-[11px] font-medium text-slate-700 bg-slate-50 px-2 py-0.5 rounded border border-slate-200">सामान्य</span>';
+          ? '<span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">उच्च</span>'
+          : '<span class="text-[10px] font-medium text-slate-700 bg-slate-50 px-2 py-0.5 rounded border border-slate-200">सामान्य</span>';
 
-        let statusBadge = '';
-        if (task.status === 'COMPLETED') {
-          statusBadge = `
-            <div class="inline-flex flex-col items-center">
-              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-300">
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block shadow-sm"></span>
-                <span>पूर्ण (Locked)</span>
-              </span>
-              <span class="text-[10px] text-emerald-700 font-mono mt-0.5">${task.completedAt || ''}</span>
-            </div>
-          `;
-        } else if (task.status === 'PENDING') {
-          statusBadge = `
-            <div class="inline-flex flex-col items-center">
-              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-rose-800 bg-rose-50 px-2.5 py-1 rounded-full border border-rose-300">
-                <span class="w-2.5 h-2.5 rounded-full bg-rose-600 inline-block shadow-sm"></span>
-                <span>लंबित</span>
-              </span>
-            </div>
-          `;
-        } else {
-          statusBadge = `
-            <div class="inline-flex flex-col items-center">
-              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-300">
-                <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block shadow-sm"></span>
-                <span>प्रक्रियाधीन</span>
-              </span>
-            </div>
-          `;
-        }
+        let statusBadge = task.status === 'COMPLETED'
+          ? `<span class="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-300">🟢 पूर्ण</span>`
+          : task.status === 'PENDING'
+          ? `<span class="inline-flex items-center gap-1 text-[11px] font-bold text-rose-800 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-300">🔴 लंबित</span>`
+          : `<span class="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-300">🟡 जारी</span>`;
 
-        let adminDirectionsHtml = '';
-        if (isAdmin) {
-          adminDirectionsHtml = `
-            <div class="space-y-1">
-              <div class="text-xs text-slate-800 italic">${task.adminInstructions || '<span class="text-slate-400">कोई निर्देश नहीं</span>'}</div>
-              <div class="flex items-center gap-1">
-                <input type="text" id="dirInput-${task.id}" placeholder="नया निर्देश लिखें..." class="text-[11px] p-1 border rounded w-full bg-slate-50 focus:bg-white font-hindi">
-                <button onclick="saveAdminInstruction('${task.id}')" class="px-2 py-1 bg-police-700 hover:bg-police-800 text-white rounded text-[10px] font-bold">
-                  दें
-                </button>
-              </div>
-            </div>
-          `;
-        } else {
-          adminDirectionsHtml = task.adminInstructions 
-            ? `<div class="text-xs font-semibold text-police-900 bg-amber-50 p-2 rounded border border-amber-200">${task.adminInstructions}</div>`
-            : `<span class="text-xs text-slate-400 italic">प्रतीक्षित...</span>`;
-        }
-
-        let actionsHtml = '';
-        if (isAdmin) {
-          actionsHtml = `
-            <div class="flex items-center justify-end gap-1.5">
-              ${task.status !== 'COMPLETED' ? `
-                <button onclick="adminToggleStatus('${task.id}', 'COMPLETED')" title="पूर्ण करें" class="px-2 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-xs font-bold">
-                  पूर्ण करें
-                </button>
-              ` : `
-                <button onclick="adminToggleStatus('${task.id}', 'PENDING')" title="अनलॉक / पुनः लंबित करें" class="px-2 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded text-xs font-bold">
-                  अनलॉक करें
-                </button>
-              `}
-              <button onclick="editTask('${task.id}')" title="संशोधित करें" class="p-1.5 text-slate-600 hover:text-police-700 rounded hover:bg-slate-100">
-                <i data-lucide="pencil" class="w-4 h-4"></i>
-              </button>
-              <button onclick="deleteTask('${task.id}')" title="हटाएं" class="p-1.5 text-slate-400 hover:text-rose-600 rounded hover:bg-rose-50">
-                <i data-lucide="trash-2" class="w-4 h-4"></i>
-              </button>
-            </div>
-          `;
-        } else {
-          if (!isLocked) {
-            actionsHtml = `
-              <div class="flex items-center justify-end gap-1.5">
-                <button onclick="branchCompleteAndLock('${task.id}')" title="कार्य पूर्ण करके लॉक करें" class="px-2.5 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded text-xs font-bold flex items-center gap-1 shadow-sm">
-                  <i data-lucide="lock" class="w-3.5 h-3.5"></i>
-                  <span>पूर्ण करें & लॉक</span>
-                </button>
-                <button onclick="editTask('${task.id}')" title="संशोधित करें" class="p-1.5 text-slate-600 hover:text-police-700 rounded hover:bg-slate-100">
-                  <i data-lucide="pencil" class="w-4 h-4"></i>
-                </button>
-              </div>
-            `;
-          } else {
-            actionsHtml = `
-              <div class="text-right text-xs font-semibold text-slate-400 flex items-center justify-end gap-1">
-                <i data-lucide="lock" class="w-3.5 h-3.5 text-emerald-600"></i>
-                <span>लॉक (केवल एडमिन संशोधन)</span>
-              </div>
-            `;
-          }
-        }
-
-        const tr = document.createElement('tr');
-        tr.className = `hover:bg-slate-50 transition border-b border-slate-200 ${task.status === 'COMPLETED' ? 'bg-emerald-50/20' : ''}`;
-        tr.innerHTML = `
-          <td class="py-3 px-3 text-center font-mono text-xs font-bold text-slate-500">${index + 1}</td>
-          <td class="py-3 px-3 font-mono font-bold text-police-900 text-xs">${formatToIndianDate(task.taskDate)}</td>
-          <td class="py-3 px-3 font-bold text-slate-800 text-xs">${task.branch}</td>
-          <td class="py-3 px-4 text-xs sm:text-sm font-medium text-slate-900 leading-relaxed">${task.description}</td>
-          <td class="py-3 px-3 text-xs font-semibold text-slate-700">${task.assignee || '-'}</td>
-          <td class="py-3 px-3">${priorityBadge}</td>
-          <td class="py-3 px-3 font-mono text-xs text-slate-600">${formatToIndianDate(task.dueDate)}</td>
-          <td class="py-3 px-3">${adminDirectionsHtml}</td>
-          <td class="py-3 px-3 text-center">${statusBadge}</td>
-          <td class="py-3 px-3 text-right no-print">${actionsHtml}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-
-      lucide.createIcons();
-    }
-
-    function renderPrintableReportDOM() {
-      const filtered = getFilteredTasks();
-      const tbody = document.getElementById('reportTableBody');
-      const fromDate = document.getElementById('filterFromDate').value;
-      const toDate = document.getElementById('filterToDate').value;
-      const branchVal = document.getElementById('filterBranch').value;
-
-      document.getElementById('repScopeDate').textContent = (fromDate || toDate) ? `अवधि: ${formatToIndianDate(fromDate) || 'प्रारंभ'} से ${formatToIndianDate(toDate) || 'अद्यतन'}` : 'अवधि: समस्त दर्ज दिनांक';
-      document.getElementById('repScopeBranch').textContent = `शाखा: ${branchVal === 'ALL' ? 'समस्त सक्रिय शाखाएं' : branchVal}`;
-      
-      const now = new Date();
-      document.getElementById('repGeneratedTime').textContent = `प्रिंट दिनांक: ${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} ${now.toLocaleTimeString('hi-IN')}`;
-
-      tbody.innerHTML = '';
-      filtered.forEach((t, i) => {
-        const statusText = t.status === 'COMPLETED' ? 'पूर्ण (निस्तारित)' : t.status === 'PENDING' ? 'लंबित / अपूर्ण' : 'प्रक्रियाधीन';
-        const priorityText = t.priority === 'URGENT' ? 'अति आवश्यक' : t.priority === 'HIGH' ? 'उच्च' : 'सामान्य';
-
-        const tr = document.createElement('tr');
-        tr.className = i % 2 === 0 ? 'bg-white' : 'bg-slate-50';
-        tr.innerHTML = `
-          <td class="border border-slate-400 p-1.5 text-center font-mono font-bold">${i + 1}</td>
-          <td class="border border-slate-400 p-1.5 text-center font-mono font-semibold">${formatToIndianDate(t.taskDate)}</td>
-          <td class="border border-slate-400 p-1.5 font-bold">${t.branch || '-'}</td>
-          <td class="border border-slate-400 p-1.5 leading-relaxed">${t.description || '-'}</td>
-          <td class="border border-slate-400 p-1.5">${t.assignee || '-'}</td>
-          <td class="border border-slate-400 p-1.5 text-center font-medium">${priorityText}</td>
-          <td class="border border-slate-400 p-1.5 text-center font-mono">${formatToIndianDate(t.dueDate)}</td>
-          <td class="border border-slate-400 p-1.5 italic text-slate-700">${t.adminInstructions || '-'}</td>
-          <td class="border border-slate-400 p-1.5 text-center font-bold ${t.status === 'COMPLETED' ? 'text-emerald-800' : 'text-rose-800'}">${statusText}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    function renderAdminGrid() {
-      const container = document.getElementById('branchSummaryGrid');
-      container.innerHTML = '';
-      const branches = getRegisteredBranches();
-      document.getElementById('regBranchesCountText').textContent = `${branches.length} शाखाएं पंजीकृत`;
-
-      if (branches.length === 0) {
-        container.innerHTML = `
-          <div class="col-span-full py-6 text-center text-slate-400 bg-white rounded-xl border">
-            वर्तमान में कोई शाखा आईडी नहीं बनाई गई है। ऊपर "+ नई शाखा ID बनाएं" पर क्लिक करें।
-          </div>
-        `;
-        return;
-      }
-
-      branches.forEach(branchName => {
-        const bTasks = tasks.filter(t => t.branch === branchName);
-        const bTotal = bTasks.length;
-        const bDone = bTasks.filter(t => t.status === 'COMPLETED').length;
-        const bPending = bTasks.filter(t => t.status === 'PENDING').length;
-        const bProg = bTasks.filter(t => t.status === 'PROGRESS').length;
-        const bRate = bTotal === 0 ? 0 : Math.round((bDone / bTotal) * 100);
-
-        const bStaff = users.find(u => u.branch === branchName && u.role === 'Branch');
-
-        const card = document.createElement('div');
-        card.className = "bg-white rounded-xl p-3.5 border border-slate-200 shadow-sm flex flex-col justify-between";
-        card.innerHTML = `
-          <div>
-            <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-              <span class="text-xs font-bold text-police-900 truncate">${branchName}</span>
-              <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700">${bTotal} कार्य</span>
-            </div>
-            ${bStaff ? `
-              <div class="text-[11px] text-slate-500 mt-1 truncate">
-                प्रभारी: <strong class="text-slate-700">${bStaff.name}</strong> (${bStaff.rank})
-                <br>ID: <span class="font-mono">${bStaff.mobile}</span>
-              </div>
-            ` : ''}
-            <div class="grid grid-cols-3 gap-1 my-3 text-center">
-              <div class="bg-emerald-50 rounded py-1 border border-emerald-200">
-                <span class="text-xs font-extrabold text-emerald-700">${bDone}</span>
-                <span class="block text-[9px] text-emerald-800">पूर्ण</span>
-              </div>
-              <div class="bg-rose-50 rounded py-1 border border-rose-200">
-                <span class="text-xs font-extrabold text-rose-700">${bPending}</span>
-                <span class="block text-[9px] text-rose-800">लंबित</span>
-              </div>
-              <div class="bg-amber-50 rounded py-1 border border-amber-200">
-                <span class="text-xs font-extrabold text-amber-700">${bProg}</span>
-                <span class="block text-[9px] text-amber-800">जारी</span>
-              </div>
+        let directionsHtml = isPrivileged ? `
+          <div class="space-y-1">
+            <div class="text-xs text-slate-800 italic">${task.adminInstructions || '<span class="text-slate-400">कोई निर्देश नहीं</span>'}</div>
+            <div class="flex gap-1">
+              <input type="text" id="dirInput-${task.id}" placeholder="निर्देश दें..." class="text-[11px] p-1 border rounded w-full">
+              <button onclick="saveTaskInstruction('${task.id}')" class="px-2 py-0.5 bg-police-700 text-white rounded text-[10px] font-bold">दें</button>
             </div>
           </div>
-          <div>
-            <div class="flex justify-between items-center text-[10px] font-bold text-slate-500 mb-1">
-              <span>निस्तारण</span>
-              <span class="text-police-700">${bRate}%</span>
-            </div>
-            <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-              <div class="bg-emerald-500 h-1.5 rounded-full" style="width: ${bRate}%"></div>
-            </div>
-            <button onclick="adminFilterToBranch('${branchName}')" class="w-full mt-2 py-1 text-[11px] font-semibold text-police-700 bg-police-50 hover:bg-police-100 rounded text-center transition">
-              पत्रावलियां देखें &rarr;
+        ` : `<div class="text-xs text-slate-700 italic">${task.adminInstructions || 'प्रतीक्षित...'}</div>`;
+
+        let actionsHtml = isPrivileged ? `
+          <div class="flex items-center justify-end gap-1">
+            <button onclick="toggleTaskStatus('${task.id}', '${task.status === 'COMPLETED' ? 'PENDING' : 'COMPLETED'}')" class="px-2 py-1 ${task.status === 'COMPLETED' ? 'bg-amber-600' : 'bg-emerald-600'} text-white rounded text-[10px] font-bold">
+              ${task.status === 'COMPLETED' ? 'अनलॉक' : 'पूर्ण'}
+            </button>
+            <button onclick="deleteTaskRecord('${task.id}')" class="p-1 text-rose-600 hover:bg-rose-50 rounded">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
             </button>
           </div>
+        ` : (!isLocked ? `
+          <button onclick="branchCompleteAndLock('${task.id}')" class="px-2.5 py-1 bg-emerald-700 hover:bg-emerald-800 text-white rounded text-xs font-bold flex items-center gap-1 shadow-sm">
+            <i data-lucide="lock" class="w-3 h-3"></i> पूर्ण करें & लॉक
+          </button>
+        ` : `<span class="text-xs text-slate-400 font-semibold">🔒 लॉक</span>`);
+
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50 transition border-b';
+        tr.innerHTML = `
+          <td class="py-2.5 px-3 text-center font-mono font-bold text-slate-500">${index + 1}</td>
+          <td class="py-2.5 px-3 font-mono font-bold text-police-900">${formatToIndianDate(task.taskDate)}</td>
+          <td class="py-2.5 px-3 font-bold text-slate-800">${task.branch}</td>
+          <td class="py-2.5 px-4 font-medium leading-relaxed">${task.description}</td>
+          <td class="py-2.5 px-3 text-slate-700 font-semibold">${task.assignee || '-'}</td>
+          <td class="py-2.5 px-3">${priorityBadge}</td>
+          <td class="py-2.5 px-3 font-mono text-slate-600">${formatToIndianDate(task.dueDate)}</td>
+          <td class="py-2.5 px-3">${directionsHtml}</td>
+          <td class="py-2.5 px-3 text-center">${statusBadge}</td>
+          <td class="py-2.5 px-3 text-right no-print">${actionsHtml}</td>
         `;
-        container.appendChild(card);
+        tbody.appendChild(tr);
       });
       lucide.createIcons();
     }
 
-    window.adminFilterToBranch = function(branchName) {
-      document.getElementById('filterBranch').value = branchName;
-      refreshDashboardData();
-      document.getElementById('tasksTable').scrollIntoView({ behavior: 'smooth' });
+    function getFilteredTasks() {
+      const fromDate = document.getElementById('filterFromDate')?.value;
+      const toDate = document.getElementById('filterToDate')?.value;
+      const branchVal = document.getElementById('filterBranch')?.value;
+      const statusVal = document.getElementById('filterStatus')?.value;
+      const priorityVal = document.getElementById('filterPriority')?.value;
+      const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
+
+      return tasks.filter(t => {
+        if (currentUser?.role === 'Branch' && t.branch !== currentUser.branch) return false;
+        if (branchVal && branchVal !== 'ALL' && t.branch !== branchVal) return false;
+        if (fromDate && t.taskDate && t.taskDate < fromDate) return false;
+        if (toDate && t.taskDate && t.taskDate > toDate) return false;
+        if (statusVal && statusVal !== 'ALL' && t.status !== statusVal) return false;
+        if (priorityVal && priorityVal !== 'ALL' && t.priority !== priorityVal) return false;
+        if (search && !((t.description || '') + (t.assignee || '')).toLowerCase().includes(search)) return false;
+        return true;
+      }).sort((a, b) => (b.taskDate || '').localeCompare(a.taskDate || ''));
+    }
+
+    window.saveTaskInstruction = function(taskId) {
+      const input = document.getElementById(`dirInput-${taskId}`);
+      if (!input || !input.value.trim()) return;
+      tasksRef.child(taskId).update({ adminInstructions: input.value.trim() }).then(() => {
+        showToast('निर्देश प्रेषित', 'कार्यवाही निर्देश दर्ज कर दिए गए हैं।');
+      });
+    };
+
+    window.toggleTaskStatus = function(taskId, newStatus) {
+      const updates = { 
+        status: newStatus,
+        isLocked: (newStatus === 'COMPLETED'),
+        completedAt: newStatus === 'COMPLETED' ? formatToIndianDate(formatDateToISO(new Date())) : null
+      };
+      tasksRef.child(taskId).update(updates).then(() => {
+        showToast('अपडेट संपन्न', `कार्य स्थिति: ${newStatus}`);
+      });
     };
 
     window.branchCompleteAndLock = function(taskId) {
-      const now = new Date();
-      const day = String(now.getDate()).padStart(2, '0');
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const year = now.getFullYear();
-      const completedAt = `${day}/${month}/${year} ${now.toLocaleTimeString('hi-IN', { hour: '2-digit', minute: '2-digit' })}`;
-
+      const nowStr = formatToIndianDate(formatDateToISO(new Date()));
       tasksRef.child(taskId).update({
         status: 'COMPLETED',
         isLocked: true,
-        completedAt: completedAt
+        completedAt: nowStr
       }).then(() => {
-        showToast('कार्य पूर्ण एवं लॉक', 'यह कार्य सफलतापूर्वक पूर्ण कर लॉक कर दिया गया है।');
+        showToast('कार्य पूर्ण व लॉक', 'कार्य लॉक कर दिया गया है।');
       });
     };
 
-    window.adminToggleStatus = function(taskId, newStatus) {
-      const updates = { status: newStatus };
-      if (newStatus === 'COMPLETED') {
-        const now = new Date();
-        const day = String(now.getDate()).padStart(2, '0');
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const year = now.getFullYear();
-        updates.isLocked = true;
-        updates.completedAt = `${day}/${month}/${year}`;
-      } else {
-        updates.isLocked = false;
-        updates.completedAt = null;
+    window.deleteTaskRecord = function(taskId) {
+      if (confirm('क्या आप इस कार्य को हटाना चाहते हैं?')) {
+        tasksRef.child(taskId).remove().then(() => {
+          showToast('हटाया गया', 'कार्य पंजिका से हटा दिया गया।');
+        });
       }
-
-      tasksRef.child(taskId).update(updates).then(() => {
-        showToast('एडमिन संशोधन संपन्न', `स्थिति बदलकर ${newStatus === 'COMPLETED' ? 'पूर्ण' : 'लंबित/अनलॉक'} कर दी गई है।`);
-      });
     };
 
-    window.saveAdminInstruction = function(taskId) {
-      const input = document.getElementById(`dirInput-${taskId}`);
-      const val = (input.value || '').trim();
-      if (!val) return;
-
-      tasksRef.child(taskId).update({
-        adminInstructions: val
-      }).then(() => {
-        showToast('निर्देश प्रेषित', 'शाखा के लिए कार्यवाही निर्देश दर्ज कर दिए गए हैं।');
-      });
-    };
-
-    window.deleteTask = function(taskId) {
-      if (currentUser.role !== 'Admin') {
-        showToast('अनाधिकृत', 'केवल एडमिन को कार्य हटाने का अधिकार है।');
-        return;
-      }
-      tasksRef.child(taskId).remove().then(() => {
-        showToast('हटाया गया', 'कार्य पंजिका से हटा दिया गया है।');
-      });
-    };
-
-    const taskRowsContainer = document.getElementById('taskRowsContainer');
-
-    function createRowElement(initialText = '') {
-      const rowId = 'row-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4);
-      const div = document.createElement('div');
-      div.id = rowId;
-      div.className = "flex items-start gap-2 bg-white p-2 rounded border border-slate-200 shadow-sm";
-      div.innerHTML = `
-        <span class="row-num text-xs font-bold text-police-700 bg-police-50 px-2 py-1.5 rounded mt-1">1.</span>
-        <textarea required rows="2" class="task-desc-input w-full text-xs rounded border border-slate-300 p-2 bg-white focus:ring-2 focus:ring-police-600 leading-normal font-hindi" placeholder="दैनिक कार्य का विवरण लिखें...">${initialText}</textarea>
-        <button type="button" onclick="removeTaskRow('${rowId}')" title="यह पंक्ति हटाएं" class="text-slate-400 hover:text-rose-600 p-1.5 rounded hover:bg-rose-50 transition mt-1">
-          <i data-lucide="trash" class="w-4 h-4"></i>
-        </button>
-      `;
-      return div;
-    }
-
-    function renumberRows() {
-      const rows = taskRowsContainer.querySelectorAll('.row-num');
-      rows.forEach((el, i) => {
-        el.textContent = `${i + 1}.`;
-      });
-    }
-
-    function addTaskRow(text = '') {
-      const rowEl = createRowElement(text);
-      taskRowsContainer.appendChild(rowEl);
-      renumberRows();
-      lucide.createIcons();
-    }
-
-    window.removeTaskRow = function(rowId) {
-      const rows = taskRowsContainer.querySelectorAll('.flex');
-      if (rows.length <= 1) {
-        showToast('सूचना', 'कम से कम एक कार्य पंक्ति आवश्यक है।');
-        return;
-      }
-      const el = document.getElementById(rowId);
-      if (el) el.remove();
-      renumberRows();
-    };
-
-    document.getElementById('addNewRowBtn').addEventListener('click', () => {
-      addTaskRow('');
-    });
-
-    document.getElementById('openNewTaskBtn').addEventListener('click', () => {
-      document.getElementById('taskModalHeading').textContent = 'दैनिक कार्य प्रविष्टि (Multiple Task Rows)';
-      document.getElementById('editTaskId').value = '';
-      document.getElementById('taskForm').reset();
-      taskRowsContainer.innerHTML = '';
-
-      const { minDateStr } = applyTaskDateRestrictions();
-
-      document.getElementById('modalTaskDate').value = minDateStr;
-      document.getElementById('modalDueDate').value = minDateStr;
-
-      if (currentUser.role === 'Admin') {
-        const branches = getRegisteredBranches();
-        document.getElementById('modalBranch').value = branches.length > 0 ? branches[0] : 'सामान्य शाखा';
-        document.getElementById('modalBranch').readOnly = false;
-      } else {
-        document.getElementById('modalBranch').value = currentUser.branch;
-        document.getElementById('modalBranch').readOnly = true;
-      }
-
-      addTaskRow('');
-      addTaskRow('');
-
-      document.getElementById('addNewRowBtn').classList.remove('hidden');
-      document.getElementById('taskModal').classList.remove('hidden');
-    });
-
-    window.editTask = function(taskId) {
-      const task = tasks.find(t => t.id === taskId);
-      if (!task) return;
-      if (currentUser.role !== 'Admin' && task.isLocked) {
-        showToast('कार्य लॉक है', 'पूर्ण हो चुके लॉक कार्य को केवल एडमिन संशोधित कर सकते हैं।');
-        return;
-      }
-
-      applyTaskDateRestrictions();
-
-      document.getElementById('taskModalHeading').textContent = 'कार्य संशोधित करें';
-      document.getElementById('editTaskId').value = task.id;
-      document.getElementById('modalBranch').value = task.branch;
-      document.getElementById('modalTaskDate').value = task.taskDate || '';
-      document.getElementById('modalAssignee').value = task.assignee || '';
-      document.getElementById('modalPriority').value = task.priority || 'NORMAL';
-      document.getElementById('modalDueDate').value = task.dueDate || '';
-
-      taskRowsContainer.innerHTML = '';
-      addTaskRow(task.description);
-      document.getElementById('addNewRowBtn').classList.add('hidden');
-
-      document.getElementById('taskModal').classList.remove('hidden');
-    };
-
-    document.getElementById('closeTaskModalBtn').addEventListener('click', () => {
-      document.getElementById('taskModal').classList.add('hidden');
-    });
-    document.getElementById('cancelTaskModalBtn').addEventListener('click', () => {
-      document.getElementById('taskModal').classList.add('hidden');
-    });
-
-    document.getElementById('taskForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const editId = document.getElementById('editTaskId').value;
-      const branch = document.getElementById('modalBranch').value.trim();
-      const taskDate = document.getElementById('modalTaskDate').value;
-      const assignee = document.getElementById('modalAssignee').value.trim();
-      const priority = document.getElementById('modalPriority').value;
-      const dueDate = document.getElementById('modalDueDate').value;
-
-      const today = new Date();
-      const todayStr = formatDateToISO(today);
-
-      const maxAllowed = new Date();
-      maxAllowed.setDate(today.getDate() + 2);
-      const maxAllowedStr = formatDateToISO(maxAllowed);
-
-      if (!editId || currentUser.role !== 'Admin') {
-        if (taskDate < todayStr) {
-          showToast('प्रतिबंधित दिनांक', 'पिछली दिनांक का कार्य वर्तमान में दर्ज नहीं किया जा सकता है।');
-          document.getElementById('modalTaskDate').focus();
-          return;
-        }
-        if (taskDate > maxAllowedStr) {
-          showToast('प्रतिबंधित दिनांक', `कार्य केवल वर्तमान दिनांक (${formatToIndianDate(todayStr)}) या 2 दिन आगे (${formatToIndianDate(maxAllowedStr)}) तक का ही दर्ज किया जा सकता है।`);
-          document.getElementById('modalTaskDate').focus();
-          return;
-        }
-      }
-
-      const descInputs = taskRowsContainer.querySelectorAll('.task-desc-input');
-      const descriptions = [];
-      descInputs.forEach(inp => {
-        const val = inp.value.trim();
-        if (val) descriptions.push(val);
-      });
-
-      if (descriptions.length === 0) {
-        showToast('त्रुटि', 'कृपया कम से कम एक कार्य का विवरण अवश्य भरें।');
-        return;
-      }
-
-      if (editId) {
-        tasksRef.child(editId).update({
-          branch: branch,
-          taskDate: taskDate,
-          description: descriptions[0],
-          assignee: assignee,
-          priority: priority,
-          dueDate: dueDate
-        }).then(() => {
-          showToast('संशोधित', 'कार्य अद्यतन हो गया है।');
-        });
-      } else {
-        const now = new Date();
-        const createdDateFormatted = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
-        
-        descriptions.forEach((desc, i) => {
-          const newTaskId = 'tsk-' + Date.now() + '-' + i;
-          const newTask = {
-            id: newTaskId,
-            branch: branch,
-            taskDate: taskDate,
-            description: desc,
-            assignee: assignee || currentUser.name,
-            priority: priority,
-            dueDate: dueDate,
-            status: 'PENDING',
-            isLocked: false,
-            adminInstructions: '',
-            createdAt: createdDateFormatted
-          };
-          tasksRef.child(newTaskId).set(newTask);
-        });
-        showToast('सुरक्षित', `${descriptions.length} कार्य सेंट्रल डेटाबेस में दर्ज किए गए।`);
-      }
-
-      document.getElementById('taskModal').classList.add('hidden');
-    });
-
-    // Admin Creates Branch ID Modal
-    const adminBranchModal = document.getElementById('adminCreateBranchModal');
-    const adminBranchForm = document.getElementById('adminBranchCreateForm');
-
-    document.getElementById('adminCreateBranchBtn').addEventListener('click', () => {
-      adminBranchForm.reset();
-      adminBranchModal.classList.remove('hidden');
-    });
-
-    document.getElementById('closeAdminBranchModalBtn').addEventListener('click', () => {
-      adminBranchModal.classList.add('hidden');
-    });
-    document.getElementById('cancelAdminBranchModalBtn').addEventListener('click', () => {
-      adminBranchModal.classList.add('hidden');
-    });
-
-    adminBranchForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const branchName = document.getElementById('admBranchName').value.trim();
-      const staffName = document.getElementById('admStaffName').value.trim();
-      const rank = document.getElementById('admStaffRank').value.trim();
-      const mobile = document.getElementById('admMobile').value.trim();
-      const pin = document.getElementById('admPin').value.trim();
-      const email = document.getElementById('admEmail').value.trim();
-      const password = document.getElementById('admPassword').value.trim();
-
-      if (mobile.length !== 10 || isNaN(mobile)) {
-        showToast('त्रुटि', 'कृपया वैध 10 अंकों का मोबाइल नंबर दर्ज करें।');
-        return;
-      }
-      if (pin.length !== 4 || isNaN(pin)) {
-        showToast('त्रुटि', 'सुरक्षा पिन 4 अंकों का होना चाहिए।');
-        return;
-      }
-
-      if (users.some(u => u.mobile === mobile)) {
-        showToast('त्रुटि', 'यह मोबाइल नंबर (लॉगिन आईडी) पहले से पंजीकृत है।');
-        return;
-      }
-
-      const newUserId = 'usr-' + mobile;
-      const newBranchUser = {
-        id: newUserId,
-        role: 'Branch',
-        name: staffName,
-        rank: rank,
-        mobile: mobile,
-        branch: branchName,
-        email: email,
-        pin: pin,
-        password: password
-      };
-
-      // Save directly to Firebase
-      usersRef.child(newUserId).set(newBranchUser).then(() => {
-        adminBranchModal.classList.add('hidden');
-        showToast('शाखा आईडी निर्मित', `'${branchName}' की आईडी (${mobile}) व पासवर्ड ऑनलाइन जारी कर दिया गया।`);
-      });
-    });
-
-    // Branch User Changes Password
-    const changePassModal = document.getElementById('changePasswordModal');
-    const changePassForm = document.getElementById('changePasswordForm');
-
-    document.getElementById('changePassBtn').addEventListener('click', () => {
-      changePassForm.reset();
-      changePassModal.classList.remove('hidden');
-    });
-
-    document.getElementById('closeChangePassModalBtn').addEventListener('click', () => {
-      changePassModal.classList.add('hidden');
-    });
-    document.getElementById('cancelChangePassBtn').addEventListener('click', () => {
-      changePassModal.classList.add('hidden');
-    });
-
-    changePassForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const currentPass = document.getElementById('currentPassInput').value;
-      const newPass = document.getElementById('newPassInput').value;
-      const confirmPass = document.getElementById('confirmPassInput').value;
-
-      if (currentUser.password !== currentPass) {
-        showToast('त्रुटि', 'वर्तमान पासवर्ड गलत दर्ज किया गया है।');
-        return;
-      }
-      if (newPass !== confirmPass) {
-        showToast('त्रुटि', 'नया पासवर्ड और पुष्टि पासवर्ड मेल नहीं खाते।');
-        return;
-      }
-      if (newPass.length < 4) {
-        showToast('त्रुटि', 'नया पासवर्ड कम से कम 4 अक्षरों का होना चाहिए।');
-        return;
-      }
-
-      const userRecord = users.find(u => u.mobile === currentUser.mobile);
-      if (userRecord) {
-        usersRef.child(userRecord.id).update({
-          password: newPass
-        }).then(() => {
-          currentUser.password = newPass;
-          changePassModal.classList.add('hidden');
-          showToast('सफल', 'आपका पासवर्ड क्लाउड में सफलतापूर्वक बदल दिया गया है।');
-        });
-      }
-    });
-
-    // Auth & Login
-    const tabNavLogin = document.getElementById('tabNavLogin');
-    const tabNavForgot = document.getElementById('tabNavForgot');
-    const mainLoginForm = document.getElementById('mainLoginForm');
-    const mainForgotForm = document.getElementById('mainForgotForm');
-
-    tabNavLogin.addEventListener('click', () => {
-      tabNavLogin.className = 'flex-1 py-3 text-center border-b-2 border-police-700 text-police-800 bg-white font-bold';
-      tabNavForgot.className = 'flex-1 py-3 text-center border-b-2 border-transparent text-slate-500 hover:text-police-700';
-      mainLoginForm.classList.remove('hidden');
-      mainForgotForm.classList.add('hidden');
-    });
-
-    tabNavForgot.addEventListener('click', () => {
-      tabNavForgot.className = 'flex-1 py-3 text-center border-b-2 border-police-700 text-police-800 bg-white font-bold';
-      tabNavLogin.className = 'flex-1 py-3 text-center border-b-2 border-transparent text-slate-500 hover:text-police-700';
-      mainForgotForm.classList.remove('hidden');
-      mainLoginForm.classList.add('hidden');
-    });
-
-    mainLoginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const role = document.getElementById('loginRoleSelect').value;
-      const logId = document.getElementById('loginIdInput').value.trim();
-      const pass = document.getElementById('loginPassInput').value;
-
-      if (role === 'Admin') {
-        const adminUser = users.find(u => u.role === 'Admin' && (u.mobile === logId || u.email === logId));
-        if (adminUser && adminUser.password === pass) {
-          currentUser = adminUser;
-          localStorage.setItem(SESSION_KEY, currentUser.mobile);
-          showDashboardView();
-          showToast('एडमिन लॉगिन सफल', 'कार्यालय महानिरीक्षक पुलिस, कोटा रेंज एडमिन पोर्टल');
-          return;
-        } else {
-          showToast('लॉगिन विफल', 'एडमिन आईडी या पासवर्ड अमान्य है।');
-          return;
-        }
-      }
-
-      // Branch user verification from central cloud
-      const user = users.find(u => (u.mobile === logId || u.email === logId) && u.password === pass && u.role === 'Branch');
-      if (user) {
-        currentUser = user;
-        localStorage.setItem(SESSION_KEY, currentUser.mobile);
-        showDashboardView();
-        showToast('शाखा लॉगिन सफल', `${user.name} (${user.branch})`);
-      } else {
-        showToast('लॉगिन विफल', 'गलत मोबाइल नंबर अथवा पासवर्ड दर्ज किया गया है।');
-      }
-    });
-
-    mainForgotForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const role = document.getElementById('forgotRoleSelect').value;
-      const mobile = document.getElementById('forgotMobile').value.trim();
-      const email = document.getElementById('forgotEmail').value.trim();
-      const pin = document.getElementById('forgotPin').value.trim();
-      const newPass = document.getElementById('forgotNewPass').value;
-
-      const userRecord = users.find(u => u.role === role && (u.mobile === mobile || u.email === mobile) && u.email === email && u.pin === pin);
-      
-      if (userRecord) {
-        usersRef.child(userRecord.id).update({
-          password: newPass
-        }).then(() => {
-          mainForgotForm.reset();
-          tabNavLogin.click();
-          showToast('पासवर्ड रीसेट सफल', `${role} का पासवर्ड बदल दिया गया है।`);
-        });
-      } else {
-        showToast('सत्यापन विफल', 'दर्ज की गई आईडी, ईमेल अथवा सुरक्षा पिन का मिलान नहीं हुआ।');
-      }
-    });
-
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      showLoginView();
-      showToast('लॉगआउट', 'सत्र समाप्त हो गया है।');
-    });
-
-    // Date Range (From - To) & Reset Listeners
-    document.getElementById('filterFromDate').addEventListener('change', refreshDashboardData);
-    document.getElementById('filterToDate').addEventListener('change', refreshDashboardData);
-
-    document.getElementById('resetDateFilterBtn').addEventListener('click', () => {
-      document.getElementById('filterFromDate').value = '';
-      document.getElementById('filterToDate').value = '';
-      document.getElementById('filterStatus').value = 'ALL';
-      document.getElementById('filterPriority').value = 'ALL';
-      document.getElementById('searchInput').value = '';
-      refreshDashboardData();
-      showToast('रीसेट संपन्न', 'दिनांक रेंज (From-To) एवं अन्य सभी फ़िल्टर रीसेट कर दिए गए हैं।');
-    });
-
-    document.getElementById('filterBranch').addEventListener('change', refreshDashboardData);
-    document.getElementById('filterStatus').addEventListener('change', refreshDashboardData);
-    document.getElementById('filterPriority').addEventListener('change', refreshDashboardData);
-    document.getElementById('searchInput').addEventListener('input', refreshDashboardData);
-
-    // EXPORT & REPORT SYSTEM
-    const downloadDropdownBtn = document.getElementById('downloadDropdownBtn');
-    const downloadMenu = document.getElementById('downloadMenu');
-
-    downloadDropdownBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      downloadMenu.classList.toggle('hidden');
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!downloadMenu.contains(e.target) && !downloadDropdownBtn.contains(e.target)) {
-        downloadMenu.classList.add('hidden');
-      }
-    });
-
-    document.getElementById('printPdfDirectBtn').addEventListener('click', () => {
-      const filtered = getFilteredTasks();
-      if (filtered.length === 0) {
-        showToast('कोई डेटा नहीं', 'प्रिंट करने हेतु कोई कार्य उपलब्ध नहीं है।');
-        return;
-      }
-      renderPrintableReportDOM();
-      window.print();
-    });
-
-    document.getElementById('downloadPdfBtn').addEventListener('click', async () => {
-      downloadMenu.classList.add('hidden');
-      const filtered = getFilteredTasks();
-      if (filtered.length === 0) {
-        showToast('कोई डेटा नहीं', 'डाउनलोड हेतु कोई कार्य नहीं है।');
-        return;
-      }
-
-      showToast('कृपया प्रतीक्षा करें', 'शुद्ध हिंदी लैंडस्केप PDF तैयार हो रही है...');
-      renderPrintableReportDOM();
-
-      const reportEl = document.getElementById('printableLandscapeReport');
-      reportEl.classList.remove('hidden');
-
-      try {
-        const canvas = await html2canvas(reportEl, {
-          scale: 2,
-          useCORS: true,
-          logging: false
-        });
-
-        reportEl.classList.add('hidden');
-
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF({
-          orientation: 'landscape',
-          unit: 'mm',
-          format: 'a4'
-        });
-
-        const imgWidth = 297;
-        const pageHeight = 210;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        let heightLeft = imgHeight;
-        let position = 0;
-
-        const imgData = canvas.toDataURL('image/png');
-
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-
-        while (heightLeft >= 0) {
-          position = heightLeft - imgHeight;
-          pdf.addPage();
-          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-        }
-
-        const fileName = `IGP_Kota_Daily_Tasks_Hindi_${formatDateToISO(new Date())}.pdf`;
-        pdf.save(fileName);
-        showToast('PDF डाउनलोड संपन्न', 'शुद्ध हिंदी लैंडस्केप PDF सफलतापूर्वक डाउनलोड हो गई।');
-      } catch (err) {
-        reportEl.classList.add('hidden');
-        console.error(err);
-        showToast('त्रुटि', 'PDF जनरेट करने में असमर्थ।');
-      }
-    });
-
-    document.getElementById('downloadExcelBtn').addEventListener('click', () => {
-      downloadMenu.classList.add('hidden');
-      const filtered = getFilteredTasks();
-      if (filtered.length === 0) {
-        showToast('कोई डेटा नहीं', 'डाउनलोड हेतु कोई कार्य नहीं है।');
-        return;
-      }
-
-      const excelData = filtered.map((t, idx) => ({
-        "क्र.": idx + 1,
-        "कार्य दिनांक": formatToIndianDate(t.taskDate),
-        "शाखा": t.branch || '',
-        "दैनिक कार्य का विस्तृत विवरण": t.description || '',
-        "प्रभारी / संबंधित कर्मचारी": t.assignee || '',
-        "प्राथमिकता": t.priority === 'URGENT' ? 'अति आवश्यक' : t.priority === 'HIGH' ? 'उच्च' : 'सामान्य',
-        "लक्ष्य तिथि": formatToIndianDate(t.dueDate),
-        "कार्यवाही हेतु निर्देश (Admin)": t.adminInstructions || '',
-        "स्थिति": t.status === 'COMPLETED' ? 'पूर्ण (Locked)' : t.status === 'PENDING' ? 'लंबित' : 'प्रक्रियाधीन',
-        "निस्तारण दिनांक": t.completedAt || ''
-      }));
-
-      const worksheet = XLSX.utils.json_to_sheet(excelData);
-      
-      const colWidths = [
-        { wch: 6 },  { wch: 14 }, { wch: 22 }, 
-        { wch: 45 }, { wch: 22 }, { wch: 14 }, { wch: 14 }, 
-        { wch: 30 }, { wch: 16 }, { wch: 18 }
-      ];
-      worksheet['!cols'] = colWidths;
-
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Daily Task Register");
-
-      const fileName = `IGP_Kota_Daily_Tasks_${formatDateToISO(new Date())}.xlsx`;
-      XLSX.writeFile(workbook, fileName);
-      showToast('Excel डाउनलोड संपन्न', 'एक्सेल (.xlsx) फ़ाइल डाउनलोड हो गई।');
-    });
-
+    // Helper Toast
     function showToast(title, msg) {
       const toast = document.getElementById('toastNotification');
       document.getElementById('toastTitle').textContent = title;
