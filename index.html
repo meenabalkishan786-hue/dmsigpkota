@@ -71,7 +71,13 @@
     }
   </style>
 </head>
-<body class="text-slate-800 antialiased min-h-screen flex flex-col font-hindi">
+<body class="text-slate-800 antialiased min-h-screen flex flex-col font-hindi relative">
+
+  <!-- ================= FLOATING ARROW TO SHOW SIDEBAR (WHEN HIDDEN) ================= -->
+  <button id="showSidebarFloatingBtn" onclick="toggleSidebar(true)" title="लॉगिन पैनल खोलें" class="hidden fixed left-0 top-1/2 -translate-y-1/2 z-50 bg-police-900 hover:bg-police-800 text-police-gold border-y border-r border-police-gold py-3 px-2 rounded-r-xl shadow-2xl transition flex flex-col items-center gap-1 group no-print">
+    <i data-lucide="chevron-right" class="w-5 h-5 group-hover:translate-x-0.5 transition"></i>
+    <span class="text-[10px] font-bold writing-mode-vertical [writing-mode:vertical-rl] tracking-widest uppercase">लॉगिन पैनल</span>
+  </button>
 
   <!-- ================= TOP GOVT STRIP ================= -->
   <div class="bg-police-950 text-police-goldlight text-xs py-1 px-4 border-b border-police-800 flex justify-between items-center no-print">
@@ -119,7 +125,7 @@
             श्री हरेन्द्र कुमार महावर, IPS
           </div>
           <div class="text-[11px] sm:text-xs text-amber-200 font-medium">
-            महानिरीक्षक पुलिस कोटा रेंज,कोटा
+            महानिरीक्षक पुलिस, कोटा रेंज, कोटा
           </div>
           <h1 class="text-base sm:text-xl font-extrabold tracking-tight text-white mt-0.5">
             कार्यालय महानिरीक्षक पुलिस, कोटा रेंज
@@ -159,14 +165,20 @@
   </div>
 
   <!-- ================= MAIN BODY LAYOUT ================= -->
-  <div class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+  <div class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 transition-all duration-300">
     
     <!-- ================= LEFT SIDEBAR (OFFICE MONITORING SYSTEM LOGIN) ================= -->
-    <aside class="lg:col-span-4 xl:col-span-3 space-y-4 no-print">
+    <aside id="mainSidebarCol" class="lg:col-span-4 xl:col-span-3 space-y-4 no-print transition-all duration-300">
       
       <!-- Monitoring Portal Trigger Card -->
-      <div class="bg-white rounded-2xl shadow-md border-t-4 border-police-700 overflow-hidden">
-        <div class="bg-police-900 text-white p-4 text-center">
+      <div class="bg-white rounded-2xl shadow-md border-t-4 border-police-700 overflow-hidden relative">
+        
+        <!-- SIDEBAR HIDE ARROW BUTTON -->
+        <button type="button" onclick="toggleSidebar(false)" title="लॉगिन साइडबार छुपाएं" class="absolute top-2.5 right-2.5 p-1 rounded-lg bg-police-800 hover:bg-police-700 text-police-gold shadow transition z-20 flex items-center justify-center">
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+        </button>
+
+        <div class="bg-police-900 text-white p-4 text-center pr-10">
           <div class="w-12 h-12 mx-auto mb-2 rounded-full bg-police-800 text-police-gold flex items-center justify-center border border-police-gold/40">
             <i data-lucide="shield-alert" class="w-6 h-6"></i>
           </div>
@@ -225,6 +237,10 @@
             <div>
               <label class="block text-[11px] font-bold text-slate-700">पंजीकृत मोबाइल ID *</label>
               <input type="text" id="forgotMobile" required placeholder="मोबाइल नंबर दर्ज करें" autocomplete="off" class="w-full text-xs rounded border p-1.5 font-mono">
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-slate-700">पंजीकृत ईमेल ID *</label>
+              <input type="email" id="forgotEmail" required placeholder="email@rajpolice.gov.in" autocomplete="off" class="w-full text-xs rounded border p-1.5 font-mono">
             </div>
             <div>
               <label class="block text-[11px] font-bold text-slate-700">सुरक्षा पिन *</label>
@@ -306,7 +322,7 @@
     </aside>
 
     <!-- ================= RIGHT MAIN CONTENT AREA ================= -->
-    <div class="lg:col-span-8 xl:col-span-9">
+    <div id="mainContentCol" class="lg:col-span-8 xl:col-span-9 transition-all duration-300">
 
       <!-- ================= 1. HOME TAB ================= -->
       <section id="content-home" class="tab-content space-y-6">
@@ -924,7 +940,7 @@
           </div>
         </div>
 
-        <!-- SUB-TAB 2: SLIDER MANAGEMENT (ADD/BROWSE & DELETE SLIDES) -->
+        <!-- SUB-TAB 2: SLIDER MANAGEMENT -->
         <div id="as-content-slider" class="admin-sub-content hidden space-y-5">
           <form id="adminAddSlideForm" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-slate-50 p-4 rounded-xl border">
             <div class="sm:col-span-2">
@@ -1214,6 +1230,25 @@
 
     let currentSlide = 0;
     let carouselInterval = null;
+
+    // ================= SIDEBAR HIDE / SHOW TOGGLE LOGIC =================
+    window.toggleSidebar = function(show) {
+      const sidebarCol = document.getElementById('mainSidebarCol');
+      const contentCol = document.getElementById('mainContentCol');
+      const floatBtn = document.getElementById('showSidebarFloatingBtn');
+
+      if (show) {
+        sidebarCol.classList.remove('hidden');
+        sidebarCol.className = 'lg:col-span-4 xl:col-span-3 space-y-4 no-print transition-all duration-300';
+        contentCol.className = 'lg:col-span-8 xl:col-span-9 transition-all duration-300';
+        floatBtn.classList.add('hidden');
+      } else {
+        sidebarCol.classList.add('hidden');
+        contentCol.className = 'col-span-12 transition-all duration-300';
+        floatBtn.classList.remove('hidden');
+      }
+      lucide.createIcons();
+    };
 
     function initCarousel() {
       if (carouselInterval) clearInterval(carouselInterval);
