@@ -119,7 +119,7 @@
             श्री हरेन्द्र कुमार महावर, IPS
           </div>
           <div class="text-[11px] sm:text-xs text-amber-200 font-medium">
-            महानिरीक्षक पुलिस कोटा रेंज, कोटा
+            महानिरीक्षक पुलिस, कोटा रेंज (कोटा, बूंदी, बारां, झालावाड़)
           </div>
           <h1 class="text-base sm:text-xl font-extrabold tracking-tight text-white mt-0.5">
             कार्यालय महानिरीक्षक पुलिस, कोटा रेंज
@@ -171,7 +171,7 @@
             <i data-lucide="shield-alert" class="w-6 h-6"></i>
           </div>
           <h2 class="text-sm font-extrabold text-police-goldlight">दैनिक कार्य प्रगति एवं निगरानी प्रणाली</h2>
-          <p class="text-[11px] text-slate-300">कार्यालय आंतरिक निगरानी पोर्टल</p>
+          <p class="text-[11px] text-slate-300">कार्यालय आंतरिक अनुश्रवण पोर्टल</p>
         </div>
 
         <!-- Auth Block (Logged Out State) -->
@@ -225,10 +225,6 @@
             <div>
               <label class="block text-[11px] font-bold text-slate-700">पंजीकृत मोबाइल ID *</label>
               <input type="text" id="forgotMobile" required placeholder="मोबाइल नंबर दर्ज करें" autocomplete="off" class="w-full text-xs rounded border p-1.5 font-mono">
-            </div>
-            <div>
-              <label class="block text-[11px] font-bold text-slate-700">पंजीकृत ईमेल ID *</label>
-              <input type="email" id="forgotEmail" required placeholder="email@rajpolice.gov.in" autocomplete="off" class="w-full text-xs rounded border p-1.5 font-mono">
             </div>
             <div>
               <label class="block text-[11px] font-bold text-slate-700">सुरक्षा पिन *</label>
@@ -317,9 +313,7 @@
         
         <!-- AUTO-SLIDING CAROUSEL -->
         <div class="relative bg-slate-900 rounded-2xl overflow-hidden shadow-xl border border-slate-200 h-64 sm:h-80 md:h-96">
-          <div id="carouselContainer" class="relative w-full h-full">
-            <!-- Dynamic slides rendered by JS -->
-          </div>
+          <div id="carouselContainer" class="relative w-full h-full"></div>
 
           <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/40 hover:bg-black/70 text-white transition z-10">
             <i data-lucide="chevron-left" class="w-5 h-5"></i>
@@ -468,10 +462,10 @@
         </div>
       </section>
 
-      <!-- ================= 5. OFFICE MONITORING SYSTEM DASHBOARD TAB (PHOTO EXACT RESTORED) ================= -->
+      <!-- ================= 5. OFFICE MONITORING SYSTEM DASHBOARD TAB ================= -->
       <section id="content-monitoringDashboard" class="tab-content hidden space-y-6">
         
-        <!-- User Scope Top Bar (Exactly like photo) -->
+        <!-- User Scope Top Bar -->
         <div class="bg-white rounded-xl p-3.5 border border-slate-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 no-print">
           <div class="flex items-center gap-3">
             <div class="w-9 h-9 rounded-full bg-police-800 text-police-gold flex items-center justify-center font-bold text-xs shadow">
@@ -499,7 +493,7 @@
           </div>
         </div>
 
-        <!-- 5 KPI Cards (Restored Exactly from Photo) -->
+        <!-- 5 KPI Cards -->
         <section class="grid grid-cols-2 lg:grid-cols-5 gap-3.5 no-print">
           <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 flex flex-col justify-between">
             <div class="flex items-center justify-between mb-1">
@@ -567,7 +561,7 @@
           </div>
         </section>
 
-        <!-- Filters Bar (Exact Photo Layout) -->
+        <!-- Filters Bar -->
         <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 no-print">
           <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
             
@@ -613,7 +607,7 @@
               </div>
             </div>
 
-            <!-- Action Buttons (Exact Photo Layout) -->
+            <!-- Action Buttons -->
             <div class="flex items-center gap-2 flex-shrink-0 self-end lg:self-center">
               <button id="resetDateFilterBtn" title="फ़िल्टर रीसेट करें" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs px-2.5 py-2 rounded-lg flex items-center gap-1 shadow-sm transition">
                 <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
@@ -654,7 +648,7 @@
           </div>
         </div>
 
-        <!-- Daily Task Register Table (Exact Photo Layout) -->
+        <!-- Daily Task Register Table -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
           <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
             <div class="flex items-center space-x-2">
@@ -708,7 +702,7 @@
           </div>
         </div>
 
-        <!-- Registered Branches Overview Grid (Exact Photo Layout) -->
+        <!-- Registered Branches Overview Grid -->
         <section id="adminBranchGridSection" class="mt-4 mb-4">
           <div class="flex items-center justify-between mb-3">
             <h3 class="font-bold text-sm sm:text-base text-police-900 flex items-center gap-2">
@@ -963,7 +957,7 @@
           </div>
         </div>
 
-        <!-- SUB-TAB 3: UPLOAD ORDER (WITH DELETE MANAGEMENT) -->
+        <!-- SUB-TAB 3: UPLOAD ORDER (PDF BROWSE FILE OR URL + DELETE) -->
         <div id="as-content-orders" class="admin-sub-content hidden space-y-4">
           <form id="adminUploadOrderForm" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-slate-50 p-4 rounded-xl border">
             <div>
@@ -978,13 +972,29 @@
               <label class="block font-bold mb-1">आदेश का विषय / विवरण *</label>
               <textarea id="admOrdTitle" required rows="2" placeholder="आदेश का संक्षिप्त विवरण लिखें..." class="w-full p-2 border rounded bg-white"></textarea>
             </div>
+            
+            <!-- PDF Upload Option 1: Browse File -->
             <div>
-              <label class="block font-bold mb-1">फ़ाइल लिंक (URL / Drive Link)</label>
-              <input type="text" id="admOrdLink" placeholder="https://..." class="w-full p-2 border rounded bg-white font-mono">
+              <label class="block font-bold mb-1 text-police-800">
+                <i data-lucide="file-up" class="w-3.5 h-3.5 inline mr-1"></i> विकल्प 1: कंप्यूटर/फ़ोन से PDF फ़ाइल अपलोड करें
+              </label>
+              <input type="file" id="admOrdPdfFile" accept=".pdf,application/pdf" class="w-full p-1.5 border rounded bg-white text-xs">
+              <span class="text-[10px] text-slate-400 block mt-0.5">केवल .pdf फ़ाइल चुनें</span>
             </div>
-            <div class="flex items-end">
-              <button type="submit" class="w-full py-2 bg-police-700 hover:bg-police-800 text-white font-bold rounded shadow">
-                + आदेश प्रकाशित करें
+
+            <!-- PDF Upload Option 2: Web Link -->
+            <div>
+              <label class="block font-bold mb-1 text-police-800">
+                <i data-lucide="link" class="w-3.5 h-3.5 inline mr-1"></i> विकल्प 2: या फ़ाइल का वेब लिंक डालें (Drive / URL)
+              </label>
+              <input type="url" id="admOrdLink" placeholder="https://drive.google.com/..." class="w-full p-2 border rounded bg-white font-mono">
+              <span class="text-[10px] text-slate-400 block mt-0.5">ऑनलाइन दस्तावेज़ लिंक</span>
+            </div>
+
+            <div class="sm:col-span-2 flex justify-end">
+              <button type="submit" class="px-5 py-2.5 bg-police-700 hover:bg-police-800 text-white font-bold rounded shadow flex items-center gap-1.5">
+                <i data-lucide="upload" class="w-4 h-4 text-police-gold"></i>
+                <span>+ आदेश प्रकाशित करें</span>
               </button>
             </div>
           </form>
@@ -1167,10 +1177,10 @@
     const DEFAULT_ADMIN = {
       id: 'usr-admin',
       role: 'Admin',
-      name: 'Bal Kishan (Admin)',
-      rank: 'Assistant Programmer',
+      name: 'श्रीमान महानिरीक्षक (Admin)',
+      rank: 'IPS',
       mobile: '9928165827',
-      email: 'balkishan.doit@rajasthan.gov.in',
+      email: 'ig.kota@rajpolice.gov.in',
       pin: '7865',
       password: '7865',
       branch: 'समस्त शाखाएं (पर्यवेक्षण)'
@@ -1197,6 +1207,7 @@
     let currentUser = null;
     let selectedMediaBase64 = '';
     let selectedSlideBase64 = '';
+    let selectedOrderPdfBase64 = '';
 
     const SESSION_KEY = 'ig_police_session_active';
     const IG_PHOTO_STORAGE_KEY = 'ig_kota_saved_avatar_data_url';
@@ -1440,7 +1451,7 @@
       });
 
       setupTabToggle();
-      setupMediaAndSliderUploadListeners();
+      setupUploadListeners();
       setupDashboardFilterListeners();
     }
 
@@ -1465,8 +1476,8 @@
       });
     }
 
-    function setupMediaAndSliderUploadListeners() {
-      // Media Tab
+    function setupUploadListeners() {
+      // Media Tab Browse
       const medFile = document.getElementById('admMedFile');
       if (medFile) {
         medFile.addEventListener('change', function(e) {
@@ -1479,7 +1490,7 @@
         });
       }
 
-      // Slider Tab
+      // Slider Tab Browse
       const slideFile = document.getElementById('admSlideFile');
       if (slideFile) {
         slideFile.addEventListener('change', function(e) {
@@ -1487,6 +1498,28 @@
           if (file) {
             const r = new FileReader();
             r.onload = function(evt) { selectedSlideBase64 = evt.target.result; };
+            r.readAsDataURL(file);
+          }
+        });
+      }
+
+      // Orders Tab PDF Browse
+      const ordPdfFile = document.getElementById('admOrdPdfFile');
+      if (ordPdfFile) {
+        ordPdfFile.addEventListener('change', function(e) {
+          const file = e.target.files[0];
+          if (file) {
+            if (file.type !== 'application/pdf') {
+              showToast('त्रुटि', 'केवल PDF फ़ाइल का चयन करें।');
+              ordPdfFile.value = '';
+              selectedOrderPdfBase64 = '';
+              return;
+            }
+            const r = new FileReader();
+            r.onload = function(evt) {
+              selectedOrderPdfBase64 = evt.target.result;
+              showToast('PDF लोड हुई', `${file.name} अपलोड हेतु तैयार है।`);
+            };
             r.readAsDataURL(file);
           }
         });
@@ -1801,19 +1834,29 @@
       }
     };
 
-    // Orders Upload & Delete
+    // Orders Upload (Browse PDF File or URL) & Delete
     document.getElementById('adminUploadOrderForm').addEventListener('submit', (e) => {
       e.preventDefault();
+      const ordLinkUrl = document.getElementById('admOrdLink').value.trim();
+      const finalPdfPath = selectedOrderPdfBase64 || ordLinkUrl || '#';
+
+      if (finalPdfPath === '#') {
+        showToast('सूचना', 'कृपया PDF फ़ाइल चुनें अथवा लिंक दर्ज करें।');
+        return;
+      }
+
       const newOrder = {
         id: 'ord-' + Date.now(),
         orderNo: document.getElementById('admOrdNo').value.trim(),
         orderDate: document.getElementById('admOrdDate').value,
         title: document.getElementById('admOrdTitle').value.trim(),
-        link: document.getElementById('admOrdLink').value.trim() || '#'
+        link: finalPdfPath
       };
+
       ordersRef.child(newOrder.id).set(newOrder).then(() => {
         document.getElementById('adminUploadOrderForm').reset();
-        showToast('आदेश प्रकाशित', 'आदेश वेबसाइट पर लाइव जोड़ दिया गया है।');
+        selectedOrderPdfBase64 = '';
+        showToast('आदेश प्रकाशित', 'आदेश एवं PDF वेबसाइट पर लाइव जोड़ दिए गए हैं।');
       });
     });
 
@@ -2041,6 +2084,7 @@
       const isAdmin = currentUser?.role === 'Admin';
 
       filtered.forEach((o, idx) => {
+        const isPdfData = o.link && o.link.startsWith('data:application/pdf');
         const tr = document.createElement('tr');
         tr.className = 'hover:bg-slate-50 transition';
         tr.innerHTML = `
@@ -2049,9 +2093,15 @@
           <td class="p-3 font-mono font-bold text-police-900">${o.orderNo}</td>
           <td class="p-3 font-medium leading-relaxed">${o.title}</td>
           <td class="p-3 text-center">
-            <a href="${o.link}" target="_blank" class="inline-flex items-center gap-1 text-xs font-bold text-police-700 hover:text-police-900 bg-police-50 hover:bg-police-100 px-2.5 py-1 rounded border">
-              <i data-lucide="download" class="w-3.5 h-3.5"></i> डाउनलोड
-            </a>
+            ${isPdfData ? `
+              <button onclick="downloadPdfFile('${o.id}')" class="inline-flex items-center gap-1 text-xs font-bold text-police-700 hover:text-police-900 bg-police-50 hover:bg-police-100 px-2.5 py-1 rounded border">
+                <i data-lucide="file-down" class="w-3.5 h-3.5 text-rose-600"></i> PDF खोलें
+              </button>
+            ` : `
+              <a href="${o.link}" target="_blank" class="inline-flex items-center gap-1 text-xs font-bold text-police-700 hover:text-police-900 bg-police-50 hover:bg-police-100 px-2.5 py-1 rounded border">
+                <i data-lucide="external-link" class="w-3.5 h-3.5"></i> लिंक खोलें
+              </a>
+            `}
           </td>
           <td class="p-3 text-center admin-action-col ${isAdmin ? '' : 'hidden'}">
             <button onclick="deleteOrderItem('${o.id}')" class="p-1 text-rose-600 hover:bg-rose-50 rounded">
@@ -2063,6 +2113,21 @@
       });
       lucide.createIcons();
     }
+
+    window.downloadPdfFile = function(orderId) {
+      const order = orders.find(o => o.id === orderId);
+      if (!order || !order.link) return;
+
+      const newTab = window.open();
+      if (newTab) {
+        newTab.document.write(`<iframe src="${order.link}" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>`);
+      } else {
+        const a = document.createElement('a');
+        a.href = order.link;
+        a.download = `${order.orderNo.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
+        a.click();
+      }
+    };
 
     function filterMedia(cat) {
       document.querySelectorAll('.media-filter-btn').forEach(b => {
@@ -2146,7 +2211,7 @@
       lucide.createIcons();
     }
 
-    // ================= DASHBOARD & REGISTER (PHOTO RESTORED LOGIC) =================
+    // ================= DASHBOARD & REGISTER =================
     function getRegisteredBranches() {
       const set = new Set();
       users.forEach(u => {
