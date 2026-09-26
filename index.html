@@ -318,39 +318,13 @@
         <!-- AUTO-SLIDING CAROUSEL -->
         <div class="relative bg-slate-900 rounded-2xl overflow-hidden shadow-xl border border-slate-200 h-64 sm:h-80 md:h-96">
           <div id="carouselContainer" class="relative w-full h-full">
-            <div class="carousel-item active relative w-full h-full">
-              <div class="w-full h-full bg-gradient-to-r from-police-950 via-police-900 to-police-800 flex items-center p-6 sm:p-10 text-white">
-                <div class="max-w-xl space-y-3">
-                  <span class="bg-police-gold text-police-950 text-xs font-extrabold px-2.5 py-1 rounded shadow">कोटा रेंज पुलिस विजन</span>
-                  <h2 class="text-xl sm:text-3xl font-extrabold leading-tight text-white">
-                    आमजन में विश्वास, अपराधियों में डर
-                  </h2>
-                  <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                    कोटा, बूंदी, बारां एवं झालावाड़ जिलों में शांति व्यवस्था, पारदर्शी पुलिसिंग और जनसंवाद के माध्यम से अपराध नियंत्रण कोटा रेंज पुलिस की सर्वोच्च प्राथमिकता है।
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div class="carousel-item relative w-full h-full">
-              <div class="w-full h-full bg-gradient-to-r from-police-900 via-slate-900 to-police-950 flex items-center p-6 sm:p-10 text-white">
-                <div class="max-w-xl space-y-3">
-                  <span class="bg-emerald-500 text-white text-xs font-extrabold px-2.5 py-1 rounded shadow">डिजिटल नवाचार</span>
-                  <h2 class="text-xl sm:text-3xl font-extrabold leading-tight text-white">
-                    दैनिक कार्य प्रगति एवं निगरानी प्रणाली
-                  </h2>
-                  <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                    रेंज कार्यालय की समस्त शाखाओं के पत्रावलियों व प्रकरणों का समयबद्ध निस्तारण, रियल-टाइम ट्रैकिंग एवं उच्चाधिकारियों द्वारा पारदर्शी पर्यवेक्षण।
-                  </p>
-                </div>
-              </div>
-            </div>
+            <!-- Dynamic slides rendered by JS -->
           </div>
 
-          <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/40 hover:bg-black/70 text-white transition">
+          <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/40 hover:bg-black/70 text-white transition z-10">
             <i data-lucide="chevron-left" class="w-5 h-5"></i>
           </button>
-          <button onclick="nextSlide()" class="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/40 hover:bg-black/70 text-white transition">
+          <button onclick="nextSlide()" class="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/40 hover:bg-black/70 text-white transition z-10">
             <i data-lucide="chevron-right" class="w-5 h-5"></i>
           </button>
         </div>
@@ -427,6 +401,7 @@
                   <th class="p-3 w-40">आदेश क्रमांक</th>
                   <th class="p-3">विषय / विवरण</th>
                   <th class="p-3 w-28 text-center">डाउनलोड</th>
+                  <th class="p-3 w-20 text-center admin-action-col hidden">हटाएं</th>
                 </tr>
               </thead>
               <tbody id="ordersTableBody" class="divide-y divide-slate-100"></tbody>
@@ -484,6 +459,7 @@
                   <th class="p-3">अधिकारी का नाम</th>
                   <th class="p-3 w-36">सीयूजी मोबाइल नंबर</th>
                   <th class="p-3 w-56">आधिकारिक ईमेल</th>
+                  <th class="p-3 w-20 text-center admin-action-col hidden">हटाएं</th>
                 </tr>
               </thead>
               <tbody id="contactsTableBody" class="divide-y divide-slate-100"></tbody>
@@ -492,19 +468,19 @@
         </div>
       </section>
 
-      <!-- ================= 5. OFFICE MONITORING SYSTEM DASHBOARD TAB ================= -->
+      <!-- ================= 5. OFFICE MONITORING SYSTEM DASHBOARD TAB (PHOTO EXACT RESTORED) ================= -->
       <section id="content-monitoringDashboard" class="tab-content hidden space-y-6">
         
-        <!-- User Scope Top Bar -->
-        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <!-- User Scope Top Bar (Exactly like photo) -->
+        <div class="bg-white rounded-xl p-3.5 border border-slate-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 no-print">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-police-800 text-police-gold flex items-center justify-center font-bold text-xs shadow">
-              <i data-lucide="shield-check" class="w-5 h-5"></i>
+            <div class="w-9 h-9 rounded-full bg-police-800 text-police-gold flex items-center justify-center font-bold text-xs shadow">
+              <i data-lucide="user-check" class="w-4 h-4"></i>
             </div>
             <div>
               <div class="text-xs font-bold text-slate-800 flex items-center gap-2">
                 <span id="scopeUserName">--</span>
-                <span id="scopeUserRank" class="text-[10px] px-2 py-0.5 bg-slate-100 text-slate-700 rounded font-mono border">--</span>
+                <span id="scopeUserRank" class="text-[10px] px-2 py-0.5 bg-slate-100 text-slate-700 rounded-full font-mono border">--</span>
               </div>
               <div class="text-[11px] text-slate-500 font-medium">
                 सक्रिय कार्यक्षेत्र: <span id="scopeUserBranch" class="font-bold text-police-800">--</span>
@@ -513,85 +489,160 @@
           </div>
 
           <div class="flex items-center gap-2">
-            <button id="adminCreateBranchBtn" class="hidden bg-police-800 hover:bg-police-900 text-police-gold text-xs font-bold px-3 py-1.5 rounded-lg border border-police-gold/50 shadow flex items-center gap-1.5 transition">
+            <button id="adminCreateBranchBtn" onclick="openAdminCreateBranchModal()" class="hidden bg-police-800 hover:bg-police-900 text-police-gold text-xs font-bold px-3 py-1.5 rounded-lg border border-police-gold/50 shadow flex items-center gap-1.5 transition">
               <i data-lucide="user-plus" class="w-4 h-4"></i>
               <span>+ नई शाखा ID बनाएं</span>
             </button>
             <div id="scopeBadgeTag" class="text-xs font-bold px-3 py-1 rounded-lg bg-blue-50 text-blue-800 border border-blue-200">
-              --
+              दूसरा पृष्ठ - एडमिन डैशबोर्ड (Admin Overview)
             </div>
           </div>
         </div>
 
-        <!-- Filters & Action Bar -->
-        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
+        <!-- 5 KPI Cards (Restored Exactly from Photo) -->
+        <section class="grid grid-cols-2 lg:grid-cols-5 gap-3.5 no-print">
+          <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-semibold text-slate-500 uppercase">कुल पंजीकृत कार्य</span>
+              <span class="p-1.5 rounded-lg bg-blue-50 text-blue-700"><i data-lucide="clipboard-list" class="w-4 h-4"></i></span>
+            </div>
+            <div class="flex items-baseline space-x-1">
+              <span class="text-2xl sm:text-3xl font-extrabold text-slate-800" id="kpiTotal">0</span>
+              <span class="text-xs text-slate-500">प्रकरण</span>
+            </div>
+            <div class="mt-2 text-[11px] text-slate-400" id="kpiScopeSubtitle">समस्त शाखाओं के कुल कार्य</div>
+          </div>
+
+          <div class="bg-white rounded-xl p-4 shadow-sm border-l-4 border-l-emerald-600 border border-slate-200 flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-bold text-emerald-700 uppercase flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> पूर्ण कार्य
+              </span>
+              <span class="p-1.5 rounded-lg bg-emerald-50 text-emerald-700"><i data-lucide="check" class="w-4 h-4"></i></span>
+            </div>
+            <div>
+              <span class="text-2xl sm:text-3xl font-extrabold text-emerald-700" id="kpiCompleted">0</span>
+            </div>
+            <div class="mt-2 text-[11px] text-emerald-800">सफलतापूर्वक निस्तारित</div>
+          </div>
+
+          <div class="bg-white rounded-xl p-4 shadow-sm border-l-4 border-l-rose-600 border border-slate-200 flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-bold text-rose-700 uppercase flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-rose-500 inline-block"></span> अपूर्ण / लंबित
+              </span>
+              <span class="p-1.5 rounded-lg bg-rose-50 text-rose-700"><i data-lucide="alert-circle" class="w-4 h-4"></i></span>
+            </div>
+            <div>
+              <span class="text-2xl sm:text-3xl font-extrabold text-rose-700" id="kpiPending">0</span>
+            </div>
+            <div class="mt-2 text-[11px] text-rose-800">कार्यवाही प्रतीक्षित</div>
+          </div>
+
+          <div class="bg-white rounded-xl p-4 shadow-sm border-l-4 border-l-amber-500 border border-slate-200 flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-bold text-amber-700 uppercase flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span> प्रक्रियाधीन
+              </span>
+              <span class="p-1.5 rounded-lg bg-amber-50 text-amber-700"><i data-lucide="clock" class="w-4 h-4"></i></span>
+            </div>
+            <div>
+              <span class="text-2xl sm:text-3xl font-extrabold text-amber-600" id="kpiProgress">0</span>
+            </div>
+            <div class="mt-2 text-[11px] text-amber-800">कार्रवाई जारी</div>
+          </div>
+
+          <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 flex flex-col justify-between col-span-2 lg:col-span-1">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-semibold text-slate-500 uppercase">निस्तारण प्रतिशत</span>
+              <span class="text-xs font-bold text-police-700 font-mono" id="ratePercentage">0%</span>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden my-2">
+              <div id="progressBar" class="bg-emerald-500 h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+            <div class="flex justify-between items-center text-[10px] text-slate-400">
+              <span>0%</span>
+              <span>लक्ष्य: 100%</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Filters Bar (Exact Photo Layout) -->
+        <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 no-print">
           <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-2 flex-grow text-xs">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-2.5 flex-grow">
               <div>
-                <label class="block font-bold text-slate-700 mb-1">दिनांक से</label>
-                <input type="date" id="filterFromDate" class="w-full rounded border border-slate-300 p-1.5 bg-slate-50 font-mono">
+                <label class="block text-xs font-bold text-slate-700 mb-1">दिनांक से (From)</label>
+                <input type="date" id="filterFromDate" class="w-full text-xs rounded-lg border border-slate-300 py-1.5 px-2 bg-slate-50 font-mono">
               </div>
+
               <div>
-                <label class="block font-bold text-slate-700 mb-1">दिनांक तक</label>
-                <input type="date" id="filterToDate" class="w-full rounded border border-slate-300 p-1.5 bg-slate-50 font-mono">
+                <label class="block text-xs font-bold text-slate-700 mb-1">दिनांक तक (To)</label>
+                <input type="date" id="filterToDate" class="w-full text-xs rounded-lg border border-slate-300 py-1.5 px-2 bg-slate-50 font-mono">
               </div>
+
               <div>
-                <label class="block font-bold text-slate-700 mb-1">शाखा</label>
-                <select id="filterBranch" class="w-full rounded border border-slate-300 p-1.5 bg-slate-50 font-medium"></select>
+                <label class="block text-xs font-bold text-slate-700 mb-1">शाखा (Branch)</label>
+                <select id="filterBranch" class="w-full text-xs rounded-lg border border-slate-300 py-2 px-2.5 bg-slate-50 font-medium"></select>
               </div>
+
               <div>
-                <label class="block font-bold text-slate-700 mb-1">स्थिति</label>
-                <select id="filterStatus" class="w-full rounded border border-slate-300 p-1.5 bg-slate-50">
+                <label class="block text-xs font-bold text-slate-700 mb-1">स्थिति (Status)</label>
+                <select id="filterStatus" class="w-full text-xs rounded-lg border border-slate-300 py-2 px-2.5 bg-slate-50">
                   <option value="ALL">सभी स्थितियां</option>
-                  <option value="COMPLETED">🟢 पूर्ण (Completed)</option>
-                  <option value="PENDING">🔴 लंबित (Pending)</option>
+                  <option value="COMPLETED">🟢 पूर्ण कार्य (Completed)</option>
+                  <option value="PENDING">🔴 अपूर्ण / लंबित (Pending)</option>
                   <option value="PROGRESS">🟡 प्रक्रियाधीन (In Progress)</option>
                 </select>
               </div>
+
               <div>
-                <label class="block font-bold text-slate-700 mb-1">प्राथमिकता</label>
-                <select id="filterPriority" class="w-full rounded border border-slate-300 p-1.5 bg-slate-50">
+                <label class="block text-xs font-bold text-slate-700 mb-1">प्राथमिकता</label>
+                <select id="filterPriority" class="w-full text-xs rounded-lg border border-slate-300 py-2 px-2.5 bg-slate-50">
                   <option value="ALL">सभी प्राथमिकताएं</option>
-                  <option value="URGENT">अति आवश्यक</option>
-                  <option value="HIGH">उच्च</option>
-                  <option value="NORMAL">सामान्य</option>
+                  <option value="URGENT">अति आवश्यक (Urgent)</option>
+                  <option value="HIGH">उच्च (High)</option>
+                  <option value="NORMAL">सामान्य (Normal)</option>
                 </select>
               </div>
+
               <div>
-                <label class="block font-bold text-slate-700 mb-1">खोजें</label>
-                <input type="text" id="searchInput" placeholder="विवरण खोजें..." class="w-full rounded border border-slate-300 p-1.5 bg-slate-50">
+                <label class="block text-xs font-bold text-slate-700 mb-1">खोजें (Search)</label>
+                <input type="text" id="searchInput" placeholder="विवरण / कर्मचारी..." class="w-full text-xs rounded-lg border border-slate-300 py-2 px-2.5 bg-slate-50">
               </div>
             </div>
 
-            <!-- Action Buttons -->
+            <!-- Action Buttons (Exact Photo Layout) -->
             <div class="flex items-center gap-2 flex-shrink-0 self-end lg:self-center">
-              <button id="resetDateFilterBtn" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs px-2.5 py-2 rounded-lg flex items-center gap-1 transition">
+              <button id="resetDateFilterBtn" title="फ़िल्टर रीसेट करें" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs px-2.5 py-2 rounded-lg flex items-center gap-1 shadow-sm transition">
                 <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
                 <span>रीसेट</span>
               </button>
-              <button id="openNewTaskBtn" class="bg-police-700 hover:bg-police-800 text-white font-bold text-xs px-3 py-2 rounded-lg flex items-center gap-1 shadow transition">
+
+              <button id="openNewTaskBtn" class="bg-police-700 hover:bg-police-800 text-white font-medium text-xs px-3 py-2 rounded-lg flex items-center gap-1.5 shadow transition">
                 <i data-lucide="plus-circle" class="w-4 h-4 text-police-gold"></i>
-                <span>+ नया कार्य</span>
+                <span>नया कार्य दर्ज करें</span>
               </button>
-              <button id="printPdfDirectBtn" class="bg-slate-800 hover:bg-slate-900 text-white font-medium text-xs px-3 py-2 rounded-lg flex items-center gap-1 shadow transition">
+
+              <button id="printPdfDirectBtn" title="लैंडस्केप PDF जनरेट करके प्रिंट करें" class="bg-slate-800 hover:bg-slate-900 text-white font-medium text-xs px-3 py-2 rounded-lg flex items-center gap-1.5 shadow transition">
                 <i data-lucide="printer" class="w-4 h-4 text-police-goldlight"></i>
-                <span>प्रिंट प्रतिवेदन</span>
+                <span>प्रतिवेदन प्रिंट (PDF)</span>
               </button>
-              
+
               <!-- Download Menu -->
               <div class="relative inline-block text-left" id="downloadDropdownWrap">
-                <button id="downloadDropdownBtn" type="button" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-3 py-2 rounded-lg flex items-center gap-1 shadow transition">
+                <button id="downloadDropdownBtn" type="button" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-3 py-2 rounded-lg flex items-center gap-1.5 shadow transition">
                   <i data-lucide="download" class="w-4 h-4"></i>
                   <span>डाउनलोड</span>
                   <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
                 </button>
-                <div id="downloadMenu" class="hidden absolute right-0 mt-1 w-44 rounded-lg shadow-xl bg-white border z-50 py-1 font-medium text-xs">
-                  <button id="downloadPdfBtn" class="w-full text-left px-3 py-2 text-slate-700 hover:bg-police-50 flex items-center gap-2 border-b">
+                <div id="downloadMenu" class="hidden absolute right-0 mt-1 w-44 rounded-lg shadow-xl bg-white ring-1 ring-black ring-opacity-5 z-50 py-1 font-medium text-xs">
+                  <button id="downloadPdfBtn" class="w-full text-left px-3.5 py-2 text-slate-700 hover:bg-police-50 flex items-center gap-2 border-b">
                     <i data-lucide="file-text" class="w-4 h-4 text-rose-600"></i>
                     <span>PDF डाउनलोड (Landscape)</span>
                   </button>
-                  <button id="downloadExcelBtn" class="w-full text-left px-3 py-2 text-slate-700 hover:bg-police-50 flex items-center gap-2">
+                  <button id="downloadExcelBtn" class="w-full text-left px-3.5 py-2 text-slate-700 hover:bg-police-50 flex items-center gap-2">
                     <i data-lucide="file-spreadsheet" class="w-4 h-4 text-emerald-600"></i>
                     <span>Excel डाउनलोड (.xlsx)</span>
                   </button>
@@ -603,50 +654,221 @@
           </div>
         </div>
 
-        <!-- Task Register Table -->
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-          <div class="px-5 py-3.5 bg-slate-50 border-b flex justify-between items-center text-xs">
-            <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-police-gold"></span>
-              <h3 class="font-bold text-police-900 text-sm">दैनिक कार्य विवरण तालिका (Daily Task Register)</h3>
-              <span id="renderedCountBadge" class="bg-police-100 text-police-800 font-bold px-2 py-0.5 rounded-full">0 कार्य</span>
+        <!-- Daily Task Register Table (Exact Photo Layout) -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+          <div class="px-5 py-3.5 bg-slate-50 border-b border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+            <div class="flex items-center space-x-2">
+              <span class="w-3 h-3 rounded-full bg-police-gold"></span>
+              <h2 class="font-bold text-sm sm:text-base text-police-900 tracking-wide">
+                दैनिक कार्य विवरण तालिका (Daily Task Register)
+              </h2>
+              <span id="renderedCountBadge" class="bg-police-100 text-police-800 text-xs px-2 py-0.5 rounded-full font-bold">
+                0 कार्य
+              </span>
             </div>
-            <div class="flex gap-3 text-[11px] font-semibold">
-              <span class="text-emerald-700">🟢 पूर्ण = लॉक</span>
-              <span class="text-rose-700">🔴 लंबित = प्रतीक्षित</span>
+            <div class="text-xs text-slate-600 font-medium flex items-center gap-4">
+              <span class="inline-flex items-center gap-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span> हरा डॉट (🟢) = पूर्ण
+              </span>
+              <span class="inline-flex items-center gap-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> लाल निशान (🔴) = लंबित
+              </span>
             </div>
           </div>
 
           <div class="overflow-x-auto w-full">
-            <table class="w-full text-left text-xs border-collapse" id="tasksTable">
+            <table class="w-full text-left text-xs sm:text-sm border-collapse" id="tasksTable">
               <thead>
-                <tr class="bg-slate-100 text-slate-700 font-bold uppercase text-[11px] border-b">
-                  <th class="py-2.5 px-3 w-10 text-center">क्र.</th>
-                  <th class="py-2.5 px-3 w-24">कार्य दिनांक</th>
-                  <th class="py-2.5 px-3 w-32">शाखा (Branch)</th>
-                  <th class="py-2.5 px-4">दैनिक कार्य का विस्तृत विवरण</th>
-                  <th class="py-2.5 px-3 w-28">प्रभारी/कर्मचारी</th>
-                  <th class="py-2.5 px-3 w-20">प्राथमिकता</th>
-                  <th class="py-2.5 px-3 w-24">लक्ष्य तिथि</th>
-                  <th class="py-2.5 px-3 min-w-[180px]">कार्यवाही हेतु निर्देश (Admin/IG)</th>
-                  <th class="py-2.5 px-3 w-24 text-center">स्थिति</th>
-                  <th class="py-2.5 px-3 text-right no-print w-32">कार्यवाही</th>
+                <tr class="bg-slate-100 text-slate-700 font-bold uppercase text-[11px] sm:text-xs tracking-wider border-b border-slate-300">
+                  <th class="py-3 px-3 w-12 text-center">क्र.</th>
+                  <th class="py-3 px-3 min-w-[110px]">कार्य दिनांक</th>
+                  <th class="py-3 px-3 min-w-[130px]">शाखा (BRANCH)</th>
+                  <th class="py-3 px-4 min-w-[260px]">दैनिक कार्य विवरण (TASK DETAILS)</th>
+                  <th class="py-3 px-3">प्रभारी / कर्मचारी</th>
+                  <th class="py-3 px-3">प्राथमिकता</th>
+                  <th class="py-3 px-3">लक्ष्य तिथि</th>
+                  <th class="py-3 px-3 min-w-[200px]">कार्यवाही हेतु निर्देश (ADMIN DIRECTIONS)</th>
+                  <th class="py-3 px-3 text-center">स्थिति सूचक (STATUS)</th>
+                  <th class="py-3 px-3 text-right no-print min-w-[150px]">कार्यवाही (ACTIONS)</th>
                 </tr>
               </thead>
-              <tbody id="taskTableBody" class="divide-y divide-slate-100"></tbody>
+              <tbody id="taskTableBody" class="divide-y divide-slate-200"></tbody>
             </table>
           </div>
 
           <div id="noTasksState" class="py-12 text-center text-slate-400">
-            <i data-lucide="clipboard-x" class="w-10 h-10 mx-auto mb-2 text-slate-300"></i>
-            <p class="font-semibold text-xs text-slate-600">कोई कार्य दर्ज नहीं मिला</p>
+            <i data-lucide="clipboard-x" class="w-12 h-12 mx-auto stroke-1 mb-2 text-slate-300"></i>
+            <p class="text-sm font-semibold text-slate-600">चयनित दिनांक रेंज / फ़िल्टर में कोई कार्य दर्ज नहीं है</p>
+            <p class="text-xs text-slate-400 mt-1">'रीसेट' बटन दबाएं अथवा 'नया कार्य दर्ज करें' पर क्लिक करें।</p>
+          </div>
+
+          <div class="p-3 bg-slate-50 border-t border-slate-200 text-[11px] text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div>* एक बार कार्य पूर्ण होकर लॉक होने के बाद संशोधन की शक्ति केवल एडमिन के पास रहेगी।</div>
+            <div class="font-medium text-police-700">सुरक्षित केंद्रीय क्लाउड डेटा (Firebase Synced)</div>
           </div>
         </div>
+
+        <!-- Registered Branches Overview Grid (Exact Photo Layout) -->
+        <section id="adminBranchGridSection" class="mt-4 mb-4">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="font-bold text-sm sm:text-base text-police-900 flex items-center gap-2">
+              <i data-lucide="layers" class="w-4 h-4 text-police-gold"></i>
+              <span>पंजीकृत शाखाओं का तुलनात्मक कार्य अवलोकन (Registered Branches Overview)</span>
+            </h3>
+            <span class="text-xs text-slate-500" id="regBranchesCountText">0 शाखाएं सक्रिय</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5" id="branchSummaryGrid"></div>
+        </section>
 
       </section>
 
     </div>
 
+  </div>
+
+  <!-- ================= MODAL: MULTI-ROW TASK ENTRY ================= -->
+  <div id="taskModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3 overflow-y-auto no-print">
+    <div class="bg-white rounded-xl shadow-2xl max-w-3xl w-full border-t-4 border-police-700 overflow-hidden my-8">
+      
+      <div class="px-5 py-3.5 bg-police-900 text-white flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <i data-lucide="file-plus" class="w-5 h-5 text-police-gold"></i>
+          <div>
+            <h3 class="font-bold text-sm sm:text-base" id="taskModalHeading">दैनिक कार्य प्रविष्टि (Multiple Task Rows)</h3>
+            <p class="text-[10px] text-amber-200">* प्रतिबंध: कार्य केवल वर्तमान दिनांक या आगामी 2 दिनों का ही दर्ज हो सकता है।</p>
+          </div>
+        </div>
+        <button onclick="document.getElementById('taskModal').classList.add('hidden')" class="text-slate-300 hover:text-white p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="taskForm" class="p-5 space-y-4">
+        <input type="hidden" id="editTaskId" value="">
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-50 p-3 rounded-lg border border-slate-200">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">शाखा *</label>
+            <input type="text" id="modalBranch" required readonly class="w-full text-xs rounded border border-slate-300 p-2 bg-slate-100 font-bold text-police-900">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">
+              कार्य दिनांक *
+              <span class="text-[10px] font-normal text-rose-600 block">(पिछली तिथि मान्य नहीं)</span>
+            </label>
+            <input type="date" id="modalTaskDate" required class="w-full text-xs rounded border border-slate-300 p-2 bg-white focus:ring-2 focus:ring-police-600 font-mono">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">लक्ष्य तिथि *</label>
+            <input type="date" id="modalDueDate" required class="w-full text-xs rounded border border-slate-300 p-2 bg-white focus:ring-2 focus:ring-police-600 font-mono">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">प्रभारी / संबंधित कर्मचारी</label>
+            <input type="text" id="modalAssignee" placeholder="उदा. उनि. सुरेश कुमार" class="w-full text-xs rounded-lg border border-slate-300 p-2.5 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">प्राथमिकता *</label>
+            <select id="modalPriority" class="w-full text-xs rounded-lg border border-slate-300 p-2.5 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
+              <option value="NORMAL">सामान्य (Normal)</option>
+              <option value="HIGH">उच्च (High)</option>
+              <option value="URGENT">अति आवश्यक (Urgent)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="border border-slate-300 rounded-lg p-3 bg-slate-50/50">
+          <div class="flex items-center justify-between mb-2">
+            <label class="block text-xs font-bold text-slate-800">
+              दैनिक कार्य का विस्तृत विवरण (1 से अधिक कार्य अलग-अलग पंक्तियों में लिखें):
+            </label>
+            <button type="button" id="addNewRowBtn" class="text-xs font-bold text-police-700 hover:text-police-900 bg-white border border-police-600 px-2.5 py-1 rounded shadow-sm flex items-center gap-1 transition">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+              <span>+ कार्य पंक्ति जोड़ें</span>
+            </button>
+          </div>
+
+          <div id="taskRowsContainer" class="space-y-2.5 max-h-64 overflow-y-auto pr-1"></div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-200 flex justify-end space-x-2">
+          <button type="button" onclick="document.getElementById('taskModal').classList.add('hidden')" class="px-4 py-2 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg">रद्द करें</button>
+          <button type="submit" class="px-5 py-2 text-xs font-bold text-white bg-police-700 hover:bg-police-800 rounded-lg shadow flex items-center gap-1">
+            <i data-lucide="save" class="w-4 h-4 text-police-gold"></i>
+            <span>सुरक्षित करें</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: ADMIN CREATES BRANCH ID ================= -->
+  <div id="adminCreateBranchModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-3 overflow-y-auto no-print">
+    <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full border-t-4 border-police-gold overflow-hidden my-8">
+      
+      <div class="px-5 py-3.5 bg-police-900 text-white flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <i data-lucide="shield-plus" class="w-5 h-5 text-police-gold"></i>
+          <div>
+            <h3 class="font-bold text-sm sm:text-base">नई शाखा आईडी व पासवर्ड जारी करें</h3>
+            <p class="text-[10px] text-police-goldlight">केवल एडमिन द्वारा प्राधिकृत</p>
+          </div>
+        </div>
+        <button onclick="document.getElementById('adminCreateBranchModal').classList.add('hidden')" class="text-slate-300 hover:text-white p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="adminBranchCreateForm" class="p-5 space-y-3.5">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">शाखा का नाम *</label>
+          <input type="text" id="admBranchName" required placeholder="उदा. अपराध शाखा / साइबर सेल / जनसुनवाई" class="w-full text-xs rounded-lg border border-slate-300 p-2.5 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-bold text-police-900">
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">प्रभारी का नाम *</label>
+            <input type="text" id="admStaffName" required placeholder="उदा. सुरेश कुमार" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">पद (Rank) *</label>
+            <input type="text" id="admStaffRank" required placeholder="उदा. निरीक्षक / उनि." class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">मोबाइल नंबर (Login ID) *</label>
+            <input type="tel" id="admMobile" maxlength="10" required placeholder="10 अंक" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-mono">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">सुरक्षा पिन (4 अंक) *</label>
+            <input type="password" id="admPin" maxlength="4" required placeholder="उदा. 1234" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-mono">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">शाखा की ईमेल आईडी *</label>
+          <input type="email" id="admEmail" required placeholder="branch.kota@rajpolice.gov.in" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-mono">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">शाखा का प्रारंभिक पासवर्ड *</label>
+          <input type="text" id="admPassword" required placeholder="प्रारंभिक पासवर्ड दर्ज करें" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-police-600 font-mono">
+        </div>
+
+        <div class="pt-3 border-t border-slate-200 flex justify-end space-x-2">
+          <button type="button" onclick="document.getElementById('adminCreateBranchModal').classList.add('hidden')" class="px-4 py-2 text-xs font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-lg">रद्द करें</button>
+          <button type="submit" class="px-5 py-2 text-xs font-bold text-white bg-police-700 hover:bg-police-800 rounded-lg shadow flex items-center gap-1">
+            <i data-lucide="check-circle" class="w-4 h-4 text-police-gold"></i>
+            <span>आईडी जारी करें</span>
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <!-- ================= ADMIN SUPER CONTROL MODAL ================= -->
@@ -658,7 +880,7 @@
           <i data-lucide="shield-check" class="w-6 h-6 text-police-gold"></i>
           <div>
             <h3 class="font-extrabold text-base text-white">एडमिन सुपर कंट्रोल विंडो (Admin Master Control)</h3>
-            <p class="text-[11px] text-police-goldlight">यूजर आईडी, पासवर्ड, फोटो, ऑर्डर्स एवं कॉन्टैक्ट्स प्रबंधन</p>
+            <p class="text-[11px] text-police-goldlight">यूजर आईडी, पासवर्ड, होम स्लाइडर, ऑर्डर्स, मीडिया व संपर्क सूची प्रबंधन</p>
           </div>
         </div>
         <button onclick="closeAdminControlModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
@@ -666,18 +888,21 @@
         </button>
       </div>
 
-      <div class="flex border-b bg-slate-50 text-xs font-bold px-6 pt-3 gap-2">
-        <button onclick="switchAdminSubTab('users')" id="ast-users" class="admin-sub-tab active py-2 px-4 border-b-2 border-police-700 text-police-800 bg-white rounded-t-lg">
-          <i data-lucide="users" class="w-3.5 h-3.5 inline mr-1"></i> यूजर क्रेडेंशियल्स (IG & Branches)
+      <div class="flex border-b bg-slate-50 text-xs font-bold px-6 pt-3 gap-2 overflow-x-auto">
+        <button onclick="switchAdminSubTab('users')" id="ast-users" class="admin-sub-tab active py-2 px-3 border-b-2 border-police-700 text-police-800 bg-white rounded-t-lg whitespace-nowrap">
+          <i data-lucide="users" class="w-3.5 h-3.5 inline mr-1"></i> यूजर क्रेडेंशियल्स
         </button>
-        <button onclick="switchAdminSubTab('orders')" id="ast-orders" class="admin-sub-tab py-2 px-4 border-b-2 border-transparent text-slate-500 hover:text-police-700">
-          <i data-lucide="file-plus" class="w-3.5 h-3.5 inline mr-1"></i> आदेश व परिपत्र अपलोड
+        <button onclick="switchAdminSubTab('slider')" id="ast-slider" class="admin-sub-tab py-2 px-3 border-b-2 border-transparent text-slate-500 hover:text-police-700 whitespace-nowrap">
+          <i data-lucide="sliders" class="w-3.5 h-3.5 inline mr-1"></i> होम फोटो स्लाइडर
         </button>
-        <button onclick="switchAdminSubTab('media')" id="ast-media" class="admin-sub-tab py-2 px-4 border-b-2 border-transparent text-slate-500 hover:text-police-700">
-          <i data-lucide="image-plus" class="w-3.5 h-3.5 inline mr-1"></i> मीडिया/गैलरी अपलोड
+        <button onclick="switchAdminSubTab('orders')" id="ast-orders" class="admin-sub-tab py-2 px-3 border-b-2 border-transparent text-slate-500 hover:text-police-700 whitespace-nowrap">
+          <i data-lucide="file-plus" class="w-3.5 h-3.5 inline mr-1"></i> आदेश व परिपत्र
         </button>
-        <button onclick="switchAdminSubTab('contacts')" id="ast-contacts" class="admin-sub-tab py-2 px-4 border-b-2 border-transparent text-slate-500 hover:text-police-700">
-          <i data-lucide="phone-forwarded" class="w-3.5 h-3.5 inline mr-1"></i> संपर्क सूची प्रबंधन (Excel)
+        <button onclick="switchAdminSubTab('media')" id="ast-media" class="admin-sub-tab py-2 px-3 border-b-2 border-transparent text-slate-500 hover:text-police-700 whitespace-nowrap">
+          <i data-lucide="image-plus" class="w-3.5 h-3.5 inline mr-1"></i> मीडिया/गैलरी
+        </button>
+        <button onclick="switchAdminSubTab('contacts')" id="ast-contacts" class="admin-sub-tab py-2 px-3 border-b-2 border-transparent text-slate-500 hover:text-police-700 whitespace-nowrap">
+          <i data-lucide="phone-forwarded" class="w-3.5 h-3.5 inline mr-1"></i> संपर्क सूची (Excel/Delete)
         </button>
       </div>
 
@@ -705,7 +930,40 @@
           </div>
         </div>
 
-        <!-- SUB-TAB 2: UPLOAD ORDER -->
+        <!-- SUB-TAB 2: SLIDER MANAGEMENT (ADD/BROWSE & DELETE SLIDES) -->
+        <div id="as-content-slider" class="admin-sub-content hidden space-y-5">
+          <form id="adminAddSlideForm" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-slate-50 p-4 rounded-xl border">
+            <div class="sm:col-span-2">
+              <label class="block font-bold mb-1">स्लाइड का शीर्षक / टैगलाइन *</label>
+              <input type="text" id="admSlideTitle" required placeholder="उदा. कोटा रेंज पुलिस: आमजन में विश्वास, अपराधियों में डर" class="w-full p-2 border rounded bg-white font-bold">
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block font-bold mb-1">विवरण</label>
+              <textarea id="admSlideDesc" rows="2" placeholder="संक्षिप्त विवरण दर्ज करें..." class="w-full p-2 border rounded bg-white"></textarea>
+            </div>
+            <div>
+              <label class="block font-bold mb-1 text-police-800">विकल्प 1: कंप्यूटर से फ़ोटो अपलोड करें</label>
+              <input type="file" id="admSlideFile" accept="image/*" class="w-full p-1.5 border rounded bg-white text-xs">
+            </div>
+            <div>
+              <label class="block font-bold mb-1 text-police-800">विकल्प 2: या वेब लिंक डालें</label>
+              <input type="url" id="admSlideUrl" placeholder="https://..." class="w-full p-2 border rounded bg-white font-mono">
+            </div>
+            <div class="sm:col-span-2 flex justify-end">
+              <button type="submit" class="px-5 py-2 bg-police-700 hover:bg-police-800 text-white font-bold rounded shadow flex items-center gap-1.5">
+                <i data-lucide="plus" class="w-4 h-4 text-police-gold"></i>
+                <span>+ नई स्लाइड जोड़ें</span>
+              </button>
+            </div>
+          </form>
+
+          <div>
+            <h4 class="font-bold text-xs text-police-900 mb-2">सक्रिय होम स्लाइडर फ़ोटो सूची (Delete Options)</h4>
+            <div id="adminSlidesList" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+          </div>
+        </div>
+
+        <!-- SUB-TAB 3: UPLOAD ORDER (WITH DELETE MANAGEMENT) -->
         <div id="as-content-orders" class="admin-sub-content hidden space-y-4">
           <form id="adminUploadOrderForm" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-slate-50 p-4 rounded-xl border">
             <div>
@@ -730,9 +988,14 @@
               </button>
             </div>
           </form>
+
+          <div>
+            <h4 class="font-bold text-xs text-police-900 mb-2">प्रकाशित आदेश सूची (हटाने का विकल्प)</h4>
+            <div id="adminOrdersManagementList" class="space-y-2"></div>
+          </div>
         </div>
 
-        <!-- SUB-TAB 3: UPLOAD MEDIA (BROWSE & LINK BOTH OPTIONS) -->
+        <!-- SUB-TAB 4: UPLOAD MEDIA (BROWSE & LINK BOTH + DELETE) -->
         <div id="as-content-media" class="admin-sub-content hidden space-y-4">
           <form id="adminUploadMediaForm" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-slate-50 p-4 rounded-xl border">
             <div>
@@ -751,35 +1014,14 @@
               <label class="block font-bold mb-1">विस्तृत विवरण</label>
               <textarea id="admMedDesc" rows="2" placeholder="संक्षिप्त विवरण दर्ज करें..." class="w-full p-2 border rounded bg-white"></textarea>
             </div>
-            
-            <!-- Option 1: File Browse -->
             <div>
-              <label class="block font-bold mb-1 text-police-800">
-                <i data-lucide="hard-drive" class="w-3.5 h-3.5 inline mr-1"></i> विकल्प 1: कंप्यूटर/फ़ोन से फ़ोटो चुनें (Browse File)
-              </label>
+              <label class="block font-bold mb-1 text-police-800">विकल्प 1: कंप्यूटर/फ़ोन से फ़ोटो चुनें (Browse)</label>
               <input type="file" id="admMedFile" accept="image/*" class="w-full p-1.5 border rounded bg-white text-xs">
-              <span class="text-[10px] text-slate-400 block mt-0.5">JPG, PNG या JPEG फ़ाइल</span>
             </div>
-
-            <!-- Option 2: Image URL -->
             <div>
-              <label class="block font-bold mb-1 text-police-800">
-                <i data-lucide="link" class="w-3.5 h-3.5 inline mr-1"></i> विकल्प 2: या इमेज का वेब लिंक डालें (URL Link)
-              </label>
-              <input type="url" id="admMedImgUrl" placeholder="https://example.com/photo.jpg" class="w-full p-2 border rounded bg-white font-mono">
-              <span class="text-[10px] text-slate-400 block mt-0.5">इंटरनेट/क्लाउड इमेज लिंक</span>
+              <label class="block font-bold mb-1 text-police-800">विकल्प 2: या वेब लिंक डालें (URL)</label>
+              <input type="url" id="admMedImgUrl" placeholder="https://..." class="w-full p-2 border rounded bg-white font-mono">
             </div>
-
-            <!-- Preview Container -->
-            <div class="sm:col-span-2 flex items-center gap-3 bg-white p-2 rounded border border-slate-200">
-              <div class="w-16 h-16 rounded border bg-slate-100 flex items-center justify-center overflow-hidden flex-shrink-0">
-                <img id="mediaPreviewImg" src="PHOTO-2026-09-24-12-07-09.jpg" class="w-full h-full object-cover">
-              </div>
-              <div class="text-[11px] text-slate-500">
-                <strong>फोटो पूर्वावलोकन (Preview):</strong> फ़ाइल चुनने अथवा लिंक डालने पर फ़ोटो यहाँ प्रदर्शित होगी।
-              </div>
-            </div>
-
             <div class="sm:col-span-2 flex justify-end">
               <button type="submit" class="px-6 py-2.5 bg-police-700 hover:bg-police-800 text-white font-bold rounded shadow flex items-center gap-1.5">
                 <i data-lucide="upload" class="w-4 h-4 text-police-gold"></i>
@@ -787,12 +1029,15 @@
               </button>
             </div>
           </form>
+
+          <div>
+            <h4 class="font-bold text-xs text-police-900 mb-2">प्रकाशित मीडिया/फ़ोटो सूची (हटाने का विकल्प)</h4>
+            <div id="adminMediaManagementList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3"></div>
+          </div>
         </div>
 
-        <!-- SUB-TAB 4: MANAGE CONTACTS (EXCEL BULK UPLOAD & MANUAL ENTRY) -->
+        <!-- SUB-TAB 5: MANAGE CONTACTS (EXCEL BULK UPLOAD & MANUAL & DELETE) -->
         <div id="as-content-contacts" class="admin-sub-content hidden space-y-5">
-          
-          <!-- Bulk Excel Upload Card -->
           <div class="bg-gradient-to-r from-emerald-50 to-teal-50 p-4 rounded-xl border border-emerald-200 text-xs space-y-3">
             <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
               <div class="flex items-center gap-2 text-emerald-900 font-extrabold text-sm">
@@ -806,7 +1051,7 @@
             </div>
 
             <p class="text-slate-600 leading-relaxed">
-              एक्सेल शीट (`.xlsx` या `.xls`) में दिए गए स्तम्भ: <strong>Designation</strong> (पदनाम), <strong>Name</strong> (अधिकारी का नाम), <strong>Phone</strong> (सीयूजी मोबाइल), और <strong>Email</strong> (ईमेल आईडी) होने चाहिए। फ़ाइल चुनते ही सभी संपर्क स्वतः सिंक हो जाएंगे।
+              एक्सेल शीट (`.xlsx` या `.xls`) में स्तम्भ: <strong>Designation</strong>, <strong>Name</strong>, <strong>Phone</strong>, और <strong>Email</strong> होने चाहिए।
             </p>
 
             <div class="flex flex-col sm:flex-row items-center gap-2 pt-1">
@@ -816,12 +1061,6 @@
                 <span>एक्सेल डेटा अपलोड करें</span>
               </button>
             </div>
-          </div>
-
-          <div class="relative flex py-1 items-center">
-            <div class="flex-grow border-t border-slate-300"></div>
-            <span class="flex-shrink mx-4 text-xs font-bold text-slate-400">अथवा मैन्युअल संपर्क जोड़ें</span>
-            <div class="flex-grow border-t border-slate-300"></div>
           </div>
 
           <!-- Manual Form -->
@@ -849,6 +1088,10 @@
             </div>
           </form>
 
+          <div>
+            <h4 class="font-bold text-xs text-police-900 mb-2">संपर्क सूची प्रबंधन (हटाने का विकल्प)</h4>
+            <div id="adminContactsManagementList" class="space-y-1.5 max-h-60 overflow-y-auto"></div>
+          </div>
         </div>
 
       </div>
@@ -918,6 +1161,7 @@
     const ordersRef = db.ref('orders');
     const mediaRef = db.ref('media');
     const contactsRef = db.ref('contacts');
+    const sliderRef = db.ref('slider');
 
     // Secure Master Credentials
     const DEFAULT_ADMIN = {
@@ -949,16 +1193,81 @@
     let orders = [];
     let mediaList = [];
     let contactsList = [];
+    let sliderList = [];
     let currentUser = null;
     let selectedMediaBase64 = '';
+    let selectedSlideBase64 = '';
 
     const SESSION_KEY = 'ig_police_session_active';
     const IG_PHOTO_STORAGE_KEY = 'ig_kota_saved_avatar_data_url';
 
     let currentSlide = 0;
+    let carouselInterval = null;
 
     function initCarousel() {
-      setInterval(() => { nextSlide(); }, 5000);
+      if (carouselInterval) clearInterval(carouselInterval);
+      carouselInterval = setInterval(() => { nextSlide(); }, 5000);
+    }
+
+    function renderCarouselDOM() {
+      const container = document.getElementById('carouselContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      if (sliderList.length === 0) {
+        sliderList = [
+          {
+            id: 's-def-1',
+            title: 'आमजन में विश्वास, अपराधियों में डर',
+            description: 'कोटा, बूंदी, बारां एवं झालावाड़ जिलों में शांति व्यवस्था, पारदर्शी पुलिसिंग और जनसंवाद के माध्यम से अपराध नियंत्रण कोटा रेंज पुलिस की सर्वोच्च प्राथमिकता है।',
+            tag: 'कोटा रेंज पुलिस विजन',
+            bg: 'gradient',
+            imageUrl: ''
+          },
+          {
+            id: 's-def-2',
+            title: 'दैनिक कार्य प्रगति एवं निगरानी प्रणाली',
+            description: 'रेंज कार्यालय की समस्त शाखाओं के पत्रावलियों व प्रकरणों का समयबद्ध निस्तारण, रियल-टाइम ट्रैकिंग एवं उच्चाधिकारियों द्वारा पारदर्शी पर्यवेक्षण।',
+            tag: 'डिजिटल नवाचार',
+            bg: 'gradient',
+            imageUrl: ''
+          }
+        ];
+      }
+
+      sliderList.forEach((s, idx) => {
+        const item = document.createElement('div');
+        item.className = `carousel-item ${idx === 0 ? 'active' : ''} relative w-full h-full`;
+        
+        if (s.imageUrl) {
+          item.innerHTML = `
+            <div class="relative w-full h-full">
+              <img src="${s.imageUrl}" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end p-6 sm:p-10 text-white">
+                <div class="max-w-xl space-y-2">
+                  <span class="bg-police-gold text-police-950 text-xs font-extrabold px-2.5 py-1 rounded shadow">${s.tag || 'कोटा रेंज पुलिस'}</span>
+                  <h2 class="text-xl sm:text-3xl font-extrabold leading-tight text-white">${s.title}</h2>
+                  <p class="text-xs sm:text-sm text-slate-200 leading-relaxed">${s.description || ''}</p>
+                </div>
+              </div>
+            </div>
+          `;
+        } else {
+          item.innerHTML = `
+            <div class="w-full h-full bg-gradient-to-r from-police-950 via-police-900 to-police-800 flex items-center p-6 sm:p-10 text-white">
+              <div class="max-w-xl space-y-3">
+                <span class="bg-police-gold text-police-950 text-xs font-extrabold px-2.5 py-1 rounded shadow">${s.tag || 'कोटा रेंज पुलिस'}</span>
+                <h2 class="text-xl sm:text-3xl font-extrabold leading-tight text-white">${s.title}</h2>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">${s.description || ''}</p>
+              </div>
+            </div>
+          `;
+        }
+        container.appendChild(item);
+      });
+
+      currentSlide = 0;
+      initCarousel();
     }
 
     function nextSlide() {
@@ -1042,11 +1351,36 @@
       return `${year}-${month}-${day}`;
     }
 
+    function applyTaskDateRestrictions() {
+      const taskDateInput = document.getElementById('modalTaskDate');
+      const dueDateInput = document.getElementById('modalDueDate');
+
+      const today = new Date();
+      const minDateStr = formatDateToISO(today);
+
+      const maxDate = new Date();
+      maxDate.setDate(today.getDate() + 2);
+      const maxDateStr = formatDateToISO(maxDate);
+
+      taskDateInput.min = minDateStr;
+      taskDateInput.max = maxDateStr;
+      dueDateInput.min = minDateStr;
+
+      return { minDateStr, maxDateStr };
+    }
+
     function initSystem() {
       initIGPhoto();
-      initCarousel();
       updateDateTime();
       setInterval(updateDateTime, 1000);
+
+      // Listen for Slider
+      sliderRef.on('value', (snapshot) => {
+        const data = snapshot.val();
+        sliderList = data ? Object.values(data) : [];
+        renderCarouselDOM();
+        renderAdminSliderList();
+      });
 
       // Listen for Users
       usersRef.on('value', (snapshot) => {
@@ -1069,6 +1403,7 @@
         }
 
         renderAdminUsersControlList();
+        updateBranchDropdown();
         checkActiveSession();
       });
 
@@ -1084,6 +1419,7 @@
         const data = snapshot.val();
         orders = data ? Object.values(data) : [];
         renderOrdersList();
+        renderAdminOrdersManagement();
       });
 
       // Listen for Media
@@ -1091,6 +1427,7 @@
         const data = snapshot.val();
         mediaList = data ? Object.values(data) : [];
         renderMediaList('ALL');
+        renderAdminMediaManagement();
       });
 
       // Listen for Contacts
@@ -1099,10 +1436,12 @@
         contactsList = data ? Object.values(data) : [];
         if (contactsList.length === 0) seedInitialContacts();
         renderContactsList();
+        renderAdminContactsManagement();
       });
 
       setupTabToggle();
-      setupMediaUploadListeners();
+      setupMediaAndSliderUploadListeners();
+      setupDashboardFilterListeners();
     }
 
     function setupTabToggle() {
@@ -1126,34 +1465,29 @@
       });
     }
 
-    // Media Upload Listeners for File Browse & URL
-    function setupMediaUploadListeners() {
-      const fileInput = document.getElementById('admMedFile');
-      const urlInput = document.getElementById('admMedImgUrl');
-      const previewImg = document.getElementById('mediaPreviewImg');
-
-      if (fileInput) {
-        fileInput.addEventListener('change', function(e) {
+    function setupMediaAndSliderUploadListeners() {
+      // Media Tab
+      const medFile = document.getElementById('admMedFile');
+      if (medFile) {
+        medFile.addEventListener('change', function(e) {
           const file = e.target.files[0];
           if (file) {
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-              selectedMediaBase64 = evt.target.result;
-              previewImg.src = selectedMediaBase64;
-              if (urlInput) urlInput.value = ''; // clear url if file chosen
-            };
-            reader.readAsDataURL(file);
+            const r = new FileReader();
+            r.onload = function(evt) { selectedMediaBase64 = evt.target.result; };
+            r.readAsDataURL(file);
           }
         });
       }
 
-      if (urlInput) {
-        urlInput.addEventListener('input', function(e) {
-          const urlVal = e.target.value.trim();
-          if (urlVal) {
-            selectedMediaBase64 = '';
-            previewImg.src = urlVal;
-            if (fileInput) fileInput.value = ''; // clear file if url typed
+      // Slider Tab
+      const slideFile = document.getElementById('admSlideFile');
+      if (slideFile) {
+        slideFile.addEventListener('change', function(e) {
+          const file = e.target.files[0];
+          if (file) {
+            const r = new FileReader();
+            r.onload = function(evt) { selectedSlideBase64 = evt.target.result; };
+            r.readAsDataURL(file);
           }
         });
       }
@@ -1203,6 +1537,7 @@
       const loginBlock = document.getElementById('sidebarLoginBlock');
       const sessionBlock = document.getElementById('sidebarUserSessionBlock');
       const adminSuperBtn = document.getElementById('adminSuperControlBtn');
+      const adminBranchBtn = document.getElementById('adminCreateBranchBtn');
 
       if (isLoggedIn && currentUser) {
         loginBlock.classList.add('hidden');
@@ -1212,20 +1547,37 @@
         document.getElementById('sessionUserRoleBadge').textContent = currentUser.role;
         document.getElementById('sessionUserBranch').textContent = currentUser.branch;
 
+        document.getElementById('scopeUserName').textContent = currentUser.name;
+        document.getElementById('scopeUserRank').textContent = `${currentUser.rank || '-'} | ${currentUser.mobile}`;
+        document.getElementById('scopeUserBranch').textContent = currentUser.role === 'Admin' ? 'समस्त पंजीकृत शाखाएं' : currentUser.branch;
+
         if (currentUser.role === 'Admin') {
           adminSuperBtn.classList.remove('hidden');
+          adminBranchBtn.classList.remove('hidden');
+          document.querySelectorAll('.admin-action-col').forEach(el => el.classList.remove('hidden'));
+          document.getElementById('scopeBadgeTag').textContent = 'दूसरा पृष्ठ - एडमिन डैशबोर्ड (Admin Overview)';
+        } else if (currentUser.role === 'IG_Sir') {
+          adminSuperBtn.classList.add('hidden');
+          adminBranchBtn.classList.add('hidden');
+          document.querySelectorAll('.admin-action-col').forEach(el => el.classList.add('hidden'));
+          document.getElementById('scopeBadgeTag').textContent = 'आईजी महोदय डैशबोर्ड (पर्यवेक्षण)';
         } else {
           adminSuperBtn.classList.add('hidden');
+          adminBranchBtn.classList.add('hidden');
+          document.querySelectorAll('.admin-action-col').forEach(el => el.classList.add('hidden'));
+          document.getElementById('scopeBadgeTag').textContent = `तीसरा पृष्ठ - शाखा डैशबोर्ड (${currentUser.branch})`;
         }
       } else {
         loginBlock.classList.remove('hidden');
         sessionBlock.classList.add('hidden');
         adminSuperBtn.classList.add('hidden');
+        adminBranchBtn.classList.add('hidden');
+        document.querySelectorAll('.admin-action-col').forEach(el => el.classList.add('hidden'));
       }
       lucide.createIcons();
     }
 
-    // Login Authentication (Admin, IG Sir, Branch)
+    // Login Authentication
     document.getElementById('sideLoginForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const role = document.getElementById('loginRoleSelect').value;
@@ -1237,6 +1589,7 @@
         currentUser = DEFAULT_ADMIN;
         localStorage.setItem(SESSION_KEY, currentUser.mobile);
         updateSidebarUI(true);
+        updateBranchDropdown();
         switchTab('monitoringDashboard');
         showToast('एडमिन लॉगिन सफल', 'कार्यालय महानिरीक्षक पुलिस, कोटा रेंज एडमिन पोर्टल');
         return;
@@ -1249,6 +1602,7 @@
         currentUser = user;
         localStorage.setItem(SESSION_KEY, currentUser.mobile);
         updateSidebarUI(true);
+        updateBranchDropdown();
         switchTab('monitoringDashboard');
         showToast('लॉग इन सफल', `${user.name} (${user.role})`);
       } else {
@@ -1261,7 +1615,6 @@
       e.preventDefault();
       const role = document.getElementById('forgotRoleSelect').value;
       const mobile = document.getElementById('forgotMobile').value.trim();
-      const email = document.getElementById('forgotEmail').value.trim();
       const pin = document.getElementById('forgotPin').value.trim();
       const newPass = document.getElementById('forgotNewPass').value.trim();
 
@@ -1305,6 +1658,10 @@
         return;
       }
       renderAdminUsersControlList();
+      renderAdminSliderList();
+      renderAdminOrdersManagement();
+      renderAdminMediaManagement();
+      renderAdminContactsManagement();
       document.getElementById('adminControlModal').classList.remove('hidden');
       lucide.createIcons();
     }
@@ -1344,7 +1701,7 @@
           <td class="p-2.5">${u.name} (${u.rank || '-'})</td>
           <td class="p-2.5 font-mono">${u.mobile}</td>
           <td class="p-2.5 font-mono font-bold text-slate-800">
-            ${isAdminSelf ? '7865 (स्थिर)' : `<input type="text" id="passEdit-${u.id}" value="${u.password}" class="border rounded px-2 py-1 text-xs w-28 bg-white font-mono font-bold">`}
+            ${isAdminSelf ? '••••••••' : `<input type="text" id="passEdit-${u.id}" value="${u.password}" class="border rounded px-2 py-1 text-xs w-28 bg-white font-mono font-bold">`}
           </td>
           <td class="p-2.5 text-center">
             ${isAdminSelf ? '<span class="text-slate-400 italic">स्वतः सुरक्षित</span>' : `
@@ -1387,7 +1744,64 @@
       }
     };
 
-    // Orders Upload
+    // Slider Add & Delete Management
+    document.getElementById('adminAddSlideForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const title = document.getElementById('admSlideTitle').value.trim();
+      const desc = document.getElementById('admSlideDesc').value.trim();
+      const url = document.getElementById('admSlideUrl').value.trim();
+      const finalImage = selectedSlideBase64 || url || '';
+
+      const slideId = 'sld-' + Date.now();
+      sliderRef.child(slideId).set({
+        id: slideId,
+        title: title,
+        description: desc,
+        imageUrl: finalImage,
+        tag: 'कोटा रेंज पुलिस'
+      }).then(() => {
+        document.getElementById('adminAddSlideForm').reset();
+        selectedSlideBase64 = '';
+        showToast('स्लाइडर अपडेटेड', 'नई फोटो स्लाइड होम पेज पर जोड़ दी गई है।');
+      });
+    });
+
+    function renderAdminSliderList() {
+      const container = document.getElementById('adminSlidesList');
+      if (!container) return;
+      container.innerHTML = '';
+
+      sliderList.forEach(s => {
+        const div = document.createElement('div');
+        div.className = 'flex items-center justify-between p-2.5 border rounded-lg bg-white shadow-sm';
+        div.innerHTML = `
+          <div class="flex items-center gap-2 overflow-hidden">
+            <div class="w-12 h-10 rounded bg-slate-100 flex-shrink-0 overflow-hidden">
+              ${s.imageUrl ? `<img src="${s.imageUrl}" class="w-full h-full object-cover">` : `<div class="w-full h-full bg-police-800 text-[9px] text-white flex items-center justify-center font-bold">टेक्स्ट</div>`}
+            </div>
+            <div class="truncate">
+              <h5 class="font-bold text-xs text-slate-800 truncate">${s.title}</h5>
+              <p class="text-[10px] text-slate-400 truncate">${s.description || ''}</p>
+            </div>
+          </div>
+          <button onclick="deleteSlideItem('${s.id}')" title="यह स्लाइड हटाएं" class="p-1.5 text-rose-600 hover:bg-rose-50 rounded">
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+          </button>
+        `;
+        container.appendChild(div);
+      });
+      lucide.createIcons();
+    }
+
+    window.deleteSlideItem = function(slideId) {
+      if (confirm('क्या आप इस फोटो स्लाइड को हटाना चाहते हैं?')) {
+        sliderRef.child(slideId).remove().then(() => {
+          showToast('हटाया गया', 'स्लाइड हटा दी गई है।');
+        });
+      }
+    };
+
+    // Orders Upload & Delete
     document.getElementById('adminUploadOrderForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const newOrder = {
@@ -1403,7 +1817,38 @@
       });
     });
 
-    // Media Upload (File Browse or URL)
+    function renderAdminOrdersManagement() {
+      const container = document.getElementById('adminOrdersManagementList');
+      if (!container) return;
+      container.innerHTML = '';
+
+      orders.forEach(o => {
+        const div = document.createElement('div');
+        div.className = 'flex items-center justify-between p-2 border rounded bg-white text-xs';
+        div.innerHTML = `
+          <div class="truncate pr-2">
+            <span class="font-mono font-bold text-police-900">${o.orderNo}</span>: 
+            <span class="text-slate-700">${o.title}</span> 
+            <span class="text-slate-400 font-mono">(${formatToIndianDate(o.orderDate)})</span>
+          </div>
+          <button onclick="deleteOrderItem('${o.id}')" class="p-1 text-rose-600 hover:bg-rose-50 rounded flex-shrink-0" title="हटाएं">
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+          </button>
+        `;
+        container.appendChild(div);
+      });
+      lucide.createIcons();
+    }
+
+    window.deleteOrderItem = function(orderId) {
+      if (confirm('क्या आप इस आदेश को वेबसाइट से हटाना चाहते हैं?')) {
+        ordersRef.child(orderId).remove().then(() => {
+          showToast('हटाया गया', 'आदेश हटा दिया गया है।');
+        });
+      }
+    };
+
+    // Media Upload & Delete
     document.getElementById('adminUploadMediaForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const fileUrl = document.getElementById('admMedImgUrl').value.trim();
@@ -1421,12 +1866,44 @@
       mediaRef.child(newMedia.id).set(newMedia).then(() => {
         document.getElementById('adminUploadMediaForm').reset();
         selectedMediaBase64 = '';
-        document.getElementById('mediaPreviewImg').src = 'PHOTO-2026-09-24-12-07-09.jpg';
         showToast('मीडिया प्रकाशित', 'फोटो/समाचार वेबसाइट पर लाइव जोड़ दिया गया है।');
       });
     });
 
-    // Contacts Manual Upload
+    function renderAdminMediaManagement() {
+      const container = document.getElementById('adminMediaManagementList');
+      if (!container) return;
+      container.innerHTML = '';
+
+      mediaList.forEach(m => {
+        const div = document.createElement('div');
+        div.className = 'border rounded p-2 bg-white flex flex-col justify-between text-xs';
+        div.innerHTML = `
+          <div>
+            <div class="h-24 bg-slate-100 rounded overflow-hidden mb-1.5">
+              <img src="${m.imageUrl}" class="w-full h-full object-cover">
+            </div>
+            <h6 class="font-bold text-slate-900 truncate">${m.title}</h6>
+            <span class="text-[10px] text-slate-400 font-mono">${m.category}</span>
+          </div>
+          <button onclick="deleteMediaItem('${m.id}')" class="mt-2 py-1 px-2 bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold rounded flex items-center justify-center gap-1">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> हटाएं
+          </button>
+        `;
+        container.appendChild(div);
+      });
+      lucide.createIcons();
+    }
+
+    window.deleteMediaItem = function(mediaId) {
+      if (confirm('क्या आप इस मीडिया/फोटो को हटाना चाहते हैं?')) {
+        mediaRef.child(mediaId).remove().then(() => {
+          showToast('हटाया गया', 'मीडिया आइटम हटा दिया गया है।');
+        });
+      }
+    };
+
+    // Contacts Upload & Delete
     document.getElementById('adminAddContactForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const newContact = {
@@ -1442,18 +1919,46 @@
       });
     });
 
-    // ================= EXCEL BULK CONTACTS UPLOAD & SAMPLE DOWNLOAD =================
+    function renderAdminContactsManagement() {
+      const container = document.getElementById('adminContactsManagementList');
+      if (!container) return;
+      container.innerHTML = '';
+
+      contactsList.forEach(c => {
+        const div = document.createElement('div');
+        div.className = 'flex items-center justify-between p-2 border rounded bg-white text-xs';
+        div.innerHTML = `
+          <div class="truncate">
+            <span class="font-bold text-police-900">${c.designation}</span> - 
+            <span class="text-slate-700">${c.name}</span> 
+            <span class="font-mono text-police-700 font-bold">(${c.phone})</span>
+          </div>
+          <button onclick="deleteContactItem('${c.id}')" class="p-1 text-rose-600 hover:bg-rose-50 rounded" title="हटाएं">
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+          </button>
+        `;
+        container.appendChild(div);
+      });
+      lucide.createIcons();
+    }
+
+    window.deleteContactItem = function(contactId) {
+      if (confirm('क्या आप इस संपर्क नंबर को हटाना चाहते हैं?')) {
+        contactsRef.child(contactId).remove().then(() => {
+          showToast('हटाया गया', 'संपर्क हटा दिया गया है।');
+        });
+      }
+    };
+
+    // Bulk Excel Upload for Contacts
     window.downloadSampleContactsExcel = function() {
       const sampleData = [
         { "Designation": "महानिरीक्षक पुलिस, कोटा रेंज", "Name": "श्री हरेन्द्र कुमार महावर, IPS", "Phone": "9414000000", "Email": "ig.kota@rajpolice.gov.in" },
-        { "Designation": "अतिरिक्त पुलिस अधीक्षक (रेंज)", "Name": "श्री...", "Phone": "9414000001", "Email": "addlsp.kota@rajpolice.gov.in" },
         { "Designation": "पुलिस अधीक्षक, कोटा शहर", "Name": "डॉ. अमृता दुहन, IPS", "Phone": "9414100000", "Email": "sp.kotacity@rajpolice.gov.in" },
         { "Designation": "पुलिस अधीक्षक, कोटा ग्रामीण", "Name": "श्री करण शर्मा, IPS", "Phone": "9414200000", "Email": "sp.kotarural@rajpolice.gov.in" },
         { "Designation": "पुलिस अधीक्षक, बूंदी", "Name": "श्री राजेन्द्र कुमार मीणा, IPS", "Phone": "9414300000", "Email": "sp.bundi@rajpolice.gov.in" },
         { "Designation": "पुलिस अधीक्षक, बारां", "Name": "श्री राजकुमार चौधरी, IPS", "Phone": "9414400000", "Email": "sp.baran@rajpolice.gov.in" },
-        { "Designation": "पुलिस अधीक्षक, झालावाड़", "Name": "श्रीमती ऋचा तोमर, IPS", "Phone": "9414500000", "Email": "sp.jhalawar@rajpolice.gov.in" },
-        { "Designation": "प्रभारी अपराध शाखा (IG Office)", "Name": "निरीक्षक...", "Phone": "9414000002", "Email": "crime.igpkota@rajpolice.gov.in" },
-        { "Designation": "प्रभारी विशेष शाखा (Special Branch)", "Name": "उनि...", "Phone": "9414000003", "Email": "sb.igpkota@rajpolice.gov.in" }
+        { "Designation": "पुलिस अधीक्षक, झालावाड़", "Name": "श्रीमती ऋचा तोमर, IPS", "Phone": "9414500000", "Email": "sp.jhalawar@rajpolice.gov.in" }
       ];
 
       const ws = XLSX.utils.json_to_sheet(sampleData);
@@ -1507,10 +2012,10 @@
           });
 
           fileInput.value = '';
-          showToast('सफल अपलोड', `${addedCount} संपर्क एक्सेल से डेटाबेस में सफलतापूर्वक सुरक्षित किए गए।`);
+          showToast('सफल अपलोड', `${addedCount} संपर्क एक्सेल से डेटाबेस में सुरक्षित किए गए।`);
         } catch (err) {
           console.error(err);
-          showToast('त्रुटि', 'एक्सेल फ़ाइल पढ़ने में समस्या आई। कृपया मान्य प्रारूप चुनें।');
+          showToast('त्रुटि', 'एक्सेल फ़ाइल पढ़ने में समस्या आई।');
         }
       };
       reader.readAsArrayBuffer(file);
@@ -1529,9 +2034,11 @@
       );
 
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400">कोई आदेश उपलब्ध नहीं है</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400">कोई आदेश उपलब्ध नहीं है</td></tr>`;
         return;
       }
+
+      const isAdmin = currentUser?.role === 'Admin';
 
       filtered.forEach((o, idx) => {
         const tr = document.createElement('tr');
@@ -1545,6 +2052,11 @@
             <a href="${o.link}" target="_blank" class="inline-flex items-center gap-1 text-xs font-bold text-police-700 hover:text-police-900 bg-police-50 hover:bg-police-100 px-2.5 py-1 rounded border">
               <i data-lucide="download" class="w-3.5 h-3.5"></i> डाउनलोड
             </a>
+          </td>
+          <td class="p-3 text-center admin-action-col ${isAdmin ? '' : 'hidden'}">
+            <button onclick="deleteOrderItem('${o.id}')" class="p-1 text-rose-600 hover:bg-rose-50 rounded">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
           </td>
         `;
         tbody.appendChild(tr);
@@ -1577,6 +2089,8 @@
         return;
       }
 
+      const isAdmin = currentUser?.role === 'Admin';
+
       filtered.forEach(m => {
         const card = document.createElement('div');
         card.className = 'bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between';
@@ -1587,6 +2101,11 @@
               <span class="absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded bg-police-900/80 text-police-gold backdrop-blur-sm">
                 ${m.category === 'NEWS' ? 'समाचार' : m.category === 'EVENTS' ? 'आयोजन' : 'गैलरी'}
               </span>
+              ${isAdmin ? `
+                <button onclick="deleteMediaItem('${m.id}')" title="हटाएं" class="absolute top-2 right-2 p-1.5 rounded-full bg-white/90 text-rose-600 shadow hover:bg-white">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+              ` : ''}
             </div>
             <div class="p-3.5 space-y-1.5">
               <span class="text-[10px] text-slate-400 font-mono">${formatToIndianDate(m.date)}</span>
@@ -1605,6 +2124,8 @@
       if (!tbody) return;
       tbody.innerHTML = '';
 
+      const isAdmin = currentUser?.role === 'Admin';
+
       contactsList.forEach((c, idx) => {
         const tr = document.createElement('tr');
         tr.className = 'hover:bg-slate-50 transition';
@@ -1614,14 +2135,103 @@
           <td class="p-3 font-semibold text-slate-800">${c.name}</td>
           <td class="p-3 font-mono font-bold text-police-700">${c.phone}</td>
           <td class="p-3 font-mono text-slate-600">${c.email}</td>
+          <td class="p-3 text-center admin-action-col ${isAdmin ? '' : 'hidden'}">
+            <button onclick="deleteContactItem('${c.id}')" class="p-1 text-rose-600 hover:bg-rose-50 rounded">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+          </td>
         `;
         tbody.appendChild(tr);
       });
       lucide.createIcons();
     }
 
-    // Task Register & Monitoring Dashboard
+    // ================= DASHBOARD & REGISTER (PHOTO RESTORED LOGIC) =================
+    function getRegisteredBranches() {
+      const set = new Set();
+      users.forEach(u => {
+        if (u.role === 'Branch' && u.branch) set.add(u.branch.trim());
+      });
+      return Array.from(set);
+    }
+
+    function updateBranchDropdown() {
+      const select = document.getElementById('filterBranch');
+      if (!select) return;
+      select.innerHTML = '';
+
+      if (currentUser?.role === 'Admin' || currentUser?.role === 'IG_Sir') {
+        const branches = getRegisteredBranches();
+        const optAll = document.createElement('option');
+        optAll.value = 'ALL';
+        optAll.textContent = 'समस्त पंजीकृत शाखाएं (All Active)';
+        select.appendChild(optAll);
+
+        branches.forEach(b => {
+          const opt = document.createElement('option');
+          opt.value = b;
+          opt.textContent = b;
+          select.appendChild(opt);
+        });
+        select.disabled = false;
+      } else if (currentUser?.role === 'Branch') {
+        const opt = document.createElement('option');
+        opt.value = currentUser.branch;
+        opt.textContent = currentUser.branch;
+        select.appendChild(opt);
+        select.disabled = true;
+      }
+    }
+
+    function setupDashboardFilterListeners() {
+      document.getElementById('filterFromDate')?.addEventListener('change', refreshDashboardData);
+      document.getElementById('filterToDate')?.addEventListener('change', refreshDashboardData);
+      document.getElementById('filterBranch')?.addEventListener('change', refreshDashboardData);
+      document.getElementById('filterStatus')?.addEventListener('change', refreshDashboardData);
+      document.getElementById('filterPriority')?.addEventListener('change', refreshDashboardData);
+      document.getElementById('searchInput')?.addEventListener('input', refreshDashboardData);
+
+      document.getElementById('resetDateFilterBtn')?.addEventListener('click', () => {
+        document.getElementById('filterFromDate').value = '';
+        document.getElementById('filterToDate').value = '';
+        document.getElementById('filterStatus').value = 'ALL';
+        document.getElementById('filterPriority').value = 'ALL';
+        document.getElementById('searchInput').value = '';
+        refreshDashboardData();
+        showToast('रीसेट संपन्न', 'दिनांक एवं अन्य सभी फ़िल्टर रीसेट कर दिए गए हैं।');
+      });
+
+      const wrap = document.getElementById('downloadDropdownWrap');
+      const menu = document.getElementById('downloadMenu');
+      document.getElementById('downloadDropdownBtn')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('hidden');
+      });
+      document.addEventListener('click', (e) => {
+        if (!wrap?.contains(e.target)) menu?.classList.add('hidden');
+      });
+    }
+
     function refreshDashboardData() {
+      const filtered = getFilteredTasks();
+      const total = filtered.length;
+      const completed = filtered.filter(t => t.status === 'COMPLETED').length;
+      const pending = filtered.filter(t => t.status === 'PENDING').length;
+      const progress = filtered.filter(t => t.status === 'PROGRESS').length;
+      const pct = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+      document.getElementById('kpiTotal').textContent = total;
+      document.getElementById('kpiCompleted').textContent = completed;
+      document.getElementById('kpiPending').textContent = pending;
+      document.getElementById('kpiProgress').textContent = progress;
+      document.getElementById('ratePercentage').textContent = pct + '%';
+      document.getElementById('progressBar').style.width = pct + '%';
+
+      renderTable();
+      renderBranchOverviewGrid();
+    }
+
+    function renderTable() {
       const filtered = getFilteredTasks();
       const tbody = document.getElementById('taskTableBody');
       const emptyState = document.getElementById('noTasksState');
@@ -1640,60 +2250,185 @@
         const isLocked = task.isLocked || false;
 
         let priorityBadge = task.priority === 'URGENT' 
-          ? '<span class="text-[10px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">अति आवश्यक</span>'
+          ? '<span class="text-[11px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">अति आवश्यक</span>'
           : task.priority === 'HIGH'
-          ? '<span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">उच्च</span>'
-          : '<span class="text-[10px] font-medium text-slate-700 bg-slate-50 px-2 py-0.5 rounded border border-slate-200">सामान्य</span>';
+          ? '<span class="text-[11px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">उच्च</span>'
+          : '<span class="text-[11px] font-medium text-slate-700 bg-slate-50 px-2 py-0.5 rounded border border-slate-200">सामान्य</span>';
 
-        let statusBadge = task.status === 'COMPLETED'
-          ? `<span class="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-300">🟢 पूर्ण</span>`
-          : task.status === 'PENDING'
-          ? `<span class="inline-flex items-center gap-1 text-[11px] font-bold text-rose-800 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-300">🔴 लंबित</span>`
-          : `<span class="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-300">🟡 जारी</span>`;
+        let statusBadge = '';
+        if (task.status === 'COMPLETED') {
+          statusBadge = `
+            <div class="inline-flex flex-col items-center">
+              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-300">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block shadow-sm"></span>
+                <span>पूर्ण (Locked)</span>
+              </span>
+              <span class="text-[10px] text-emerald-700 font-mono mt-0.5">${task.completedAt || ''}</span>
+            </div>
+          `;
+        } else if (task.status === 'PENDING') {
+          statusBadge = `
+            <div class="inline-flex flex-col items-center">
+              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-rose-800 bg-rose-50 px-2.5 py-1 rounded-full border border-rose-300">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-600 inline-block shadow-sm"></span>
+                <span>लंबित</span>
+              </span>
+            </div>
+          `;
+        } else {
+          statusBadge = `
+            <div class="inline-flex flex-col items-center">
+              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-300">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block shadow-sm"></span>
+                <span>प्रक्रियाधीन</span>
+              </span>
+            </div>
+          `;
+        }
 
         let directionsHtml = isPrivileged ? `
           <div class="space-y-1">
             <div class="text-xs text-slate-800 italic">${task.adminInstructions || '<span class="text-slate-400">कोई निर्देश नहीं</span>'}</div>
-            <div class="flex gap-1">
-              <input type="text" id="dirInput-${task.id}" placeholder="निर्देश दें..." class="text-[11px] p-1 border rounded w-full">
-              <button onclick="saveTaskInstruction('${task.id}')" class="px-2 py-0.5 bg-police-700 text-white rounded text-[10px] font-bold">दें</button>
+            <div class="flex items-center gap-1">
+              <input type="text" id="dirInput-${task.id}" placeholder="नया निर्देश लिखें..." class="text-[11px] p-1 border rounded w-full bg-slate-50 focus:bg-white">
+              <button onclick="saveAdminInstruction('${task.id}')" class="px-2 py-1 bg-police-700 hover:bg-police-800 text-white rounded text-[10px] font-bold">दें</button>
             </div>
           </div>
-        ` : `<div class="text-xs text-slate-700 italic">${task.adminInstructions || 'प्रतीक्षित...'}</div>`;
+        ` : (task.adminInstructions 
+            ? `<div class="text-xs font-semibold text-police-900 bg-amber-50 p-2 rounded border border-amber-200">${task.adminInstructions}</div>`
+            : `<span class="text-xs text-slate-400 italic">प्रतीक्षित...</span>`);
 
-        let actionsHtml = isPrivileged ? `
-          <div class="flex items-center justify-end gap-1">
-            <button onclick="toggleTaskStatus('${task.id}', '${task.status === 'COMPLETED' ? 'PENDING' : 'COMPLETED'}')" class="px-2 py-1 ${task.status === 'COMPLETED' ? 'bg-amber-600' : 'bg-emerald-600'} text-white rounded text-[10px] font-bold">
-              ${task.status === 'COMPLETED' ? 'अनलॉक' : 'पूर्ण'}
-            </button>
-            <button onclick="deleteTaskRecord('${task.id}')" class="p-1 text-rose-600 hover:bg-rose-50 rounded">
-              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-            </button>
-          </div>
-        ` : (!isLocked ? `
-          <button onclick="branchCompleteAndLock('${task.id}')" class="px-2.5 py-1 bg-emerald-700 hover:bg-emerald-800 text-white rounded text-xs font-bold flex items-center gap-1 shadow-sm">
-            <i data-lucide="lock" class="w-3 h-3"></i> पूर्ण करें & लॉक
-          </button>
-        ` : `<span class="text-xs text-slate-400 font-semibold">🔒 लॉक</span>`);
+        let actionsHtml = '';
+        if (isPrivileged) {
+          actionsHtml = `
+            <div class="flex items-center justify-end gap-1.5">
+              ${task.status !== 'COMPLETED' ? `
+                <button onclick="adminToggleStatus('${task.id}', 'COMPLETED')" title="पूर्ण करें" class="px-2 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-xs font-bold">
+                  पूर्ण करें
+                </button>
+              ` : `
+                <button onclick="adminToggleStatus('${task.id}', 'PENDING')" title="अनलॉक करें" class="px-2 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded text-xs font-bold">
+                  अनलॉक
+                </button>
+              `}
+              <button onclick="editTask('${task.id}')" title="संशोधित करें" class="p-1.5 text-slate-600 hover:text-police-700 rounded hover:bg-slate-100">
+                <i data-lucide="pencil" class="w-4 h-4"></i>
+              </button>
+              <button onclick="deleteTask('${task.id}')" title="हटाएं" class="p-1.5 text-slate-400 hover:text-rose-600 rounded hover:bg-rose-50">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+          `;
+        } else {
+          if (!isLocked) {
+            actionsHtml = `
+              <div class="flex items-center justify-end gap-1.5">
+                <button onclick="branchCompleteAndLock('${task.id}')" class="px-2.5 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded text-xs font-bold flex items-center gap-1 shadow-sm">
+                  <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                  <span>पूर्ण करें & लॉक</span>
+                </button>
+                <button onclick="editTask('${task.id}')" title="संशोधित करें" class="p-1.5 text-slate-600 hover:text-police-700 rounded hover:bg-slate-100">
+                  <i data-lucide="pencil" class="w-4 h-4"></i>
+                </button>
+              </div>
+            `;
+          } else {
+            actionsHtml = `<div class="text-right text-xs font-semibold text-slate-400 flex items-center justify-end gap-1"><i data-lucide="lock" class="w-3.5 h-3.5 text-emerald-600"></i><span>लॉक</span></div>`;
+          }
+        }
 
         const tr = document.createElement('tr');
-        tr.className = 'hover:bg-slate-50 transition border-b';
+        tr.className = `hover:bg-slate-50 transition border-b border-slate-200 ${task.status === 'COMPLETED' ? 'bg-emerald-50/20' : ''}`;
         tr.innerHTML = `
-          <td class="py-2.5 px-3 text-center font-mono font-bold text-slate-500">${index + 1}</td>
-          <td class="py-2.5 px-3 font-mono font-bold text-police-900">${formatToIndianDate(task.taskDate)}</td>
-          <td class="py-2.5 px-3 font-bold text-slate-800">${task.branch}</td>
-          <td class="py-2.5 px-4 font-medium leading-relaxed">${task.description}</td>
-          <td class="py-2.5 px-3 text-slate-700 font-semibold">${task.assignee || '-'}</td>
-          <td class="py-2.5 px-3">${priorityBadge}</td>
-          <td class="py-2.5 px-3 font-mono text-slate-600">${formatToIndianDate(task.dueDate)}</td>
-          <td class="py-2.5 px-3">${directionsHtml}</td>
-          <td class="py-2.5 px-3 text-center">${statusBadge}</td>
-          <td class="py-2.5 px-3 text-right no-print">${actionsHtml}</td>
+          <td class="py-3 px-3 text-center font-mono text-xs font-bold text-slate-500">${index + 1}</td>
+          <td class="py-3 px-3 font-mono font-bold text-police-900 text-xs">${formatToIndianDate(task.taskDate)}</td>
+          <td class="py-3 px-3 font-bold text-slate-800 text-xs">${task.branch}</td>
+          <td class="py-3 px-4 text-xs sm:text-sm font-medium text-slate-900 leading-relaxed">${task.description}</td>
+          <td class="py-3 px-3 text-xs font-semibold text-slate-700">${task.assignee || '-'}</td>
+          <td class="py-3 px-3">${priorityBadge}</td>
+          <td class="py-3 px-3 font-mono text-xs text-slate-600">${formatToIndianDate(task.dueDate)}</td>
+          <td class="py-3 px-3">${directionsHtml}</td>
+          <td class="py-3 px-3 text-center">${statusBadge}</td>
+          <td class="py-3 px-3 text-right no-print">${actionsHtml}</td>
         `;
         tbody.appendChild(tr);
       });
       lucide.createIcons();
     }
+
+    function renderBranchOverviewGrid() {
+      const container = document.getElementById('branchSummaryGrid');
+      if (!container) return;
+      container.innerHTML = '';
+      const branches = getRegisteredBranches();
+      document.getElementById('regBranchesCountText').textContent = `${branches.length} शाखाएं पंजीकृत`;
+
+      if (branches.length === 0) {
+        container.innerHTML = `<div class="col-span-full py-6 text-center text-slate-400 bg-white rounded-xl border">वर्तमान में कोई शाखा आईडी नहीं बनाई गई है। ऊपर "+ नई शाखा ID बनाएं" पर क्लिक करें।</div>`;
+        return;
+      }
+
+      branches.forEach(branchName => {
+        const bTasks = tasks.filter(t => t.branch === branchName);
+        const bTotal = bTasks.length;
+        const bDone = bTasks.filter(t => t.status === 'COMPLETED').length;
+        const bPending = bTasks.filter(t => t.status === 'PENDING').length;
+        const bProg = bTasks.filter(t => t.status === 'PROGRESS').length;
+        const bRate = bTotal === 0 ? 0 : Math.round((bDone / bTotal) * 100);
+        const bStaff = users.find(u => u.branch === branchName && u.role === 'Branch');
+
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-xl p-3.5 border border-slate-200 shadow-sm flex flex-col justify-between";
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+              <span class="text-xs font-bold text-police-900 truncate">${branchName}</span>
+              <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700">${bTotal} कार्य</span>
+            </div>
+            ${bStaff ? `
+              <div class="text-[11px] text-slate-500 mt-1 truncate">
+                प्रभारी: <strong class="text-slate-700">${bStaff.name}</strong> (${bStaff.rank})
+                <br>ID: <span class="font-mono">${bStaff.mobile}</span>
+              </div>
+            ` : ''}
+            <div class="grid grid-cols-3 gap-1 my-3 text-center">
+              <div class="bg-emerald-50 rounded py-1 border border-emerald-200">
+                <span class="text-xs font-extrabold text-emerald-700">${bDone}</span>
+                <span class="block text-[9px] text-emerald-800">पूर्ण</span>
+              </div>
+              <div class="bg-rose-50 rounded py-1 border border-rose-200">
+                <span class="text-xs font-extrabold text-rose-700">${bPending}</span>
+                <span class="block text-[9px] text-rose-800">लंबित</span>
+              </div>
+              <div class="bg-amber-50 rounded py-1 border border-amber-200">
+                <span class="text-xs font-extrabold text-amber-700">${bProg}</span>
+                <span class="block text-[9px] text-amber-800">जारी</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between items-center text-[10px] font-bold text-slate-500 mb-1">
+              <span>निस्तारण</span>
+              <span class="text-police-700">${bRate}%</span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+              <div class="bg-emerald-500 h-1.5 rounded-full" style="width: ${bRate}%"></div>
+            </div>
+            <button onclick="adminFilterToBranch('${branchName}')" class="w-full mt-2 py-1 text-[11px] font-semibold text-police-700 bg-police-50 hover:bg-police-100 rounded text-center transition">
+              पत्रावलियां देखें &rarr;
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    window.adminFilterToBranch = function(b) {
+      document.getElementById('filterBranch').value = b;
+      refreshDashboardData();
+      document.getElementById('tasksTable').scrollIntoView({ behavior: 'smooth' });
+    };
 
     function getFilteredTasks() {
       const fromDate = document.getElementById('filterFromDate')?.value;
@@ -1715,15 +2450,7 @@
       }).sort((a, b) => (b.taskDate || '').localeCompare(a.taskDate || ''));
     }
 
-    window.saveTaskInstruction = function(taskId) {
-      const input = document.getElementById(`dirInput-${taskId}`);
-      if (!input || !input.value.trim()) return;
-      tasksRef.child(taskId).update({ adminInstructions: input.value.trim() }).then(() => {
-        showToast('निर्देश प्रेषित', 'कार्यवाही निर्देश दर्ज कर दिए गए हैं।');
-      });
-    };
-
-    window.toggleTaskStatus = function(taskId, newStatus) {
+    window.adminToggleStatus = function(taskId, newStatus) {
       const updates = { 
         status: newStatus,
         isLocked: (newStatus === 'COMPLETED'),
@@ -1745,13 +2472,241 @@
       });
     };
 
-    window.deleteTaskRecord = function(taskId) {
-      if (confirm('क्या आप इस कार्य को हटाना चाहते हैं?')) {
+    window.saveAdminInstruction = function(taskId) {
+      const input = document.getElementById(`dirInput-${taskId}`);
+      if (!input || !input.value.trim()) return;
+      tasksRef.child(taskId).update({ adminInstructions: input.value.trim() }).then(() => {
+        showToast('निर्देश प्रेषित', 'कार्यवाही निर्देश दर्ज कर दिए गए हैं।');
+      });
+    };
+
+    window.deleteTask = function(taskId) {
+      if (confirm('क्या आप इस कार्य को पंजिका से हटाना चाहते हैं?')) {
         tasksRef.child(taskId).remove().then(() => {
           showToast('हटाया गया', 'कार्य पंजिका से हटा दिया गया।');
         });
       }
     };
+
+    // Task Entry Modal Handling
+    const taskRowsContainer = document.getElementById('taskRowsContainer');
+
+    function createRowElement(initialText = '') {
+      const rowId = 'row-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4);
+      const div = document.createElement('div');
+      div.id = rowId;
+      div.className = "flex items-start gap-2 bg-white p-2 rounded border border-slate-200 shadow-sm";
+      div.innerHTML = `
+        <span class="row-num text-xs font-bold text-police-700 bg-police-50 px-2 py-1.5 rounded mt-1">1.</span>
+        <textarea required rows="2" class="task-desc-input w-full text-xs rounded border border-slate-300 p-2 bg-white focus:ring-2 focus:ring-police-600 leading-normal" placeholder="दैनिक कार्य का विवरण लिखें...">${initialText}</textarea>
+        <button type="button" onclick="removeTaskRow('${rowId}')" title="यह पंक्ति हटाएं" class="text-slate-400 hover:text-rose-600 p-1.5 rounded hover:bg-rose-50 transition mt-1">
+          <i data-lucide="trash" class="w-4 h-4"></i>
+        </button>
+      `;
+      return div;
+    }
+
+    function renumberRows() {
+      const rows = taskRowsContainer.querySelectorAll('.row-num');
+      rows.forEach((el, i) => { el.textContent = `${i + 1}.`; });
+    }
+
+    function addTaskRow(text = '') {
+      const rowEl = createRowElement(text);
+      taskRowsContainer.appendChild(rowEl);
+      renumberRows();
+      lucide.createIcons();
+    }
+
+    window.removeTaskRow = function(rowId) {
+      const rows = taskRowsContainer.querySelectorAll('.flex');
+      if (rows.length <= 1) {
+        showToast('सूचना', 'कम से कम एक कार्य पंक्ति आवश्यक है।');
+        return;
+      }
+      const el = document.getElementById(rowId);
+      if (el) el.remove();
+      renumberRows();
+    };
+
+    document.getElementById('addNewRowBtn')?.addEventListener('click', () => { addTaskRow(''); });
+
+    document.getElementById('openNewTaskBtn')?.addEventListener('click', () => {
+      document.getElementById('taskModalHeading').textContent = 'दैनिक कार्य प्रविष्टि (Multiple Task Rows)';
+      document.getElementById('editTaskId').value = '';
+      document.getElementById('taskForm').reset();
+      taskRowsContainer.innerHTML = '';
+
+      const { minDateStr } = applyTaskDateRestrictions();
+      document.getElementById('modalTaskDate').value = minDateStr;
+      document.getElementById('modalDueDate').value = minDateStr;
+
+      if (currentUser?.role === 'Admin' || currentUser?.role === 'IG_Sir') {
+        const branches = getRegisteredBranches();
+        document.getElementById('modalBranch').value = branches.length > 0 ? branches[0] : 'अपराध शाखा';
+        document.getElementById('modalBranch').readOnly = false;
+      } else {
+        document.getElementById('modalBranch').value = currentUser.branch;
+        document.getElementById('modalBranch').readOnly = true;
+      }
+
+      addTaskRow('');
+      addTaskRow('');
+      document.getElementById('addNewRowBtn').classList.remove('hidden');
+      document.getElementById('taskModal').classList.remove('hidden');
+      lucide.createIcons();
+    });
+
+    window.editTask = function(taskId) {
+      const task = tasks.find(t => t.id === taskId);
+      if (!task) return;
+      if (currentUser?.role === 'Branch' && task.isLocked) {
+        showToast('कार्य लॉक है', 'पूर्ण हो चुके लॉक कार्य को केवल एडमिन या आईजी महोदय संशोधित कर सकते हैं।');
+        return;
+      }
+
+      applyTaskDateRestrictions();
+      document.getElementById('taskModalHeading').textContent = 'कार्य संशोधित करें';
+      document.getElementById('editTaskId').value = task.id;
+      document.getElementById('modalBranch').value = task.branch;
+      document.getElementById('modalTaskDate').value = task.taskDate || '';
+      document.getElementById('modalAssignee').value = task.assignee || '';
+      document.getElementById('modalPriority').value = task.priority || 'NORMAL';
+      document.getElementById('modalDueDate').value = task.dueDate || '';
+
+      taskRowsContainer.innerHTML = '';
+      addTaskRow(task.description);
+      document.getElementById('addNewRowBtn').classList.add('hidden');
+      document.getElementById('taskModal').classList.remove('hidden');
+      lucide.createIcons();
+    };
+
+    document.getElementById('taskForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const editId = document.getElementById('editTaskId').value;
+      const branch = document.getElementById('modalBranch').value.trim();
+      const taskDate = document.getElementById('modalTaskDate').value;
+      const assignee = document.getElementById('modalAssignee').value.trim();
+      const priority = document.getElementById('modalPriority').value;
+      const dueDate = document.getElementById('modalDueDate').value;
+
+      const descInputs = taskRowsContainer.querySelectorAll('.task-desc-input');
+      const descriptions = [];
+      descInputs.forEach(inp => {
+        const val = inp.value.trim();
+        if (val) descriptions.push(val);
+      });
+
+      if (descriptions.length === 0) {
+        showToast('त्रुटि', 'कृपया कम से कम एक कार्य का विवरण अवश्य भरें।');
+        return;
+      }
+
+      if (editId) {
+        tasksRef.child(editId).update({
+          branch: branch,
+          taskDate: taskDate,
+          description: descriptions[0],
+          assignee: assignee,
+          priority: priority,
+          dueDate: dueDate
+        }).then(() => {
+          showToast('संशोधित', 'कार्य अद्यतन हो गया है।');
+        });
+      } else {
+        const now = new Date();
+        const createdDateFormatted = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
+        descriptions.forEach((desc, i) => {
+          const newTaskId = 'tsk-' + Date.now() + '-' + i;
+          tasksRef.child(newTaskId).set({
+            id: newTaskId,
+            branch: branch,
+            taskDate: taskDate,
+            description: desc,
+            assignee: assignee || currentUser.name,
+            priority: priority,
+            dueDate: dueDate,
+            status: 'PENDING',
+            isLocked: false,
+            adminInstructions: '',
+            createdAt: createdDateFormatted
+          });
+        });
+        showToast('सुरक्षित', `${descriptions.length} कार्य सेंट्रल डेटाबेस में दर्ज किए गए।`);
+      }
+
+      document.getElementById('taskModal').classList.add('hidden');
+    });
+
+    // Create Branch ID Modal
+    window.openAdminCreateBranchModal = function() {
+      document.getElementById('adminBranchCreateForm').reset();
+      document.getElementById('adminCreateBranchModal').classList.remove('hidden');
+    };
+
+    document.getElementById('adminBranchCreateForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const branchName = document.getElementById('admBranchName').value.trim();
+      const staffName = document.getElementById('admStaffName').value.trim();
+      const rank = document.getElementById('admStaffRank').value.trim();
+      const mobile = document.getElementById('admMobile').value.trim();
+      const pin = document.getElementById('admPin').value.trim();
+      const email = document.getElementById('admEmail').value.trim();
+      const password = document.getElementById('admPassword').value.trim();
+
+      if (mobile.length !== 10 || isNaN(mobile)) {
+        showToast('त्रुटि', 'कृपया वैध 10 अंकों का मोबाइल नंबर दर्ज करें।');
+        return;
+      }
+
+      const newUserId = 'usr-' + mobile;
+      usersRef.child(newUserId).set({
+        id: newUserId,
+        role: 'Branch',
+        name: staffName,
+        rank: rank,
+        mobile: mobile,
+        branch: branchName,
+        email: email,
+        pin: pin,
+        password: password
+      }).then(() => {
+        document.getElementById('adminCreateBranchModal').classList.add('hidden');
+        showToast('शाखा आईडी निर्मित', `'${branchName}' की आईडी (${mobile}) व पासवर्ड ऑनलाइन जारी कर दिया गया।`);
+      });
+    });
+
+    // Download / Print Landscape Reports
+    document.getElementById('printPdfDirectBtn')?.addEventListener('click', () => {
+      window.print();
+    });
+
+    document.getElementById('downloadExcelBtn')?.addEventListener('click', () => {
+      const filtered = getFilteredTasks();
+      if (filtered.length === 0) {
+        showToast('कोई डेटा नहीं', 'डाउनलोड हेतु कोई कार्य नहीं है।');
+        return;
+      }
+
+      const excelData = filtered.map((t, idx) => ({
+        "क्र.": idx + 1,
+        "कार्य दिनांक": formatToIndianDate(t.taskDate),
+        "शाखा": t.branch || '',
+        "दैनिक कार्य का विस्तृत विवरण": t.description || '',
+        "प्रभारी / संबंधित कर्मचारी": t.assignee || '',
+        "प्राथमिकता": t.priority === 'URGENT' ? 'अति आवश्यक' : t.priority === 'HIGH' ? 'उच्च' : 'सामान्य',
+        "लक्ष्य तिथि": formatToIndianDate(t.dueDate),
+        "कार्यवाही हेतु निर्देश (Admin)": t.adminInstructions || '',
+        "स्थिति": t.status === 'COMPLETED' ? 'पूर्ण (Locked)' : t.status === 'PENDING' ? 'लंबित' : 'प्रक्रियाधीन',
+        "निस्तारण दिनांक": t.completedAt || ''
+      }));
+
+      const worksheet = XLSX.utils.json_to_sheet(excelData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Daily Task Register");
+      XLSX.writeFile(workbook, `IGP_Kota_Daily_Tasks_${formatDateToISO(new Date())}.xlsx`);
+      showToast('Excel डाउनलोड संपन्न', 'एक्सेल (.xlsx) फ़ाइल डाउनलोड हो गई।');
+    });
 
     function showToast(title, msg) {
       const toast = document.getElementById('toastNotification');
