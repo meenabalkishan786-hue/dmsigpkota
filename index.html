@@ -119,7 +119,7 @@
             श्री हरेन्द्र कुमार महावर, IPS
           </div>
           <div class="text-[11px] sm:text-xs text-amber-200 font-medium">
-            महानिरीक्षक पुलिस, कोटा रेंज (कोटा, बूंदी, बारां, झालावाड़)
+            महानिरीक्षक पुलिस, कोटा रेंज, कोटा
           </div>
           <h1 class="text-base sm:text-xl font-extrabold tracking-tight text-white mt-0.5">
             कार्यालय महानिरीक्षक पुलिस, कोटा रेंज
@@ -144,7 +144,7 @@
           <i data-lucide="phone-call" class="w-4 h-4 inline-block mr-1"></i> संपर्क सूत्र
         </button>
         <button onclick="switchTab('monitoringDashboard')" class="nav-tab-btn hidden px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold hover:bg-police-800 text-amber-300 transition official-only-nav" id="tab-monitoringDashboard">
-          <i data-lucide="layout-dashboard" class="w-4 h-4 inline-block mr-1"></i> कार्य अनुश्रवण
+          <i data-lucide="layout-dashboard" class="w-4 h-4 inline-block mr-1"></i> कार्य निगरानी 
         </button>
 
         <!-- Right Side Login Trigger Button (When Logged Out) -->
@@ -258,6 +258,8 @@
           <span class="bg-police-950/80 px-2.5 py-1 rounded border border-police-700">कंट्रोल रूम: 112 / 100</span>
           <span class="bg-police-950/80 px-2.5 py-1 rounded border border-police-700">महिला: 1090</span>
           <span class="bg-police-950/80 px-2.5 py-1 rounded border border-police-700">साइबर: 1930</span>
+          <span class="bg-police-950/80 px-2.5 py-1 rounded border border-police-700">कार्यालय मेल आई.डी.: igp-kot-rj@nic.in</span>
+          <span class="bg-police-950/80 px-2.5 py-1 rounded border border-police-700">कार्यालय फ़ोन न.: 0744-2350800</span>
         </div>
       </div>
 
@@ -552,10 +554,10 @@
           </div>
           <div class="text-xs text-slate-600 font-medium flex items-center gap-4">
             <span class="inline-flex items-center gap-1">
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span> हरा डॉट (🟢) = पूर्ण
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span> (🟢) = पूर्ण
             </span>
             <span class="inline-flex items-center gap-1">
-              <span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> लाल निशान (🔴) = लंबित
+              <span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> (🔴) = लंबित
             </span>
           </div>
         </div>
@@ -613,7 +615,7 @@
   <div id="printableLandscapeReport" class="hidden p-6 bg-white text-slate-900 font-hindi">
     <div class="border-b-2 border-police-900 pb-3 mb-4 text-center">
       <h2 class="text-xl font-extrabold">कार्यालय महानिरीक्षक पुलिस, कोटा रेंज (राजस्थान)</h2>
-      <h3 class="text-sm font-bold text-slate-700 mt-0.5">दैनिक कार्य प्रगति एवं अनुश्रवण प्रतिवेदन</h3>
+      <h3 class="text-sm font-bold text-slate-700 mt-0.5">दैनिक कार्य प्रगति एवं निगरानी प्रतिवेदन</h3>
       <div class="flex justify-between items-center text-xs font-semibold mt-2 px-2">
         <span id="pdfRepDate">अवधि: समस्त दिनांक</span>
         <span id="pdfRepBranch">शाखा: समस्त शाखाएं</span>
@@ -641,7 +643,7 @@
     <div class="mt-8 flex justify-between items-end text-xs font-bold px-4">
       <div>हस्ताक्षर शाखा प्रभारी</div>
       <div class="text-right">
-        <p>कार्यालय महानिरीक्षक पुलिस</p>
+        <p>महानिरीक्षक पुलिस</p>
         <p class="font-normal text-slate-500">कोटा रेंज, कोटा (राज.)</p>
       </div>
     </div>
@@ -1160,10 +1162,10 @@
     const DEFAULT_ADMIN = {
       id: 'usr-admin',
       role: 'Admin',
-      name: 'श्रीमान महानिरीक्षक (Admin)',
-      rank: 'IPS',
+      name: 'Bal Kishan (Admin)',
+      rank: 'Assistant Programmer',
       mobile: '9928165827',
-      email: 'ig.kota@rajpolice.gov.in',
+      email: 'balkishan.doit@rajasthan.gov.in',
       pin: '7865',
       password: '7865',
       branch: 'समस्त शाखाएं (पर्यवेक्षण)'
@@ -1172,13 +1174,13 @@
     const DEFAULT_IG = {
       id: 'usr-ig',
       role: 'IG_Sir',
-      name: 'श्री हरेन्द्र कुमार महावर (IG Sir)',
+      name: 'श्री हरेन्द्र कुमार महावर',
       rank: 'IPS',
       mobile: '9414000000',
-      email: 'ig.kota@rajpolice.gov.in',
+      email: 'igp-kot-rj@nic.in',
       pin: '1234',
       password: 'igp@kota',
-      branch: 'कोटा रेंज (महानिरीक्षक)'
+      branch: 'महानिरीक्षक कोटा रेंज '
     };
 
     let users = [DEFAULT_ADMIN, DEFAULT_IG];
