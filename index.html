@@ -119,7 +119,7 @@
             श्री हरेन्द्र कुमार महावर, IPS
           </div>
           <div class="text-[11px] sm:text-xs text-amber-200 font-medium">
-            महानिरीक्षक पुलिस, कोटा रेंज, कोटा
+            महानिरीक्षक पुलिस, कोटा रेंज,कोटा
           </div>
           <h1 class="text-base sm:text-xl font-extrabold tracking-tight text-white mt-0.5">
             कार्यालय महानिरीक्षक पुलिस, कोटा रेंज
@@ -144,7 +144,7 @@
           <i data-lucide="phone-call" class="w-4 h-4 inline-block mr-1"></i> संपर्क सूत्र
         </button>
         <button onclick="switchTab('monitoringDashboard')" class="nav-tab-btn hidden px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold hover:bg-police-800 text-amber-300 transition official-only-nav" id="tab-monitoringDashboard">
-          <i data-lucide="layout-dashboard" class="w-4 h-4 inline-block mr-1"></i> कार्य निगरानी 
+          <i data-lucide="layout-dashboard" class="w-4 h-4 inline-block mr-1"></i> कार्य अनुश्रवण
         </button>
 
         <!-- Right Side Login Trigger Button (When Logged Out) -->
@@ -178,7 +178,7 @@
         <i data-lucide="bell" class="w-3 h-3"></i> नवीनतम सूचना
       </span>
       <marquee behavior="scroll" direction="left" scrollamount="6" class="text-xs font-semibold text-slate-800">
-        कोटा रेंज पुलिस: निष्पक्ष अनुसंधान, त्वरित न्याय एवं संवेदनशील जनसेवा हेतु सदैव तत्पर | 
+        कोटा रेंज पुलिस: निष्पक्ष अनुसंधान, त्वरित न्याय एवं संवेदनशील जनसेवा हेतु सदैव तत्पर | आमजन किसी भी आपात स्थिति में 112 डायल करें।
       </marquee>
     </div>
   </div>
@@ -248,18 +248,70 @@
         </div>
       </div>
 
-      <!-- Quick Police Helpline Strip -->
-      <div class="bg-gradient-to-r from-police-900 via-police-800 to-police-950 text-white rounded-2xl p-4 shadow-sm border border-police-700 flex flex-wrap justify-between items-center gap-3">
-        <div class="flex items-center gap-2">
-          <i data-lucide="phone-call" class="w-5 h-5 text-police-gold animate-bounce"></i>
-          <span class="font-bold text-sm">24x7 आपातकालीन पुलिस हेल्पलाइन नंबर:</span>
+      <!-- PUBLIC CONTACT DETAILS & EMERGENCY HELPLINE (LANDLINE & EMAIL) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Official IG Office Contact Card -->
+        <div class="bg-gradient-to-br from-police-950 to-police-900 text-white rounded-2xl p-5 shadow-sm border border-police-800 flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center gap-2 text-police-goldlight">
+              <i data-lucide="building-2" class="w-5 h-5 text-police-gold"></i>
+              <h4 class="font-bold text-sm sm:text-base">कार्यालय महानिरीक्षक पुलिस, कोटा रेंज (सम्पर्क विवरण)</h4>
+            </div>
+            <p class="text-xs text-slate-300">
+              कार्यालय से संबंधित किसी भी पूछताछ, प्रशासनिक कार्य अथवा जानकारी हेतु नीचे दिए गए दूरभाष अथवा ईमेल पर संपर्क करें:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs">
+              <div class="bg-police-900/90 p-3 rounded-xl border border-police-700/80">
+                <span class="text-[11px] text-slate-400 block mb-1">
+                  <i data-lucide="phone" class="w-3.5 h-3.5 inline mr-1 text-police-gold"></i> दूरभाष (लैंडलाइन)
+                </span>
+                <a href="tel:07442350800" class="font-bold font-mono text-amber-200 text-sm hover:underline">0744-2350782</a>
+              </div>
+              <div class="bg-police-900/90 p-3 rounded-xl border border-police-700/80">
+                <span class="text-[11px] text-slate-400 block mb-1">
+                  <i data-lucide="mail" class="w-3.5 h-3.5 inline mr-1 text-police-gold"></i> आधिकारिक ईमेल आईडी
+                </span>
+                <a href="mailto:igp-kot-rj@nic.in" class="font-bold font-mono text-amber-200 text-xs sm:text-[13px] hover:underline break-all">igp-kot-rj@nic.in</a>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-police-800 text-[11px] text-slate-400">
+            कार्यालय समय: प्रातः 09:30 बजे से सायं 06:00 बजे तक (शासकीय कार्यदिवस)
+          </div>
         </div>
-        <div class="flex items-center gap-4 text-xs font-mono font-bold">
-          <span class="bg-police-950/80 px-2.5 py-1 rounded border border-police-700">कंट्रोल रूम: 112 / 100</span>
-          <span class="bg-police-950/80 px-2.5 py-1 rounded border border-police-700">महिला: 1090</span>
-          <span class="bg-police-950/80 px-2.5 py-1 rounded border border-police-700">साइबर: 1930</span>
-          <span class="bg-police-950/80 px-2.5 py-1 rounded border border-police-700">कार्यालय मेल आई.डी.: igp-kot-rj@nic.in</span>
-          <span class="bg-police-950/80 px-2.5 py-1 rounded border border-police-700">कार्यालय फ़ोन न.: 0744-2350800</span>
+
+        <!-- 24x7 Emergency Helpline Card -->
+        <div class="bg-gradient-to-br from-slate-900 to-police-950 text-white rounded-2xl p-5 shadow-sm border border-police-800 flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="flex items-center gap-2 text-police-goldlight">
+              <i data-lucide="phone-call" class="w-5 h-5 text-police-gold animate-bounce"></i>
+              <h4 class="font-bold text-sm sm:text-base">24x7 आपातकालीन पुलिस सहायता हेल्पलाइन</h4>
+            </div>
+            <p class="text-xs text-slate-300">
+              आपात स्थिति, महिला सुरक्षा, साइबर ठगी या त्वरित पुलिस सहायता हेतु इन टोल-फ्री नंबरों पर कॉल करें:
+            </p>
+            <div class="grid grid-cols-2 gap-2.5 pt-2 text-xs font-mono font-bold">
+              <div class="bg-police-900/90 p-2.5 rounded-xl border border-police-800">
+                <span class="text-[10px] text-slate-400 font-sans block">पुलिस कंट्रोल रूम</span>
+                <span class="text-white text-sm">112 / 100</span>
+              </div>
+              <div class="bg-police-900/90 p-2.5 rounded-xl border border-police-800">
+                <span class="text-[10px] text-slate-400 font-sans block">महिला हेल्पलाइन</span>
+                <span class="text-amber-200 text-sm">1090</span>
+              </div>
+              <div class="bg-police-900/90 p-2.5 rounded-xl border border-police-800">
+                <span class="text-[10px] text-slate-400 font-sans block">साइबर अपराध हेल्पलाइन</span>
+                <span class="text-white text-sm">1930</span>
+              </div>
+              <div class="bg-police-900/90 p-2.5 rounded-xl border border-police-800">
+                <span class="text-[10px] text-slate-400 font-sans block">चाइल्ड हेल्पलाइन</span>
+                <span class="text-amber-200 text-sm">1098</span>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-police-800 text-[11px] text-slate-400">
+            टोल-फ्री सेवा | राजस्थान पुलिस सदैव आपकी सेवा में तत्पर
+          </div>
         </div>
       </div>
 
@@ -386,8 +438,8 @@
         </div>
       </div>
 
-      <!-- 5 KPI Cards -->
-      <section class="grid grid-cols-2 lg:grid-cols-5 gap-3.5 no-print">
+      <!-- 4 KPI Cards (Without 'Prakriyadheen') -->
+      <section class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 no-print">
         <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 flex flex-col justify-between">
           <div class="flex items-center justify-between mb-1">
             <span class="text-xs font-semibold text-slate-500 uppercase">कुल पंजीकृत कार्य</span>
@@ -426,19 +478,6 @@
           <div class="mt-2 text-[11px] text-rose-800">कार्यवाही प्रतीक्षित</div>
         </div>
 
-        <div class="bg-white rounded-xl p-4 shadow-sm border-l-4 border-l-amber-500 border border-slate-200 flex flex-col justify-between">
-          <div class="flex items-center justify-between mb-1">
-            <span class="text-xs font-bold text-amber-700 uppercase flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-amber-500 inline-block"></span> प्रक्रियाधीन
-            </span>
-            <span class="p-1.5 rounded-lg bg-amber-50 text-amber-700"><i data-lucide="clock" class="w-4 h-4"></i></span>
-          </div>
-          <div>
-            <span class="text-2xl sm:text-3xl font-extrabold text-amber-600" id="kpiProgress">0</span>
-          </div>
-          <div class="mt-2 text-[11px] text-amber-800">कार्रवाई जारी</div>
-        </div>
-
         <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 flex flex-col justify-between col-span-2 lg:col-span-1">
           <div class="flex items-center justify-between mb-1">
             <span class="text-xs font-semibold text-slate-500 uppercase">निस्तारण प्रतिशत</span>
@@ -454,11 +493,11 @@
         </div>
       </section>
 
-      <!-- Filters Bar -->
+      <!-- Filters Bar (Without 'Prakriyadheen') -->
       <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 no-print">
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
           
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-2.5 flex-grow">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2.5 flex-grow">
             <div>
               <label class="block text-xs font-bold text-slate-700 mb-1">दिनांक से (From)</label>
               <input type="date" id="filterFromDate" class="w-full text-xs rounded-lg border border-slate-300 py-1.5 px-2 bg-slate-50 font-mono">
@@ -480,17 +519,6 @@
                 <option value="ALL">सभी स्थितियां</option>
                 <option value="COMPLETED">🟢 पूर्ण कार्य (Completed)</option>
                 <option value="PENDING">🔴 अपूर्ण / लंबित (Pending)</option>
-                <option value="PROGRESS">🟡 प्रक्रियाधीन (In Progress)</option>
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">प्राथमिकता</label>
-              <select id="filterPriority" class="w-full text-xs rounded-lg border border-slate-300 py-2 px-2.5 bg-slate-50">
-                <option value="ALL">सभी प्राथमिकताएं</option>
-                <option value="URGENT">अति आवश्यक (Urgent)</option>
-                <option value="HIGH">उच्च (High)</option>
-                <option value="NORMAL">सामान्य (Normal)</option>
               </select>
             </div>
 
@@ -594,7 +622,7 @@
         </div>
       </div>
 
-      <!-- Registered Branches Overview Grid -->
+      <!-- Registered Branches Overview Grid (Without 'Prakriyadheen') -->
       <section id="adminBranchGridSection" class="mt-4 mb-4">
         <div class="flex items-center justify-between mb-3">
           <h3 class="font-bold text-sm sm:text-base text-police-900 flex items-center gap-2">
@@ -615,7 +643,7 @@
   <div id="printableLandscapeReport" class="hidden p-6 bg-white text-slate-900 font-hindi">
     <div class="border-b-2 border-police-900 pb-3 mb-4 text-center">
       <h2 class="text-xl font-extrabold">कार्यालय महानिरीक्षक पुलिस, कोटा रेंज (राजस्थान)</h2>
-      <h3 class="text-sm font-bold text-slate-700 mt-0.5">दैनिक कार्य प्रगति एवं निगरानी प्रतिवेदन</h3>
+      <h3 class="text-sm font-bold text-slate-700 mt-0.5">दैनिक कार्य प्रगति एवं अनुश्रवण प्रतिवेदन</h3>
       <div class="flex justify-between items-center text-xs font-semibold mt-2 px-2">
         <span id="pdfRepDate">अवधि: समस्त दिनांक</span>
         <span id="pdfRepBranch">शाखा: समस्त शाखाएं</span>
@@ -643,7 +671,7 @@
     <div class="mt-8 flex justify-between items-end text-xs font-bold px-4">
       <div>हस्ताक्षर शाखा प्रभारी</div>
       <div class="text-right">
-        <p>महानिरीक्षक पुलिस</p>
+        <p>कार्यालय महानिरीक्षक पुलिस</p>
         <p class="font-normal text-slate-500">कोटा रेंज, कोटा (राज.)</p>
       </div>
     </div>
@@ -886,7 +914,7 @@
           <i data-lucide="shield-check" class="w-6 h-6 text-police-gold"></i>
           <div>
             <h3 class="font-extrabold text-base text-white">एडमिन सुपर कंट्रोल विंडो (Admin Master Control)</h3>
-            <p class="text-[11px] text-police-goldlight">यूजर आईडी, पासवर्ड, होम स्लाइडर, ऑर्डर्स, मीडिया व संपर्क सूची प्रबंधन</p>
+            <p class="text-[11px] text-police-goldlight">यूजर आईडी, पासवर्ड, होम स्लाइडर, ऑर्डर्स, बैकअप व संपर्क सूची प्रबंधन</p>
           </div>
         </div>
         <button onclick="closeAdminControlModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">
@@ -897,6 +925,9 @@
       <div class="flex border-b bg-slate-50 text-xs font-bold px-6 pt-3 gap-2 overflow-x-auto">
         <button onclick="switchAdminSubTab('users')" id="ast-users" class="admin-sub-tab active py-2 px-3 border-b-2 border-police-700 text-police-800 bg-white rounded-t-lg whitespace-nowrap">
           <i data-lucide="users" class="w-3.5 h-3.5 inline mr-1"></i> यूजर क्रेडेंशियल्स
+        </button>
+        <button onclick="switchAdminSubTab('backup')" id="ast-backup" class="admin-sub-tab py-2 px-3 border-b-2 border-transparent text-slate-500 hover:text-police-700 whitespace-nowrap">
+          <i data-lucide="database" class="w-3.5 h-3.5 inline mr-1"></i> डेटा बैकअप / रिस्टोर
         </button>
         <button onclick="switchAdminSubTab('slider')" id="ast-slider" class="admin-sub-tab py-2 px-3 border-b-2 border-transparent text-slate-500 hover:text-police-700 whitespace-nowrap">
           <i data-lucide="sliders" class="w-3.5 h-3.5 inline mr-1"></i> होम फोटो स्लाइडर
@@ -936,7 +967,43 @@
           </div>
         </div>
 
-        <!-- SUB-TAB 2: SLIDER MANAGEMENT -->
+        <!-- SUB-TAB 2: DATA BACKUP / RESTORE SYSTEM -->
+        <div id="as-content-backup" class="admin-sub-content hidden space-y-5">
+          <div class="bg-blue-50 border border-blue-200 p-4 rounded-xl text-xs space-y-3">
+            <div class="flex items-center gap-2 text-police-900 font-bold text-sm">
+              <i data-lucide="archive" class="w-5 h-5 text-police-700"></i>
+              <span>संपूर्ण पोर्टल डेटा बैकअप (Cloud & Local Migration Backup)</span>
+            </div>
+            <p class="text-slate-600 leading-relaxed">
+              इस विकल्प से पोर्टल का <strong>समस्त डेटा (शाखाएं, उपयोगकर्ता, दैनिक कार्य पंजिका, परिपत्र/आदेश, मीडिया व संपर्क सूची)</strong> एक संपूर्ण सुरक्षित JSON फ़ाइल में डाउनलोड हो जाएगा। भविष्य में किसी भी अन्य सर्वर या डेटाबेस पर जाते समय इस फ़ाइल से पूरा पोर्टल 1 सेकंड में पुनः चालू हो जाएगा।
+            </p>
+            <div class="pt-1">
+              <button type="button" onclick="exportFullDataBackup()" class="px-5 py-2.5 bg-police-700 hover:bg-police-800 text-white font-bold rounded-lg shadow flex items-center gap-2 transition">
+                <i data-lucide="download-cloud" class="w-4 h-4 text-police-gold"></i>
+                <span>संपूर्ण डेटा बैकअप फ़ाइल डाउनलोड करें (.JSON)</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-xs space-y-3">
+            <div class="flex items-center gap-2 text-amber-900 font-bold text-sm">
+              <i data-lucide="upload-cloud" class="w-5 h-5 text-amber-700"></i>
+              <span>बैकअप फ़ाइल से डेटा पुनर्स्थापित (Restore) करें</span>
+            </div>
+            <p class="text-slate-600 leading-relaxed">
+              यदि आपने किसी अन्य प्लेटफार्म या नए डेटाबेस में वेबसाइट को स्थापित किया है, तो पूर्व में डाउनलोड की गई <strong>`.json` बैकअप फ़ाइल</strong> को यहाँ अपलोड करें।
+            </p>
+            <div class="flex flex-col sm:flex-row items-center gap-2 pt-1">
+              <input type="file" id="restoreBackupFileInput" accept=".json,application/json" class="w-full sm:w-auto flex-grow p-2 border rounded bg-white text-xs">
+              <button type="button" onclick="importFullDataBackup()" class="w-full sm:w-auto px-5 py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg shadow flex items-center justify-center gap-1.5 transition">
+                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                <span>डेटा रीस्टोर करें</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUB-TAB 3: SLIDER MANAGEMENT -->
         <div id="as-content-slider" class="admin-sub-content hidden space-y-5">
           <form id="adminAddSlideForm" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-slate-50 p-4 rounded-xl border">
             <div class="sm:col-span-2">
@@ -969,7 +1036,7 @@
           </div>
         </div>
 
-        <!-- SUB-TAB 3: UPLOAD ORDER (PDF BROWSE FILE OR URL + DELETE) -->
+        <!-- SUB-TAB 4: UPLOAD ORDER (PDF BROWSE FILE OR URL + DELETE) -->
         <div id="as-content-orders" class="admin-sub-content hidden space-y-4">
           <form id="adminUploadOrderForm" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-slate-50 p-4 rounded-xl border">
             <div>
@@ -1017,7 +1084,7 @@
           </div>
         </div>
 
-        <!-- SUB-TAB 4: UPLOAD MEDIA (BROWSE & LINK BOTH + DELETE) -->
+        <!-- SUB-TAB 5: UPLOAD MEDIA (BROWSE & LINK BOTH + DELETE) -->
         <div id="as-content-media" class="admin-sub-content hidden space-y-4">
           <form id="adminUploadMediaForm" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-slate-50 p-4 rounded-xl border">
             <div>
@@ -1058,7 +1125,7 @@
           </div>
         </div>
 
-        <!-- SUB-TAB 5: MANAGE CONTACTS (EXCEL BULK UPLOAD & MANUAL & DELETE) -->
+        <!-- SUB-TAB 6: MANAGE CONTACTS (EXCEL BULK UPLOAD & MANUAL & DELETE) -->
         <div id="as-content-contacts" class="admin-sub-content hidden space-y-5">
           <div class="bg-gradient-to-r from-emerald-50 to-teal-50 p-4 rounded-xl border border-emerald-200 text-xs space-y-3">
             <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
@@ -1120,26 +1187,34 @@
     </div>
   </div>
 
-  <!-- Toast Notification -->
-  <div id="toastNotification" class="fixed bottom-12 right-5 z-50 bg-police-900 text-white px-4 py-2.5 rounded-lg shadow-xl border-l-4 border-police-gold flex items-center gap-3 transition-opacity duration-300 opacity-0 pointer-events-none no-print">
-    <i data-lucide="info" id="toastIcon" class="w-5 h-5 text-police-gold"></i>
-    <div>
-      <div id="toastTitle" class="text-xs font-bold">सूचना</div>
-      <div id="toastMessage" class="text-xs text-slate-300">अपडेट संपन्न</div>
-    </div>
-  </div>
+  <!-- ================= 5-MINUTE AUTO LOGOUT INACTIVITY ENGINE ================= -->
+  <script>
+    let inactivityTimer = null;
+    const INACTIVITY_LIMIT_MS = 5 * 60 * 1000; // 5 Minutes
 
-  <!-- ================= FOOTER ================= -->
-  <footer class="mt-auto bg-police-950 text-white border-t-2 border-police-gold py-3 no-print z-30 shadow-inner">
-    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-2">
-      <div>
-        © 2026 कार्यालय महानिरीक्षक पुलिस, कोटा रेंज (राजस्थान पुलिस). सर्वाधिकार सुरक्षित।
-      </div>
-      <div class="text-police-goldlight font-semibold">
-        ⭐ This site made by Bal Kishan Assistant Programmer IGP Kota ⭐
-      </div>
-    </div>
-  </footer>
+    function resetInactivityTimer() {
+      if (inactivityTimer) clearTimeout(inactivityTimer);
+      if (currentUser) {
+        inactivityTimer = setTimeout(() => {
+          logoutDueToInactivity();
+        }, INACTIVITY_LIMIT_MS);
+      }
+    }
+
+    function logoutDueToInactivity() {
+      if (currentUser) {
+        currentUser = null;
+        localStorage.removeItem(SESSION_KEY);
+        updateAuthUI(false);
+        switchTab('home');
+        showToast('सत्र समाप्त', '5 मिनट तक कोई गतिविधि न होने के कारण सुरक्षा हेतु स्वतः लॉगआउट कर दिया गया है।');
+      }
+    }
+
+    ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'click'].forEach(evt => {
+      window.addEventListener(evt, resetInactivityTimer, { passive: true });
+    });
+  </script>
 
   <!-- ================= JAVASCRIPT & CLOUD REALTIME SYNC LOGIC ================= -->
   <script>
@@ -1158,14 +1233,13 @@
     const contactsRef = db.ref('contacts');
     const sliderRef = db.ref('slider');
 
-    // Secure Master Credentials
     const DEFAULT_ADMIN = {
       id: 'usr-admin',
       role: 'Admin',
       name: 'Bal Kishan (Admin)',
       rank: 'Assistant Programmer',
       mobile: '9928165827',
-      email: 'balkishan.doit@rajasthan.gov.in',
+      email: 'balkishan.doit@rajsthan.gov.in',
       pin: '7865',
       password: '7865',
       branch: 'समस्त शाखाएं (पर्यवेक्षण)'
@@ -1180,7 +1254,7 @@
       email: 'igp-kot-rj@nic.in',
       pin: '1234',
       password: 'igp@kota',
-      branch: 'महानिरीक्षक कोटा रेंज '
+      branch: 'कोटा रेंज (महानिरीक्षक)'
     };
 
     let users = [DEFAULT_ADMIN, DEFAULT_IG];
@@ -1200,26 +1274,6 @@
     let currentSlide = 0;
     let carouselInterval = null;
 
-    // ================= 5-MINUTE AUTO-LOGOUT SYSTEM =================
-    let inactivityTimer = null;
-    const INACTIVITY_LIMIT_MS = 5 * 60 * 1000; // 5 Minutes (300,000 ms)
-
-    function resetInactivityTimer() {
-      if (inactivityTimer) clearTimeout(inactivityTimer);
-      if (currentUser) {
-        inactivityTimer = setTimeout(() => {
-          showToast('सत्र समाप्त', '5 मिनट तक कोई गतिविधि न होने के कारण सुरक्षा हेतु स्वतः लॉगआउट कर दिया गया है।');
-          logoutUser();
-        }, INACTIVITY_LIMIT_MS);
-      }
-    }
-
-    // Attach Activity Listeners
-    ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll'].forEach(evt => {
-      window.addEventListener(evt, resetInactivityTimer, { passive: true });
-    });
-
-    // Login Modal Handlers
     window.openLoginModal = function() {
       document.getElementById('loginModal').classList.remove('hidden');
       lucide.createIcons();
@@ -1403,7 +1457,6 @@
       updateDateTime();
       setInterval(updateDateTime, 1000);
 
-      // Listen for Slider
       sliderRef.on('value', (snapshot) => {
         const data = snapshot.val();
         sliderList = data ? Object.values(data) : [];
@@ -1411,7 +1464,6 @@
         renderAdminSliderList();
       });
 
-      // Listen for Users
       usersRef.on('value', (snapshot) => {
         const data = snapshot.val();
         if (data) {
@@ -1436,14 +1488,12 @@
         checkActiveSession();
       });
 
-      // Listen for Tasks
       tasksRef.on('value', (snapshot) => {
         const data = snapshot.val();
         tasks = data ? Object.values(data) : [];
         if (currentUser) refreshDashboardData();
       });
 
-      // Listen for Orders
       ordersRef.on('value', (snapshot) => {
         const data = snapshot.val();
         orders = data ? Object.values(data) : [];
@@ -1451,7 +1501,6 @@
         renderAdminOrdersManagement();
       });
 
-      // Listen for Media
       mediaRef.on('value', (snapshot) => {
         const data = snapshot.val();
         mediaList = data ? Object.values(data) : [];
@@ -1459,7 +1508,6 @@
         renderAdminMediaManagement();
       });
 
-      // Listen for Contacts
       contactsRef.on('value', (snapshot) => {
         const data = snapshot.val();
         contactsList = data ? Object.values(data) : [];
@@ -1495,7 +1543,6 @@
     }
 
     function setupUploadListeners() {
-      // Media Tab Browse
       const medFile = document.getElementById('admMedFile');
       if (medFile) {
         medFile.addEventListener('change', function(e) {
@@ -1508,7 +1555,6 @@
         });
       }
 
-      // Slider Tab Browse
       const slideFile = document.getElementById('admSlideFile');
       if (slideFile) {
         slideFile.addEventListener('change', function(e) {
@@ -1521,7 +1567,6 @@
         });
       }
 
-      // Orders Tab PDF Browse
       const ordPdfFile = document.getElementById('admOrdPdfFile');
       if (ordPdfFile) {
         ordPdfFile.addEventListener('change', function(e) {
@@ -1572,14 +1617,12 @@
         if (activeMobile === DEFAULT_ADMIN.mobile) {
           currentUser = DEFAULT_ADMIN;
           updateAuthUI(true);
-          resetInactivityTimer();
           return;
         }
         const found = users.find(u => u.mobile === activeMobile);
         if (found) {
           currentUser = found;
           updateAuthUI(true);
-          resetInactivityTimer();
           return;
         }
       }
@@ -1610,7 +1653,7 @@
           adminBranchBtn.classList.remove('hidden');
           document.querySelectorAll('.admin-action-col').forEach(el => el.classList.remove('hidden'));
           document.getElementById('scopeBadgeTag').textContent = 'एडमिन डैशबोर्ड (Admin Master)';
-        } else if (currentUser.role === 'IPS') {
+        } else if (currentUser.role === 'IG_Sir') {
           adminSuperBtn.classList.add('hidden');
           adminBranchBtn.classList.add('hidden');
           document.querySelectorAll('.admin-action-col').forEach(el => el.classList.add('hidden'));
@@ -1632,14 +1675,12 @@
       lucide.createIcons();
     }
 
-    // Login Form Submit
     document.getElementById('modalLoginForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const role = document.getElementById('loginRoleSelect').value;
       const logId = document.getElementById('loginIdInput').value.trim();
       const pass = document.getElementById('loginPassInput').value.trim();
 
-      // Master Admin Authenticator
       if (role === 'Admin' && (logId === '9928165827' || logId === DEFAULT_ADMIN.email) && pass === '7865') {
         currentUser = DEFAULT_ADMIN;
         localStorage.setItem(SESSION_KEY, currentUser.mobile);
@@ -1647,12 +1688,10 @@
         updateBranchDropdown();
         closeLoginModal();
         switchTab('monitoringDashboard');
-        resetInactivityTimer();
         showToast('एडमिन लॉगिन सफल', 'कार्यालय महानिरीक्षक पुलिस, कोटा रेंज एडमिन पोर्टल');
         return;
       }
 
-      // Cloud Authenticator (IG Sir & Branches)
       const user = users.find(u => u.role === role && (u.mobile === logId || u.email === logId) && u.password === pass);
 
       if (user) {
@@ -1662,14 +1701,12 @@
         updateBranchDropdown();
         closeLoginModal();
         switchTab('monitoringDashboard');
-        resetInactivityTimer();
         showToast('लॉग इन सफल', `${user.name} (${user.role})`);
       } else {
         showToast('लॉगिन विफल', 'गलत आईडी अथवा पासवर्ड दर्ज किया गया है।');
       }
     });
 
-    // Forgot Password Handler
     document.getElementById('modalForgotForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const role = document.getElementById('forgotRoleSelect').value;
@@ -1702,7 +1739,6 @@
     });
 
     window.logoutUser = function() {
-      if (inactivityTimer) clearTimeout(inactivityTimer);
       currentUser = null;
       localStorage.removeItem(SESSION_KEY);
       updateAuthUI(false);
@@ -1800,6 +1836,85 @@
           showToast('हटाया गया', 'शाखा खाता हटा दिया गया।');
         });
       }
+    };
+
+    // ================= DATA BACKUP & RESTORE LOGIC =================
+    window.exportFullDataBackup = function() {
+      const backupData = {
+        exportedAt: new Date().toISOString(),
+        version: "2.0",
+        portal: "Office of IGP Kota Range",
+        data: {
+          users: users,
+          tasks: tasks,
+          orders: orders,
+          media: mediaList,
+          contacts: contactsList,
+          slider: sliderList
+        }
+      };
+
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `IGP_Kota_Full_Backup_${formatDateToISO(new Date())}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+
+      showToast('बैकअप सफल', 'समस्त पोर्टल डेटा सुरक्षित JSON फाइल में डाउनलोड हो गया है।');
+    };
+
+    window.importFullDataBackup = function() {
+      const fileInput = document.getElementById('restoreBackupFileInput');
+      const file = fileInput.files[0];
+      if (!file) {
+        showToast('त्रुटि', 'कृपया पहले JSON बैकअप फ़ाइल चुनें।');
+        return;
+      }
+
+      if (!confirm('चेतावनी: बैकअप रीस्टोर करने से डेटाबेस का वर्तमान डेटा अद्यतन हो जाएगा। क्या आप जारी रखना चाहते हैं?')) {
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          if (!parsed.data) {
+            showToast('त्रुटि', 'अमान्य बैकअप फ़ाइल प्रारूप।');
+            return;
+          }
+
+          const d = parsed.data;
+
+          if (d.users && Array.isArray(d.users)) {
+            d.users.forEach(u => usersRef.child(u.id).set(u));
+          }
+          if (d.tasks && Array.isArray(d.tasks)) {
+            d.tasks.forEach(t => tasksRef.child(t.id).set(t));
+          }
+          if (d.orders && Array.isArray(d.orders)) {
+            d.orders.forEach(o => ordersRef.child(o.id).set(o));
+          }
+          if (d.media && Array.isArray(d.media)) {
+            d.media.forEach(m => mediaRef.child(m.id).set(m));
+          }
+          if (d.contacts && Array.isArray(d.contacts)) {
+            d.contacts.forEach(c => contactsRef.child(c.id).set(c));
+          }
+          if (d.slider && Array.isArray(d.slider)) {
+            d.slider.forEach(s => sliderRef.child(s.id).set(s));
+          }
+
+          fileInput.value = '';
+          showToast('रीस्टोर संपन्न', 'बैकअप फ़ाइल से संपूर्ण डेटाबेस पुनः सक्रिय हो गया है।');
+        } catch (err) {
+          console.error(err);
+          showToast('त्रुटि', 'फ़ाइल को पढ़ने या रीस्टोर करने में समस्या आई।');
+        }
+      };
+      reader.readAsText(file);
     };
 
     // Slider Add & Delete
@@ -2234,11 +2349,13 @@
     }
 
     // ================= DASHBOARD & REGISTER =================
-    // Real Dynamic Branches Only (Created strictly by Admin)
+    // STRICTLY ONLY ADMIN CREATED BRANCHES (NO PRE-CACHED DEFAULTS)
     function getRegisteredBranches() {
       const set = new Set();
       users.forEach(u => {
-        if (u.role === 'Branch' && u.branch) set.add(u.branch.trim());
+        if (u.role === 'Branch' && u.branch && u.branch.trim()) {
+          set.add(u.branch.trim());
+        }
       });
       return Array.from(set);
     }
@@ -2284,7 +2401,7 @@
           if (branches.length === 0) {
             const opt = document.createElement('option');
             opt.value = '';
-            opt.textContent = '-- कोई शाखा उपलब्ध नहीं (पहले शाखा ID बनाएं) --';
+            opt.textContent = '-- कोई शाखा नहीं (पहले नई शाखा बनाएं) --';
             modalSelect.appendChild(opt);
           } else {
             branches.forEach(b => {
@@ -2304,14 +2421,12 @@
       document.getElementById('filterToDate')?.addEventListener('change', refreshDashboardData);
       document.getElementById('filterBranch')?.addEventListener('change', refreshDashboardData);
       document.getElementById('filterStatus')?.addEventListener('change', refreshDashboardData);
-      document.getElementById('filterPriority')?.addEventListener('change', refreshDashboardData);
       document.getElementById('searchInput')?.addEventListener('input', refreshDashboardData);
 
       document.getElementById('resetDateFilterBtn')?.addEventListener('click', () => {
         document.getElementById('filterFromDate').value = '';
         document.getElementById('filterToDate').value = '';
         document.getElementById('filterStatus').value = 'ALL';
-        document.getElementById('filterPriority').value = 'ALL';
         document.getElementById('searchInput').value = '';
         refreshDashboardData();
         showToast('रीसेट संपन्न', 'दिनांक एवं अन्य सभी फ़िल्टर रीसेट कर दिए गए हैं।');
@@ -2333,13 +2448,11 @@
       const total = filtered.length;
       const completed = filtered.filter(t => t.status === 'COMPLETED').length;
       const pending = filtered.filter(t => t.status === 'PENDING').length;
-      const progress = filtered.filter(t => t.status === 'PROGRESS').length;
       const pct = total === 0 ? 0 : Math.round((completed / total) * 100);
 
       document.getElementById('kpiTotal').textContent = total;
       document.getElementById('kpiCompleted').textContent = completed;
       document.getElementById('kpiPending').textContent = pending;
-      document.getElementById('kpiProgress').textContent = progress;
       document.getElementById('ratePercentage').textContent = pct + '%';
       document.getElementById('progressBar').style.width = pct + '%';
 
@@ -2382,21 +2495,12 @@
               <span class="text-[10px] text-emerald-700 font-mono mt-0.5">${task.completedAt || ''}</span>
             </div>
           `;
-        } else if (task.status === 'PENDING') {
+        } else {
           statusBadge = `
             <div class="inline-flex flex-col items-center">
               <span class="inline-flex items-center gap-1.5 text-xs font-bold text-rose-800 bg-rose-50 px-2.5 py-1 rounded-full border border-rose-300">
                 <span class="w-2.5 h-2.5 rounded-full bg-rose-600 inline-block shadow-sm"></span>
                 <span>लंबित</span>
-              </span>
-            </div>
-          `;
-        } else {
-          statusBadge = `
-            <div class="inline-flex flex-col items-center">
-              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-800 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-300">
-                <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block shadow-sm"></span>
-                <span>प्रक्रियाधीन</span>
               </span>
             </div>
           `;
@@ -2479,17 +2583,11 @@
       const branches = getRegisteredBranches();
       document.getElementById('regBranchesCountText').textContent = `${branches.length} शाखाएं पंजीकृत`;
 
-      if (branches.length === 0) {
-        container.innerHTML = `<div class="col-span-full py-6 text-center text-slate-400 bg-white rounded-xl border">वर्तमान में कोई शाखा आईडी नहीं बनाई गई है। ऊपर "+ नई शाखा ID बनाएं" पर क्लिक करें।</div>`;
-        return;
-      }
-
       branches.forEach(branchName => {
         const bTasks = tasks.filter(t => t.branch === branchName);
         const bTotal = bTasks.length;
         const bDone = bTasks.filter(t => t.status === 'COMPLETED').length;
         const bPending = bTasks.filter(t => t.status === 'PENDING').length;
-        const bProg = bTasks.filter(t => t.status === 'PROGRESS').length;
         const bRate = bTotal === 0 ? 0 : Math.round((bDone / bTotal) * 100);
         const bStaff = users.find(u => u.branch === branchName && u.role === 'Branch');
 
@@ -2507,18 +2605,14 @@
                 <br>ID: <span class="font-mono">${bStaff.mobile}</span>
               </div>
             ` : ''}
-            <div class="grid grid-cols-3 gap-1 my-3 text-center">
-              <div class="bg-emerald-50 rounded py-1 border border-emerald-200">
+            <div class="grid grid-cols-2 gap-2 my-3 text-center">
+              <div class="bg-emerald-50 rounded py-1.5 border border-emerald-200">
                 <span class="text-xs font-extrabold text-emerald-700">${bDone}</span>
                 <span class="block text-[9px] text-emerald-800">पूर्ण</span>
               </div>
-              <div class="bg-rose-50 rounded py-1 border border-rose-200">
+              <div class="bg-rose-50 rounded py-1.5 border border-rose-200">
                 <span class="text-xs font-extrabold text-rose-700">${bPending}</span>
                 <span class="block text-[9px] text-rose-800">लंबित</span>
-              </div>
-              <div class="bg-amber-50 rounded py-1 border border-amber-200">
-                <span class="text-xs font-extrabold text-amber-700">${bProg}</span>
-                <span class="block text-[9px] text-amber-800">जारी</span>
               </div>
             </div>
           </div>
@@ -2551,7 +2645,6 @@
       const toDate = document.getElementById('filterToDate')?.value;
       const branchVal = document.getElementById('filterBranch')?.value;
       const statusVal = document.getElementById('filterStatus')?.value;
-      const priorityVal = document.getElementById('filterPriority')?.value;
       const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
 
       return tasks.filter(t => {
@@ -2560,7 +2653,6 @@
         if (fromDate && t.taskDate && t.taskDate < fromDate) return false;
         if (toDate && t.taskDate && t.taskDate > toDate) return false;
         if (statusVal && statusVal !== 'ALL' && t.status !== statusVal) return false;
-        if (priorityVal && priorityVal !== 'ALL' && t.priority !== priorityVal) return false;
         if (search && !((t.description || '') + (t.assignee || '')).toLowerCase().includes(search)) return false;
         return true;
       }).sort((a, b) => (b.taskDate || '').localeCompare(a.taskDate || ''));
@@ -2702,7 +2794,7 @@
       const dueDate = document.getElementById('modalDueDate').value;
 
       if (!branch) {
-        showToast('त्रुटि', 'कृपया कार्य दर्ज करने हेतु वैध शाखा का चयन करें।');
+        showToast('त्रुटि', 'कृपया पहले शाखा चुनें। यदि कोई शाखा नहीं है, तो एडमिन पैनल से शाखा बनाएं।');
         return;
       }
 
@@ -2754,7 +2846,6 @@
       document.getElementById('taskModal').classList.add('hidden');
     });
 
-    // Create Branch Modal
     window.openAdminCreateBranchModal = function() {
       document.getElementById('adminBranchCreateForm').reset();
       document.getElementById('adminCreateBranchModal').classList.remove('hidden');
@@ -2792,7 +2883,7 @@
       });
     });
 
-    // ================= 100% ACCURATE PDF DOWNLOAD LOGIC =================
+    // 100% Accurate Landscape PDF Generation
     window.downloadReportPDF = async function() {
       const menu = document.getElementById('downloadMenu');
       if (menu) menu.classList.add('hidden');
@@ -2871,7 +2962,6 @@
       }
     };
 
-    // Download Excel
     document.getElementById('downloadExcelBtn')?.addEventListener('click', () => {
       const filtered = getFilteredTasks();
       if (filtered.length === 0) {
@@ -2888,7 +2978,7 @@
         "प्राथमिकता": t.priority === 'URGENT' ? 'अति आवश्यक' : t.priority === 'HIGH' ? 'उच्च' : 'सामान्य',
         "लक्ष्य तिथि": formatToIndianDate(t.dueDate),
         "कार्यवाही हेतु निर्देश (Admin)": t.adminInstructions || '',
-        "स्थिति": t.status === 'COMPLETED' ? 'पूर्ण (Locked)' : t.status === 'PENDING' ? 'लंबित' : 'प्रक्रियाधीन',
+        "स्थिति": t.status === 'COMPLETED' ? 'पूर्ण (Locked)' : 'लंबित',
         "निस्तारण दिनांक": t.completedAt || ''
       }));
 
@@ -2911,7 +3001,10 @@
       }, 3500);
     }
 
-    document.addEventListener('DOMContentLoaded', initSystem);
+    document.addEventListener('DOMContentLoaded', () => {
+      initSystem();
+      resetInactivityTimer();
+    });
   </script>
 </body>
 </html>
