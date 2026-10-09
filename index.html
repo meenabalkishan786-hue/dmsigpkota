@@ -3024,26 +3024,14 @@
     document.addEventListener('DOMContentLoaded', () => {
       initSystem();
       resetInactivityTimer();
-      // Booth Tab Visibility Control
-    function updateBoothTabVisibility() {
-      const isBoothPub = localStorage.getItem('igp_public_visible') === 'true';
-      const isMainLoggedIn = localStorage.getItem('ig_police_session_active') !== null;
-      const bBtn = document.getElementById('boothNavBtn');
-      if (bBtn) {
-        if (isBoothPub || isMainLoggedIn) {
-          bBtn.classList.remove('hidden');
-          bBtn.style.display = 'inline-flex';
-        } else {
-          bBtn.classList.add('hidden');
-          bBtn.style.display = 'none';
-        }
-      }
-      if (window.lucide) lucide.createIcons();
+     // Safe Booth Tab Check
+    const isBoothPub = localStorage.getItem('igp_public_visible') === 'true';
+    const isMainAuth = localStorage.getItem('ig_police_session_active') !== null;
+    const bBtn = document.getElementById('boothNavBtn');
+    if (bBtn && (isBoothPub || isMainAuth)) {
+      bBtn.classList.remove('hidden');
     }
-
-    updateBoothTabVisibility();
-    setInterval(updateBoothTabVisibility, 1000);
-    });
+  });
   </script>
 </body>
 </html>
