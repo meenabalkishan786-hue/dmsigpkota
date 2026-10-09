@@ -149,6 +149,10 @@
         <button onclick="switchTab('contacts')" class="nav-tab-btn hidden px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold hover:bg-police-800 text-slate-200 transition official-only-nav" id="tab-contacts">
           <i data-lucide="phone-call" class="w-4 h-4 inline-block mr-1"></i> संपर्क सूत्र
         </button>
+        <!-- Booth Map Tab (Auto-controlled by Publish Status & Login) -->
+<button id="boothNavBtn" onclick="window.open('booth-map.html', '_blank')" class="nav-tab-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold hover:bg-slate-700 text-slate-200 transition-all flex items-center gap-1.5">
+  <i data-lucide="map-pin" class="w-4 h-4 inline-block mr-1"></i> बूथ जानकारी
+</button>
         <button onclick="switchTab('monitoringDashboard')" class="nav-tab-btn hidden px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold hover:bg-police-800 text-amber-300 transition official-only-nav" id="tab-monitoringDashboard">
           <i data-lucide="layout-dashboard" class="w-4 h-4 inline-block mr-1"></i> कार्य अनुश्रवण
         </button>
@@ -3028,6 +3032,13 @@
     document.addEventListener('DOMContentLoaded', () => {
       initSystem();
       resetInactivityTimer();
+      // Booth Button Visibility Control
+    const isBoothPub = localStorage.getItem('igp_public_visible') === 'true';
+    const isBoothAuth = sessionStorage.getItem('igp_user_session') !== null;
+    const bBtn = document.getElementById('boothNavBtn');
+    if (bBtn && !isBoothPub && !isBoothAuth) {
+      bBtn.style.display = 'none';
+    }
     });
   </script>
 </body>
