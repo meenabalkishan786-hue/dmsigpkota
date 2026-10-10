@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>कोटा रेंज पुलिस - पोलिंग बूथ डिजिटल GIS एवं प्रबन्धन पोर्टल</title>
+  <title>IGP RANGE KOTA - पोलिंग बूथ डिजिटल GIS एवं प्रबन्धन पोर्टल</title>
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -122,12 +122,12 @@
         
         <!-- Admin Privilege: Publish for Public Toggle Button -->
         <button id="publishToggleBtn" onclick="togglePublicPublishState()" class="admin-only-action px-3 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-lg transition items-center gap-1.5 shadow">
-          <i class="fa-solid fa-bullhorn"></i> <span id="publishToggleLabel">पब्लिक हेतु खोलें</span>
+          <i class="fa-solid fa-bullhorn"></i> <span id="publishToggleLabel">आमजन हेतु खोलें</span>
         </button>
 
         <!-- Manage Police Stations Button (Admin Only) -->
         <button onclick="openThanaManagerModal()" class="admin-only-action px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg transition items-center gap-1.5 shadow-md shadow-indigo-900/30">
-          <i class="fa-solid fa-building-shield"></i> थाना प्रबंधन (+ नया थाना)
+          <i class="fa-solid fa-building-shield"></i> + नया थाना जोड़े
         </button>
 
         <!-- Single Entry Button (Admin Only) -->
@@ -261,7 +261,7 @@
       <div class="p-2.5 border-t border-slate-200 bg-slate-50 text-[11px] text-slate-600 flex justify-between items-center shrink-0">
         <span id="filteredCountText" class="font-medium">लोड हो रहा है...</span>
         <button onclick="resetMapView()" class="text-blue-700 hover:text-blue-900 font-bold flex items-center gap-1">
-          <i class="fa-solid fa-arrows-to-dot"></i> पूरी रेंज दृश्य
+          <i class="fa-solid fa-arrows-to-dot"></i> पूरी रेंज देखे
         </button>
       </div>
     </aside>
@@ -274,7 +274,7 @@
 
       <!-- Map Layer Selector Floating Control -->
       <div class="absolute top-4 left-4 z-[400] bg-white/95 backdrop-blur shadow-lg border border-slate-300 rounded-xl p-2 text-xs flex items-center gap-1.5">
-        <span class="font-bold text-slate-700 pl-1"><i class="fa-solid fa-map text-blue-600"></i> मैप दृश्य:</span>
+        <span class="font-bold text-slate-700 pl-1"><i class="fa-solid fa-map text-blue-600"></i> मैप देखे:</span>
         <select id="tileProviderSelect" onchange="changeTileLayer(this.value)" class="text-xs bg-slate-50 border border-slate-300 rounded-lg py-1 px-2 font-medium focus:ring-2 focus:ring-blue-600 focus:outline-none">
           <option value="cartoVoyager">CartoDB Voyager (मानक)</option>
           <option value="cartoPositron">CartoDB Positron (साफ/सफेद)</option>
@@ -929,7 +929,7 @@
         document.getElementById('authBtnLabel').innerText = 'लॉगआउट';
       } else {
         document.body.classList.remove('is-admin-mode');
-        document.getElementById('authRoleBadge').innerText = 'पब्लिक दृश्य';
+        document.getElementById('authRoleBadge').innerText = 'For public';
         document.getElementById('authRoleBadge').className = 'text-[10px] bg-slate-800 border border-slate-700 text-amber-300 font-bold px-2 py-0.5 rounded';
         document.getElementById('authBtnLabel').innerText = 'पुलिस लॉगिन';
 
@@ -945,11 +945,11 @@
       if (isPublicPublished) {
         pubBadge.className = 'text-[10px] bg-emerald-900/80 border border-emerald-500 text-emerald-200 px-2 py-0.5 rounded';
         pubBadge.innerHTML = '<i class="fa-solid fa-globe"></i> लाइव (पब्लिक)';
-        if (pubBtnLabel) pubBtnLabel.innerText = 'पब्लिक से छिपाएं (Cancel)';
+        if (pubBtnLabel) pubBtnLabel.innerText = 'Hide for Public (Cancel)';
       } else {
         pubBadge.className = 'text-[10px] bg-rose-900/80 border border-rose-500 text-rose-200 px-2 py-0.5 rounded';
         pubBadge.innerHTML = '<i class="fa-solid fa-lock"></i> अप्रकाशित (निजी)';
-        if (pubBtnLabel) pubBtnLabel.innerText = 'पब्लिक हेतु खोलें';
+        if (pubBtnLabel) pubBtnLabel.innerText = 'आमजन हेतु खोलें';
       }
     }
 
@@ -961,7 +961,7 @@
       isPublicPublished = !isPublicPublished;
       localStorage.setItem('igp_public_visible', isPublicPublished ? 'true' : 'false');
       applyRoleUI();
-      showToast(isPublicPublished ? 'पोर्टल अब आमजन (पब्लिक) हेतु लाइव कर दिया गया है।' : 'पोर्टल अब केवल पुलिस अधिकारियों तक सीमित कर दिया गया है।');
+      showToast(isPublicPublished ? 'पोर्टल अब आमजन हेतु लाइव कर दिया गया है।' : 'पोर्टल अब केवल पुलिस अधिकारियों तक सीमित कर दिया गया है।');
     }
 
     function handleAuthPortalClick() {
