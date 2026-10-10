@@ -910,7 +910,7 @@
       } else if (mainPortalMobile) {
         currentLoggedInUser = {
           role: (mainPortalMobile === '9928165827' ? 'Admin' : (mainPortalMobile === '9414000000' ? 'IG' : 'Staff')),
-          name: (mainPortalMobile === '9928165827' ? 'Bal Kishan (Admin)' : 'पुलिस अधिकारी')
+          name: (mainPortalMobile === '9928165827' ? 'Bal Kishan (Admin)' : 'IGP KOTA RANGE')
         };
       } else {
         currentLoggedInUser = null;
@@ -944,8 +944,8 @@
       const pubBtnLabel = document.getElementById('publishToggleLabel');
       if (isPublicPublished) {
         pubBadge.className = 'text-[10px] bg-emerald-900/80 border border-emerald-500 text-emerald-200 px-2 py-0.5 rounded';
-        pubBadge.innerHTML = '<i class="fa-solid fa-globe"></i> लाइव (पब्लिक)';
-        if (pubBtnLabel) pubBtnLabel.innerText = 'Hide for Public (Cancel)';
+        pubBadge.innerHTML = '<i class="fa-solid fa-globe"></i> लाइव (आमजन)';
+        if (pubBtnLabel) pubBtnLabel.innerText = 'आमजन हेतु बंद करे';
       } else {
         pubBadge.className = 'text-[10px] bg-rose-900/80 border border-rose-500 text-rose-200 px-2 py-0.5 rounded';
         pubBadge.innerHTML = '<i class="fa-solid fa-lock"></i> अप्रकाशित (निजी)';
