@@ -149,12 +149,6 @@
         <button onclick="switchTab('contacts')" class="nav-tab-btn hidden px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold hover:bg-police-800 text-slate-200 transition official-only-nav" id="tab-contacts">
           <i data-lucide="phone-call" class="w-4 h-4 inline-block mr-1"></i> संपर्क सूत्र
         </button>
-
-        <!-- Booth Map Tab -->
-        <button type="button" id="boothNavBtn" onclick="window.open('booth-map.html', '_blank')" class="hidden px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-amber-950 bg-amber-400 hover:bg-amber-300 transition-all items-center gap-1.5 cursor-pointer ml-1 shadow">
-          <i data-lucide="map-pin" class="w-4 h-4 inline-block mr-1 text-amber-950"></i> 📍 बूथ जानकारी
-        </button>
-
         <button onclick="switchTab('monitoringDashboard')" class="nav-tab-btn hidden px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold hover:bg-police-800 text-amber-300 transition official-only-nav" id="tab-monitoringDashboard">
           <i data-lucide="layout-dashboard" class="w-4 h-4 inline-block mr-1"></i> कार्य अनुश्रवण
         </button>
@@ -450,7 +444,7 @@
         </div>
       </div>
 
-      <!-- 4 KPI Cards -->
+      <!-- 4 KPI Cards (Without 'Prakriyadheen') -->
       <section class="grid grid-cols-2 lg:grid-cols-4 gap-3.5 no-print">
         <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 flex flex-col justify-between">
           <div class="flex items-center justify-between mb-1">
@@ -505,7 +499,7 @@
         </div>
       </section>
 
-      <!-- Filters Bar -->
+      <!-- Filters Bar (Without 'Prakriyadheen') -->
       <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200 no-print">
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
           
@@ -634,7 +628,7 @@
         </div>
       </div>
 
-      <!-- Registered Branches Overview Grid -->
+      <!-- Registered Branches Overview Grid (Without 'Prakriyadheen') -->
       <section id="adminBranchGridSection" class="mt-4 mb-4">
         <div class="flex items-center justify-between mb-3">
           <h3 class="font-bold text-sm sm:text-base text-police-900 flex items-center gap-2">
@@ -650,25 +644,6 @@
     </section>
 
   </main>
-
-  <!-- ================= FOOTER & RUNNING CREDIT STRIP ================= -->
-  <footer class="mt-auto bg-police-950 text-white border-t-2 border-police-gold py-3 no-print z-30 shadow-inner">
-    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-2">
-      <div>
-        © 2026 कार्यालय महानिरीक्षक पुलिस, कोटा रेंज (राजस्थान पुलिस). सर्वाधिकार सुरक्षित।
-      </div>
-      <div class="text-slate-400">
-        कोटा रेंज, राजस्थान
-      </div>
-    </div>
-  </footer>
-
-  <!-- Running Credit Strip at Bottom (Right to Left) -->
-  <div class="bg-police-900 border-t border-police-gold/50 py-1.5 px-4 overflow-hidden no-print">
-    <marquee behavior="scroll" direction="left" scrollamount="6" class="text-xs font-semibold text-police-goldlight">
-      ⭐ Designed &amp; Developed By Bal kishan, Assistant Programmer, IG Police, Kota Range ⭐
-    </marquee>
-  </div>
 
   <!-- ================= PRINTABLE REPORT TEMPLATE FOR ACCURATE PDF ================= -->
   <div id="printableLandscapeReport" class="hidden p-6 bg-white text-slate-900 font-hindi">
@@ -1218,12 +1193,6 @@
     </div>
   </div>
 
-  <!-- Toast Notification Wrapper -->
-  <div id="toastNotification" class="fixed bottom-5 right-5 z-50 bg-police-950 text-white px-5 py-3 rounded-xl shadow-2xl border border-police-gold opacity-0 pointer-events-none transition-opacity duration-300 max-w-sm">
-    <div id="toastTitle" class="font-extrabold text-xs text-police-goldlight mb-0.5">सूचना</div>
-    <div id="toastMessage" class="text-xs text-slate-200">विवरण</div>
-  </div>
-
   <!-- ================= 5-MINUTE AUTO LOGOUT INACTIVITY ENGINE ================= -->
   <script>
     let inactivityTimer = null;
@@ -1312,14 +1281,12 @@
     let carouselInterval = null;
 
     window.openLoginModal = function() {
-      const m = document.getElementById('loginModal');
-      if (m) m.classList.remove('hidden');
-      if (window.lucide) lucide.createIcons();
+      document.getElementById('loginModal').classList.remove('hidden');
+      lucide.createIcons();
     };
 
     window.closeLoginModal = function() {
-      const m = document.getElementById('loginModal');
-      if (m) m.classList.add('hidden');
+      document.getElementById('loginModal').classList.add('hidden');
     };
 
     function initCarousel() {
@@ -1423,7 +1390,7 @@
         navBtn.classList.add('active', 'bg-police-700', 'text-police-gold');
         navBtn.classList.remove('text-slate-200');
       }
-      if (window.lucide) lucide.createIcons();
+      lucide.createIcons();
     }
 
     function initIGPhoto() {
@@ -1566,8 +1533,6 @@
       const loginForm = document.getElementById('modalLoginForm');
       const forgotForm = document.getElementById('modalForgotForm');
 
-      if (!loginTab || !forgotTab) return;
-
       loginTab.addEventListener('click', () => {
         loginTab.className = 'flex-1 py-2 text-center bg-white rounded shadow-sm text-police-900 font-extrabold';
         forgotTab.className = 'flex-1 py-2 text-center text-slate-500 hover:text-police-700';
@@ -1648,10 +1613,8 @@
       const day = String(now.getDate()).padStart(2, '0');
       const month = String(now.getMonth() + 1).padStart(2, '0');
       const year = now.getFullYear();
-      const liveClock = document.getElementById('liveClock');
-      const todayFullDate = document.getElementById('todayFullDate');
-      if (liveClock) liveClock.textContent = timeStr;
-      if (todayFullDate) todayFullDate.textContent = `दिनांक: ${day}/${month}/${year}`;
+      document.getElementById('liveClock').textContent = timeStr;
+      document.getElementById('todayFullDate').textContent = `दिनांक: ${day}/${month}/${year}`;
     }
 
     function checkActiveSession() {
@@ -1678,23 +1641,10 @@
       const officialNavs = document.querySelectorAll('.official-only-nav');
       const adminSuperBtn = document.getElementById('adminSuperControlBtn');
       const adminBranchBtn = document.getElementById('adminCreateBranchBtn');
-      const boothBtn = document.getElementById('boothNavBtn');
-
-      // Booth Visibility Logic
-      const isBoothPub = localStorage.getItem('igp_public_visible') === 'true';
-      if (boothBtn) {
-        if (isLoggedIn || isBoothPub) {
-          boothBtn.classList.remove('hidden');
-          boothBtn.style.display = 'inline-flex';
-        } else {
-          boothBtn.classList.add('hidden');
-          boothBtn.style.display = 'none';
-        }
-      }
 
       if (isLoggedIn && currentUser) {
-        if (loginBtn) loginBtn.classList.add('hidden');
-        if (authBadge) authBadge.classList.remove('hidden');
+        loginBtn.classList.add('hidden');
+        authBadge.classList.remove('hidden');
         officialNavs.forEach(nav => nav.classList.remove('hidden'));
 
         document.getElementById('headerUserName').textContent = currentUser.name;
@@ -1705,30 +1655,30 @@
         document.getElementById('scopeUserBranch').textContent = currentUser.role === 'Admin' ? 'समस्त पंजीकृत शाखाएं' : currentUser.branch;
 
         if (currentUser.role === 'Admin') {
-          if (adminSuperBtn) adminSuperBtn.classList.remove('hidden');
-          if (adminBranchBtn) adminBranchBtn.classList.remove('hidden');
+          adminSuperBtn.classList.remove('hidden');
+          adminBranchBtn.classList.remove('hidden');
           document.querySelectorAll('.admin-action-col').forEach(el => el.classList.remove('hidden'));
           document.getElementById('scopeBadgeTag').textContent = 'एडमिन डैशबोर्ड (Admin Master)';
         } else if (currentUser.role === 'IG_Sir') {
-          if (adminSuperBtn) adminSuperBtn.classList.add('hidden');
-          if (adminBranchBtn) adminBranchBtn.classList.add('hidden');
+          adminSuperBtn.classList.add('hidden');
+          adminBranchBtn.classList.add('hidden');
           document.querySelectorAll('.admin-action-col').forEach(el => el.classList.add('hidden'));
           document.getElementById('scopeBadgeTag').textContent = 'आईजी महोदय डैशबोर्ड (पर्यवेक्षण)';
         } else {
-          if (adminSuperBtn) adminSuperBtn.classList.add('hidden');
-          if (adminBranchBtn) adminBranchBtn.classList.add('hidden');
+          adminSuperBtn.classList.add('hidden');
+          adminBranchBtn.classList.add('hidden');
           document.querySelectorAll('.admin-action-col').forEach(el => el.classList.add('hidden'));
           document.getElementById('scopeBadgeTag').textContent = `शाखा डैशबोर्ड (${currentUser.branch})`;
         }
       } else {
-        if (loginBtn) loginBtn.classList.remove('hidden');
-        if (authBadge) authBadge.classList.add('hidden');
+        loginBtn.classList.remove('hidden');
+        authBadge.classList.add('hidden');
         officialNavs.forEach(nav => nav.classList.add('hidden'));
-        if (adminSuperBtn) adminSuperBtn.classList.add('hidden');
-        if (adminBranchBtn) adminBranchBtn.classList.add('hidden');
+        adminSuperBtn.classList.add('hidden');
+        adminBranchBtn.classList.add('hidden');
         document.querySelectorAll('.admin-action-col').forEach(el => el.classList.add('hidden'));
       }
-      if (window.lucide) lucide.createIcons();
+      lucide.createIcons();
     }
 
     document.getElementById('modalLoginForm').addEventListener('submit', (e) => {
@@ -1813,7 +1763,7 @@
       renderAdminMediaManagement();
       renderAdminContactsManagement();
       document.getElementById('adminControlModal').classList.remove('hidden');
-      if (window.lucide) lucide.createIcons();
+      lucide.createIcons();
     }
 
     function closeAdminControlModal() {
@@ -1832,7 +1782,7 @@
 
       const content = document.getElementById(`as-content-${subTabId}`);
       if (content) content.classList.remove('hidden');
-      if (window.lucide) lucide.createIcons();
+      lucide.createIcons();
     }
 
     function renderAdminUsersControlList() {
@@ -1870,7 +1820,7 @@
         `;
         tbody.appendChild(tr);
       });
-      if (window.lucide) lucide.createIcons();
+      lucide.createIcons();
     }
 
     window.adminSaveUserPass = function(userId) {
@@ -2019,7 +1969,7 @@
         `;
         container.appendChild(div);
       });
-      if (window.lucide) lucide.createIcons();
+      lucide.createIcons();
     }
 
     window.deleteSlideItem = function(slideId) {
@@ -2076,7 +2026,7 @@
         `;
         container.appendChild(div);
       });
-      if (window.lucide) lucide.createIcons();
+      lucide.createIcons();
     }
 
     window.deleteOrderItem = function(orderId) {
@@ -2131,7 +2081,7 @@
         `;
         container.appendChild(div);
       });
-      if (window.lucide) lucide.createIcons();
+      lucide.createIcons();
     }
 
     window.deleteMediaItem = function(mediaId) {
@@ -2178,7 +2128,7 @@
         `;
         container.appendChild(div);
       });
-      if (window.lucide) lucide.createIcons();
+      lucide.createIcons();
     }
 
     window.deleteContactItem = function(contactId) {
@@ -2304,7 +2254,7 @@
         `;
         tbody.appendChild(tr);
       });
-      if (window.lucide) lucide.createIcons();
+      lucide.createIcons();
     }
 
     window.downloadPdfFile = function(orderId) {
@@ -2374,7 +2324,7 @@
         `;
         container.appendChild(card);
       });
-      if (window.lucide) lucide.createIcons();
+      lucide.createIcons();
     }
 
     function renderContactsList() {
@@ -2401,10 +2351,11 @@
         `;
         tbody.appendChild(tr);
       });
-      if (window.lucide) lucide.createIcons();
+      lucide.createIcons();
     }
 
     // ================= DASHBOARD & REGISTER =================
+    // STRICTLY ONLY ADMIN CREATED BRANCHES (NO PRE-CACHED DEFAULTS)
     function getRegisteredBranches() {
       const set = new Set();
       users.forEach(u => {
@@ -2537,4 +2488,529 @@
           ? '<span class="text-[11px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">अति आवश्यक</span>'
           : task.priority === 'HIGH'
           ? '<span class="text-[11px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">उच्च</span>'
-          : '<span
+          : '<span class="text-[11px] font-medium text-slate-700 bg-slate-50 px-2 py-0.5 rounded border border-slate-200">सामान्य</span>';
+
+        let statusBadge = '';
+        if (task.status === 'COMPLETED') {
+          statusBadge = `
+            <div class="inline-flex flex-col items-center">
+              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-300">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block shadow-sm"></span>
+                <span>पूर्ण (Locked)</span>
+              </span>
+              <span class="text-[10px] text-emerald-700 font-mono mt-0.5">${task.completedAt || ''}</span>
+            </div>
+          `;
+        } else {
+          statusBadge = `
+            <div class="inline-flex flex-col items-center">
+              <span class="inline-flex items-center gap-1.5 text-xs font-bold text-rose-800 bg-rose-50 px-2.5 py-1 rounded-full border border-rose-300">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-600 inline-block shadow-sm"></span>
+                <span>लंबित</span>
+              </span>
+            </div>
+          `;
+        }
+
+        let directionsHtml = isPrivileged ? `
+          <div class="space-y-1">
+            <div class="text-xs text-slate-800 italic">${task.adminInstructions || '<span class="text-slate-400">कोई निर्देश नहीं</span>'}</div>
+            <div class="flex items-center gap-1">
+              <input type="text" id="dirInput-${task.id}" placeholder="नया निर्देश लिखें..." class="text-[11px] p-1 border rounded w-full bg-slate-50 focus:bg-white">
+              <button onclick="saveAdminInstruction('${task.id}')" class="px-2 py-1 bg-police-700 hover:bg-police-800 text-white rounded text-[10px] font-bold">दें</button>
+            </div>
+          </div>
+        ` : (task.adminInstructions 
+            ? `<div class="text-xs font-semibold text-police-900 bg-amber-50 p-2 rounded border border-amber-200">${task.adminInstructions}</div>`
+            : `<span class="text-xs text-slate-400 italic">प्रतीक्षित...</span>`);
+
+        let actionsHtml = '';
+        if (isPrivileged) {
+          actionsHtml = `
+            <div class="flex items-center justify-end gap-1.5">
+              ${task.status !== 'COMPLETED' ? `
+                <button onclick="adminToggleStatus('${task.id}', 'COMPLETED')" title="पूर्ण करें" class="px-2 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-xs font-bold">
+                  पूर्ण करें
+                </button>
+              ` : `
+                <button onclick="adminToggleStatus('${task.id}', 'PENDING')" title="अनलॉक करें" class="px-2 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded text-xs font-bold">
+                  अनलॉक
+                </button>
+              `}
+              <button onclick="editTask('${task.id}')" title="संशोधित करें" class="p-1.5 text-slate-600 hover:text-police-700 rounded hover:bg-slate-100">
+                <i data-lucide="pencil" class="w-4 h-4"></i>
+              </button>
+              <button onclick="deleteTask('${task.id}')" title="हटाएं" class="p-1.5 text-slate-400 hover:text-rose-600 rounded hover:bg-rose-50">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+          `;
+        } else {
+          if (!isLocked) {
+            actionsHtml = `
+              <div class="flex items-center justify-end gap-1.5">
+                <button onclick="branchCompleteAndLock('${task.id}')" class="px-2.5 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded text-xs font-bold flex items-center gap-1 shadow-sm">
+                  <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                  <span>पूर्ण करें & लॉक</span>
+                </button>
+                <button onclick="editTask('${task.id}')" title="संशोधित करें" class="p-1.5 text-slate-600 hover:text-police-700 rounded hover:bg-slate-100">
+                  <i data-lucide="pencil" class="w-4 h-4"></i>
+                </button>
+              </div>
+            `;
+          } else {
+            actionsHtml = `<div class="text-right text-xs font-semibold text-slate-400 flex items-center justify-end gap-1"><i data-lucide="lock" class="w-3.5 h-3.5 text-emerald-600"></i><span>लॉक</span></div>`;
+          }
+        }
+
+        const tr = document.createElement('tr');
+        tr.className = `hover:bg-slate-50 transition border-b border-slate-200 ${task.status === 'COMPLETED' ? 'bg-emerald-50/20' : ''}`;
+        tr.innerHTML = `
+          <td class="py-3 px-3 text-center font-mono text-xs font-bold text-slate-500">${index + 1}</td>
+          <td class="py-3 px-3 font-mono font-bold text-police-900 text-xs">${formatToIndianDate(task.taskDate)}</td>
+          <td class="py-3 px-3 font-bold text-slate-800 text-xs">${task.branch}</td>
+          <td class="py-3 px-4 text-xs sm:text-sm font-medium text-slate-900 leading-relaxed">${task.description}</td>
+          <td class="py-3 px-3 text-xs font-semibold text-slate-700">${task.assignee || '-'}</td>
+          <td class="py-3 px-3">${priorityBadge}</td>
+          <td class="py-3 px-3 font-mono text-xs text-slate-600">${formatToIndianDate(task.dueDate)}</td>
+          <td class="py-3 px-3">${directionsHtml}</td>
+          <td class="py-3 px-3 text-center">${statusBadge}</td>
+          <td class="py-3 px-3 text-right no-print">${actionsHtml}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+      lucide.createIcons();
+    }
+
+    function renderBranchOverviewGrid() {
+      const container = document.getElementById('branchSummaryGrid');
+      if (!container) return;
+      container.innerHTML = '';
+      const branches = getRegisteredBranches();
+      document.getElementById('regBranchesCountText').textContent = `${branches.length} शाखाएं पंजीकृत`;
+
+      branches.forEach(branchName => {
+        const bTasks = tasks.filter(t => t.branch === branchName);
+        const bTotal = bTasks.length;
+        const bDone = bTasks.filter(t => t.status === 'COMPLETED').length;
+        const bPending = bTasks.filter(t => t.status === 'PENDING').length;
+        const bRate = bTotal === 0 ? 0 : Math.round((bDone / bTotal) * 100);
+        const bStaff = users.find(u => u.branch === branchName && u.role === 'Branch');
+
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-xl p-3.5 border border-slate-200 shadow-sm flex flex-col justify-between";
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+              <span class="text-xs font-bold text-police-900 truncate">${branchName}</span>
+              <span class="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700">${bTotal} कार्य</span>
+            </div>
+            ${bStaff ? `
+              <div class="text-[11px] text-slate-500 mt-1 truncate">
+                प्रभारी: <strong class="text-slate-700">${bStaff.name}</strong> (${bStaff.rank})
+                <br>ID: <span class="font-mono">${bStaff.mobile}</span>
+              </div>
+            ` : ''}
+            <div class="grid grid-cols-2 gap-2 my-3 text-center">
+              <div class="bg-emerald-50 rounded py-1.5 border border-emerald-200">
+                <span class="text-xs font-extrabold text-emerald-700">${bDone}</span>
+                <span class="block text-[9px] text-emerald-800">पूर्ण</span>
+              </div>
+              <div class="bg-rose-50 rounded py-1.5 border border-rose-200">
+                <span class="text-xs font-extrabold text-rose-700">${bPending}</span>
+                <span class="block text-[9px] text-rose-800">लंबित</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="flex justify-between items-center text-[10px] font-bold text-slate-500 mb-1">
+              <span>निस्तारण</span>
+              <span class="text-police-700">${bRate}%</span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+              <div class="bg-emerald-500 h-1.5 rounded-full" style="width: ${bRate}%"></div>
+            </div>
+            <button onclick="adminFilterToBranch('${branchName}')" class="w-full mt-2 py-1 text-[11px] font-semibold text-police-700 bg-police-50 hover:bg-police-100 rounded text-center transition">
+              पत्रावलियां देखें &rarr;
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    window.adminFilterToBranch = function(b) {
+      document.getElementById('filterBranch').value = b;
+      refreshDashboardData();
+      document.getElementById('tasksTable').scrollIntoView({ behavior: 'smooth' });
+    };
+
+    function getFilteredTasks() {
+      const fromDate = document.getElementById('filterFromDate')?.value;
+      const toDate = document.getElementById('filterToDate')?.value;
+      const branchVal = document.getElementById('filterBranch')?.value;
+      const statusVal = document.getElementById('filterStatus')?.value;
+      const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
+
+      return tasks.filter(t => {
+        if (currentUser?.role === 'Branch' && t.branch !== currentUser.branch) return false;
+        if (branchVal && branchVal !== 'ALL' && t.branch !== branchVal) return false;
+        if (fromDate && t.taskDate && t.taskDate < fromDate) return false;
+        if (toDate && t.taskDate && t.taskDate > toDate) return false;
+        if (statusVal && statusVal !== 'ALL' && t.status !== statusVal) return false;
+        if (search && !((t.description || '') + (t.assignee || '')).toLowerCase().includes(search)) return false;
+        return true;
+      }).sort((a, b) => (b.taskDate || '').localeCompare(a.taskDate || ''));
+    }
+
+    window.adminToggleStatus = function(taskId, newStatus) {
+      const updates = { 
+        status: newStatus,
+        isLocked: (newStatus === 'COMPLETED'),
+        completedAt: newStatus === 'COMPLETED' ? formatToIndianDate(formatDateToISO(new Date())) : null
+      };
+      tasksRef.child(taskId).update(updates).then(() => {
+        showToast('अपडेट संपन्न', `कार्य स्थिति: ${newStatus}`);
+      });
+    };
+
+    window.branchCompleteAndLock = function(taskId) {
+      const nowStr = formatToIndianDate(formatDateToISO(new Date()));
+      tasksRef.child(taskId).update({
+        status: 'COMPLETED',
+        isLocked: true,
+        completedAt: nowStr
+      }).then(() => {
+        showToast('कार्य पूर्ण व लॉक', 'कार्य लॉक कर दिया गया है।');
+      });
+    };
+
+    window.saveAdminInstruction = function(taskId) {
+      const input = document.getElementById(`dirInput-${taskId}`);
+      if (!input || !input.value.trim()) return;
+      tasksRef.child(taskId).update({ adminInstructions: input.value.trim() }).then(() => {
+        showToast('निर्देश प्रेषित', 'कार्यवाही निर्देश दर्ज कर दिए गए हैं।');
+      });
+    };
+
+    window.deleteTask = function(taskId) {
+      if (confirm('क्या आप इस कार्य को पंजिका से हटाना चाहते हैं?')) {
+        tasksRef.child(taskId).remove().then(() => {
+          showToast('हटाया गया', 'कार्य पंजिका से हटा दिया गया।');
+        });
+      }
+    };
+
+    // Task Entry Modal Handling
+    const taskRowsContainer = document.getElementById('taskRowsContainer');
+
+    function createRowElement(initialText = '') {
+      const rowId = 'row-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4);
+      const div = document.createElement('div');
+      div.id = rowId;
+      div.className = "flex items-start gap-2 bg-white p-2 rounded border border-slate-200 shadow-sm";
+      div.innerHTML = `
+        <span class="row-num text-xs font-bold text-police-700 bg-police-50 px-2 py-1.5 rounded mt-1">1.</span>
+        <textarea required rows="2" class="task-desc-input w-full text-xs rounded border border-slate-300 p-2 bg-white focus:ring-2 focus:ring-police-600 leading-normal" placeholder="दैनिक कार्य का विवरण लिखें...">${initialText}</textarea>
+        <button type="button" onclick="removeTaskRow('${rowId}')" title="यह पंक्ति हटाएं" class="text-slate-400 hover:text-rose-600 p-1.5 rounded hover:bg-rose-50 transition mt-1">
+          <i data-lucide="trash" class="w-4 h-4"></i>
+        </button>
+      `;
+      return div;
+    }
+
+    function renumberRows() {
+      const rows = taskRowsContainer.querySelectorAll('.row-num');
+      rows.forEach((el, i) => { el.textContent = `${i + 1}.`; });
+    }
+
+    function addTaskRow(text = '') {
+      const rowEl = createRowElement(text);
+      taskRowsContainer.appendChild(rowEl);
+      renumberRows();
+      lucide.createIcons();
+    }
+
+    window.removeTaskRow = function(rowId) {
+      const rows = taskRowsContainer.querySelectorAll('.flex');
+      if (rows.length <= 1) {
+        showToast('सूचना', 'कम से कम एक कार्य पंक्ति आवश्यक है।');
+        return;
+      }
+      const el = document.getElementById(rowId);
+      if (el) el.remove();
+      renumberRows();
+    };
+
+    document.getElementById('addNewRowBtn')?.addEventListener('click', () => { addTaskRow(''); });
+
+    document.getElementById('openNewTaskBtn')?.addEventListener('click', () => {
+      document.getElementById('taskModalHeading').textContent = 'दैनिक कार्य प्रविष्टि (Multiple Task Rows)';
+      document.getElementById('editTaskId').value = '';
+      document.getElementById('taskForm').reset();
+      taskRowsContainer.innerHTML = '';
+
+      updateBranchDropdown();
+
+      const { minDateStr } = applyTaskDateRestrictions();
+      document.getElementById('modalTaskDate').value = minDateStr;
+      document.getElementById('modalDueDate').value = minDateStr;
+
+      addTaskRow('');
+      addTaskRow('');
+      document.getElementById('addNewRowBtn').classList.remove('hidden');
+      document.getElementById('taskModal').classList.remove('hidden');
+      lucide.createIcons();
+    });
+
+    window.editTask = function(taskId) {
+      const task = tasks.find(t => t.id === taskId);
+      if (!task) return;
+      if (currentUser?.role === 'Branch' && task.isLocked) {
+        showToast('कार्य लॉक है', 'पूर्ण हो चुके लॉक कार्य को केवल एडमिन या आईजी महोदय संशोधित कर सकते हैं।');
+        return;
+      }
+
+      applyTaskDateRestrictions();
+      updateBranchDropdown();
+
+      document.getElementById('taskModalHeading').textContent = 'कार्य संशोधित करें';
+      document.getElementById('editTaskId').value = task.id;
+      document.getElementById('modalBranchSelect').value = task.branch;
+      document.getElementById('modalTaskDate').value = task.taskDate || '';
+      document.getElementById('modalAssignee').value = task.assignee || '';
+      document.getElementById('modalPriority').value = task.priority || 'NORMAL';
+      document.getElementById('modalDueDate').value = task.dueDate || '';
+
+      taskRowsContainer.innerHTML = '';
+      addTaskRow(task.description);
+      document.getElementById('addNewRowBtn').classList.add('hidden');
+      document.getElementById('taskModal').classList.remove('hidden');
+      lucide.createIcons();
+    };
+
+    document.getElementById('taskForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const editId = document.getElementById('editTaskId').value;
+      const branch = document.getElementById('modalBranchSelect').value.trim();
+      const taskDate = document.getElementById('modalTaskDate').value;
+      const assignee = document.getElementById('modalAssignee').value.trim();
+      const priority = document.getElementById('modalPriority').value;
+      const dueDate = document.getElementById('modalDueDate').value;
+
+      if (!branch) {
+        showToast('त्रुटि', 'कृपया पहले शाखा चुनें। यदि कोई शाखा नहीं है, तो एडमिन पैनल से शाखा बनाएं।');
+        return;
+      }
+
+      const descInputs = taskRowsContainer.querySelectorAll('.task-desc-input');
+      const descriptions = [];
+      descInputs.forEach(inp => {
+        const val = inp.value.trim();
+        if (val) descriptions.push(val);
+      });
+
+      if (descriptions.length === 0) {
+        showToast('त्रुटि', 'कृपया कम से कम एक कार्य का विवरण अवश्य भरें।');
+        return;
+      }
+
+      if (editId) {
+        tasksRef.child(editId).update({
+          branch: branch,
+          taskDate: taskDate,
+          description: descriptions[0],
+          assignee: assignee,
+          priority: priority,
+          dueDate: dueDate
+        }).then(() => {
+          showToast('संशोधित', 'कार्य अद्यतन हो गया है।');
+        });
+      } else {
+        const now = new Date();
+        const createdDateFormatted = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
+        descriptions.forEach((desc, i) => {
+          const newTaskId = 'tsk-' + Date.now() + '-' + i;
+          tasksRef.child(newTaskId).set({
+            id: newTaskId,
+            branch: branch,
+            taskDate: taskDate,
+            description: desc,
+            assignee: assignee || currentUser.name,
+            priority: priority,
+            dueDate: dueDate,
+            status: 'PENDING',
+            isLocked: false,
+            adminInstructions: '',
+            createdAt: createdDateFormatted
+          });
+        });
+        showToast('सुरक्षित', `${descriptions.length} कार्य सेंट्रल डेटाबेस में दर्ज किए गए।`);
+      }
+
+      document.getElementById('taskModal').classList.add('hidden');
+    });
+
+    window.openAdminCreateBranchModal = function() {
+      document.getElementById('adminBranchCreateForm').reset();
+      document.getElementById('adminCreateBranchModal').classList.remove('hidden');
+    };
+
+    document.getElementById('adminBranchCreateForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const branchName = document.getElementById('admBranchName').value.trim();
+      const staffName = document.getElementById('admStaffName').value.trim();
+      const rank = document.getElementById('admStaffRank').value.trim();
+      const mobile = document.getElementById('admMobile').value.trim();
+      const pin = document.getElementById('admPin').value.trim();
+      const email = document.getElementById('admEmail').value.trim();
+      const password = document.getElementById('admPassword').value.trim();
+
+      if (mobile.length !== 10 || isNaN(mobile)) {
+        showToast('त्रुटि', 'कृपया वैध 10 अंकों का मोबाइल नंबर दर्ज करें।');
+        return;
+      }
+
+      const newUserId = 'usr-' + mobile;
+      usersRef.child(newUserId).set({
+        id: newUserId,
+        role: 'Branch',
+        name: staffName,
+        rank: rank,
+        mobile: mobile,
+        branch: branchName,
+        email: email,
+        pin: pin,
+        password: password
+      }).then(() => {
+        document.getElementById('adminCreateBranchModal').classList.add('hidden');
+        showToast('शाखा आईडी निर्मित', `'${branchName}' की आईडी (${mobile}) व पासवर्ड ऑनलाइन जारी कर दिया गया।`);
+      });
+    });
+
+    // 100% Accurate Landscape PDF Generation
+    window.downloadReportPDF = async function() {
+      const menu = document.getElementById('downloadMenu');
+      if (menu) menu.classList.add('hidden');
+
+      const filtered = getFilteredTasks();
+      if (filtered.length === 0) {
+        showToast('कोई डेटा नहीं', 'डाउनलोड हेतु कोई कार्य नहीं है।');
+        return;
+      }
+
+      showToast('कृपया प्रतीक्षा करें', 'शुद्ध हिंदी लैंडस्केप PDF तैयार हो रही है...');
+
+      const fromDate = document.getElementById('filterFromDate')?.value;
+      const toDate = document.getElementById('filterToDate')?.value;
+      const branchVal = document.getElementById('filterBranch')?.value;
+
+      document.getElementById('pdfRepDate').textContent = (fromDate || toDate) ? `अवधि: ${formatToIndianDate(fromDate) || 'प्रारंभ'} से ${formatToIndianDate(toDate) || 'अद्यतन'}` : 'अवधि: समस्त दिनांक';
+      document.getElementById('pdfRepBranch').textContent = `शाखा: ${branchVal === 'ALL' ? 'समस्त सक्रिय शाखाएं' : branchVal}`;
+      const now = new Date();
+      document.getElementById('pdfRepGenTime').textContent = `प्रिंट दिनांक: ${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} ${now.toLocaleTimeString('hi-IN')}`;
+
+      const tbody = document.getElementById('pdfReportTableBody');
+      tbody.innerHTML = '';
+
+      filtered.forEach((t, i) => {
+        const tr = document.createElement('tr');
+        tr.className = i % 2 === 0 ? 'bg-white' : 'bg-slate-50';
+        tr.innerHTML = `
+          <td class="border border-slate-400 p-2 text-center font-bold">${i + 1}</td>
+          <td class="border border-slate-400 p-2 text-center font-mono font-semibold">${formatToIndianDate(t.taskDate)}</td>
+          <td class="border border-slate-400 p-2 font-bold">${t.branch || '-'}</td>
+          <td class="border border-slate-400 p-2 leading-relaxed">${t.description || '-'}</td>
+          <td class="border border-slate-400 p-2">${t.assignee || '-'}</td>
+          <td class="border border-slate-400 p-2 text-center">${t.priority || 'NORMAL'}</td>
+          <td class="border border-slate-400 p-2 text-center font-mono">${formatToIndianDate(t.dueDate)}</td>
+          <td class="border border-slate-400 p-2 italic">${t.adminInstructions || '-'}</td>
+          <td class="border border-slate-400 p-2 text-center font-bold ${t.status === 'COMPLETED' ? 'text-emerald-800' : 'text-rose-800'}">
+            ${t.status === 'COMPLETED' ? 'पूर्ण' : 'लंबित'}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      const reportEl = document.getElementById('printableLandscapeReport');
+      reportEl.classList.remove('hidden');
+
+      try {
+        const canvas = await html2canvas(reportEl, { scale: 2, useCORS: true });
+        reportEl.classList.add('hidden');
+
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+        const imgWidth = 297;
+        const pageHeight = 210;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        let heightLeft = imgHeight;
+        let position = 0;
+        const imgData = canvas.toDataURL('image/png');
+
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+
+        pdf.save(`IGP_Kota_Daily_Tasks_${formatDateToISO(new Date())}.pdf`);
+        showToast('सफल', 'प्रतिवेदन PDF सफलतापूर्वक डाउनलोड हो गई।');
+      } catch (err) {
+        reportEl.classList.add('hidden');
+        console.error(err);
+        showToast('त्रुटि', 'PDF जनरेट करने में असमर्थ।');
+      }
+    };
+
+    document.getElementById('downloadExcelBtn')?.addEventListener('click', () => {
+      const filtered = getFilteredTasks();
+      if (filtered.length === 0) {
+        showToast('कोई डेटा नहीं', 'डाउनलोड हेतु कोई कार्य नहीं है।');
+        return;
+      }
+
+      const excelData = filtered.map((t, idx) => ({
+        "क्र.": idx + 1,
+        "कार्य दिनांक": formatToIndianDate(t.taskDate),
+        "शाखा": t.branch || '',
+        "दैनिक कार्य का विस्तृत विवरण": t.description || '',
+        "प्रभारी / संबंधित कर्मचारी": t.assignee || '',
+        "प्राथमिकता": t.priority === 'URGENT' ? 'अति आवश्यक' : t.priority === 'HIGH' ? 'उच्च' : 'सामान्य',
+        "लक्ष्य तिथि": formatToIndianDate(t.dueDate),
+        "कार्यवाही हेतु निर्देश (Admin)": t.adminInstructions || '',
+        "स्थिति": t.status === 'COMPLETED' ? 'पूर्ण (Locked)' : 'लंबित',
+        "निस्तारण दिनांक": t.completedAt || ''
+      }));
+
+      const worksheet = XLSX.utils.json_to_sheet(excelData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Daily Task Register");
+      XLSX.writeFile(workbook, `IGP_Kota_Daily_Tasks_${formatDateToISO(new Date())}.xlsx`);
+      showToast('Excel डाउनलोड संपन्न', 'एक्सेल (.xlsx) फ़ाइल डाउनलोड हो गई।');
+    });
+
+    function showToast(title, msg) {
+      const toast = document.getElementById('toastNotification');
+      document.getElementById('toastTitle').textContent = title;
+      document.getElementById('toastMessage').textContent = msg;
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      toast.classList.add('opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 3500);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initSystem();
+      resetInactivityTimer();
+    });
+  </script>
+</body>
+</html>
