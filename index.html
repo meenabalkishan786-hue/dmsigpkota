@@ -151,7 +151,7 @@
         </button>
         <!-- Booth Map Tab -->
         <button type="button" id="boothNavBtn" onclick="window.open('booth-map.html', '_blank')" class="hidden px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-amber-950 bg-amber-400 hover:bg-amber-300 transition-all items-center gap-1.5 cursor-pointer ml-1 shadow">
-          <i data-lucide="map-pin" class="w-4 h-4 inline-block mr-1 text-amber-950"></i> 📍 बूथ जानकारी
+          <i data-lucide="map-pin" class="w-4 h-4 inline-block mr-1 text-amber-950"></i> 📍 Booth Detail
         </button>
         <button onclick="switchTab('monitoringDashboard')" class="nav-tab-btn hidden px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold hover:bg-police-800 text-amber-300 transition official-only-nav" id="tab-monitoringDashboard">
           <i data-lucide="layout-dashboard" class="w-4 h-4 inline-block mr-1"></i> कार्य अनुश्रवण
@@ -648,6 +648,24 @@
     </section>
 
   </main>
+  <!-- ================= FOOTER & RUNNING CREDIT STRIP ================= -->
+  <footer class="mt-auto bg-police-950 text-white border-t-2 border-police-gold py-3 no-print z-30 shadow-inner">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-2">
+      <div>
+        © 2026 कार्यालय महानिरीक्षक पुलिस, कोटा रेंज (राजस्थान पुलिस). सर्वाधिकार सुरक्षित।
+      </div>
+      <div class="text-slate-400">
+        कोटा रेंज, राजस्थान
+      </div>
+    </div>
+  </footer>
+
+  <!-- Running Credit Strip at Bottom (Right to Left) -->
+  <div class="bg-police-900 border-t border-police-gold/50 py-1.5 px-4 overflow-hidden no-print">
+    <marquee behavior="scroll" direction="left" scrollamount="6" class="text-xs font-semibold text-police-goldlight">
+      ⭐ Designed & Developed By Bal kishan, Assistant Programmer, IG Police, Range Kota ⭐
+    </marquee>
+  </div>
 
   <!-- ================= PRINTABLE REPORT TEMPLATE FOR ACCURATE PDF ================= -->
   <div id="printableLandscapeReport" class="hidden p-6 bg-white text-slate-900 font-hindi">
