@@ -2088,4 +2088,453 @@
     };
 
     // Media Upload & Delete
-    document.getElementById('adminUploadMediaForm').addEventListener('submit', (e)
+    document.getElementById('adminUploadMediaForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const fileUrl = document.getElementById('admMedImgUrl').value.trim();
+      const finalImage = selectedMediaBase64 || fileUrl || 'PHOTO-2026-09-24-12-07-09.jpg';
+
+      const newMedia = {
+        id: 'med-' + Date.now(),
+        category: document.getElementById('admMedCat').value,
+        title: document.getElementById('admMedTitle').value.trim(),
+        description: document.getElementById('admMedDesc').value.trim(),
+        imageUrl: finalImage,
+        date: formatDateToISO(new Date())
+      };
+      
+      mediaRef.child(newMedia.id).set(newMedia).then(() => {
+        document.getElementById('adminUploadMediaForm').reset();
+        selectedMediaBase64 = '';
+        showToast('मीडिया प्रकाशित', 'फोटो/समाचार वेबसाइट पर लाइव जोड़ दिया गया है।');
+      });
+    });
+
+    function renderAdminMediaManagement() {
+      const container = document.getElementById('adminMediaManagementList');
+      if (!container) return;
+      container.innerHTML = '';
+
+      mediaList.forEach(m => {
+        const div = document.createElement('div');
+        div.className = 'border rounded p-2 bg-white flex flex-col justify-between text-xs';
+        div.innerHTML = `
+          <div>
+            <div class="h-24 bg-slate-100 rounded overflow-hidden mb-1.5">
+              <img src="${m.imageUrl}" class="w-full h-full object-cover">
+            </div>
+            <h6 class="font-bold text-slate-900 truncate">${m.title}</h6>
+            <span class="text-[10px] text-slate-400 font-mono">${m.category}</span>
+          </div>
+          <button onclick="deleteMediaItem('${m.id}')" class="mt-2 py-1 px-2 bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold rounded flex items-center justify-center gap-1">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> हटाएं
+          </button>
+        `;
+        container.appendChild(div);
+      });
+      if (window.lucide) lucide.createIcons();
+    }
+
+    window.deleteMediaItem = function(mediaId) {
+      if (confirm('क्या आप इस मीडिया/फोटो को हटाना चाहते हैं?')) {
+        mediaRef.child(mediaId).remove().then(() => {
+          showToast('हटाया गया', 'मीडिया आइटम हटा दिया गया है।');
+        });
+      }
+    };
+
+    // Contacts Upload & Delete
+    document.getElementById('adminAddContactForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const newContact = {
+        id: 'cnt-' + Date.now(),
+        designation: document.getElementById('admCntDesignation').value.trim(),
+        name: document.getElementById('admCntName').value.trim() || '-',
+        phone: document.getElementById('admCntPhone').value.trim(),
+        email: document.getElementById('admCntEmail').value.trim() || '-'
+      };
+      contactsRef.child(newContact.id).set(newContact).then(() => {
+        document.getElementById('adminAddContactForm').reset();
+        showToast('सम्पर्क सुरक्षित', 'सम्पर्क विवरण जोड़ दिया गया है।');
+      });
+    });
+
+    function renderAdminContactsManagement() {
+      const container = document.getElementById('adminContactsManagementList');
+      if (!container) return;
+      container.innerHTML = '';
+
+      contactsList.forEach(c => {
+        const div = document.createElement('div');
+        div.className = 'flex items-center justify-between p-2 border rounded bg-white text-xs';
+        div.innerHTML = `
+          <div class="truncate">
+            <span class="font-bold text-police-900">${c.designation}</span> - 
+            <span class="text-slate-700">${c.name}</span> 
+            <span class="font-mono text-police-700 font-bold">(${c.phone})</span>
+          </div>
+          <button onclick="deleteContactItem('${c.id}')" class="p-1 text-rose-600 hover:bg-rose-50 rounded" title="हटाएं">
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+          </button>
+        `;
+        container.appendChild(div);
+      });
+      if (window.lucide) lucide.createIcons();
+    }
+
+    window.deleteContactItem = function(contactId) {
+      if (confirm('क्या आप इस संपर्क नंबर को हटाना चाहते हैं?')) {
+        contactsRef.child(contactId).remove().then(() => {
+          showToast('हटाया गया', 'संपर्क हटा दिया गया है।');
+        });
+      }
+    };
+
+    // Bulk Excel Upload
+    window.downloadSampleContactsExcel = function() {
+      const sampleData = [
+        { "Designation": "महानिरीक्षक पुलिस, कोटा रेंज", "Name": "श्री हरेन्द्र कुमार महावर, IPS", "Phone": "9414000000", "Email": "ig.kota@rajpolice.gov.in" },
+        { "Designation": "पुलिस अधीक्षक, कोटा शहर", "Name": "डॉ. अमृता दुहन, IPS", "Phone": "9414100000", "Email": "sp.kotacity@rajpolice.gov.in" },
+        { "Designation": "पुलिस अधीक्षक, कोटा ग्रामीण", "Name": "श्री करण शर्मा, IPS", "Phone": "9414200000", "Email": "sp.kotarural@rajpolice.gov.in" }
+      ];
+
+      const ws = XLSX.utils.json_to_sheet(sampleData);
+      ws['!cols'] = [{ wch: 35 }, { wch: 28 }, { wch: 18 }, { wch: 32 }];
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Contacts_Sample");
+      XLSX.writeFile(wb, "Sample_Kota_Range_Contacts.xlsx");
+      showToast('डाउनलोड संपन्न', 'सैंपल एक्सेल प्रारूप डाउनलोड हो गया है।');
+    };
+
+    window.processContactsExcel = function() {
+      const fileInput = document.getElementById('contactsExcelInput');
+      const file = fileInput.files[0];
+      if (!file) {
+        showToast('त्रुटि', 'कृपया पहले एक्सेल फ़ाइल चुनें।');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = new Uint8Array(e.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          const sheetName = workbook.SheetNames[0];
+          const sheet = workbook.Sheets[sheetName];
+          const jsonData = XLSX.utils.sheet_to_json(sheet);
+
+          if (!jsonData || jsonData.length === 0) {
+            showToast('त्रुटि', 'एक्सेल फ़ाइल में कोई डेटा नहीं मिला।');
+            return;
+          }
+
+          let addedCount = 0;
+          jsonData.forEach((row, i) => {
+            const desig = row['Designation'] || row['पदनाम'] || row['पद'] || '';
+            const name = row['Name'] || row['नाम'] || '-';
+            const phone = row['Phone'] || row['मोबाइल'] || '';
+            const email = row['Email'] || row['ईमेल'] || '-';
+
+            if (desig && phone) {
+              const contactId = 'cnt-' + Date.now() + '-' + i;
+              contactsRef.child(contactId).set({
+                id: contactId,
+                designation: String(desig).trim(),
+                name: String(name).trim(),
+                phone: String(phone).trim(),
+                email: String(email).trim()
+              });
+              addedCount++;
+            }
+          });
+
+          fileInput.value = '';
+          showToast('सफल अपलोड', `${addedCount} संपर्क एक्सेल से डेटाबेस में सुरक्षित किए गए।`);
+        } catch (err) {
+          console.error(err);
+          showToast('त्रुटि', 'एक्सेल फ़ाइल पढ़ने में समस्या आई।');
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    };
+
+    // Public Section Rendering
+    function renderOrdersList() {
+      const tbody = document.getElementById('ordersTableBody');
+      if (!tbody) return;
+      const search = (document.getElementById('orderSearchInput')?.value || '').toLowerCase();
+      tbody.innerHTML = '';
+
+      const filtered = orders.filter(o => 
+        (o.orderNo || '').toLowerCase().includes(search) || 
+        (o.title || '').toLowerCase().includes(search)
+      );
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400">कोई आदेश उपलब्ध नहीं है</td></tr>`;
+        return;
+      }
+
+      const isAdmin = currentUser?.role === 'Admin';
+
+      filtered.forEach((o, idx) => {
+        const isPdfData = o.link && o.link.startsWith('data:application/pdf');
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50 transition';
+        tr.innerHTML = `
+          <td class="p-3 text-center font-mono font-bold">${idx + 1}</td>
+          <td class="p-3 font-mono">${formatToIndianDate(o.orderDate)}</td>
+          <td class="p-3 font-mono font-bold text-police-900">${o.orderNo}</td>
+          <td class="p-3 font-medium leading-relaxed">${o.title}</td>
+          <td class="p-3 text-center">
+            ${isPdfData ? `
+              <button onclick="downloadPdfFile('${o.id}')" class="inline-flex items-center gap-1 text-xs font-bold text-police-700 hover:text-police-900 bg-police-50 hover:bg-police-100 px-2.5 py-1 rounded border">
+                <i data-lucide="file-down" class="w-3.5 h-3.5 text-rose-600"></i> PDF खोलें
+              </button>
+            ` : `
+              <a href="${o.link}" target="_blank" class="inline-flex items-center gap-1 text-xs font-bold text-police-700 hover:text-police-900 bg-police-50 hover:bg-police-100 px-2.5 py-1 rounded border">
+                <i data-lucide="external-link" class="w-3.5 h-3.5"></i> लिंक खोलें
+              </a>
+            `}
+          </td>
+          <td class="p-3 text-center admin-action-col ${isAdmin ? '' : 'hidden'}">
+            <button onclick="deleteOrderItem('${o.id}')" class="p-1 text-rose-600 hover:bg-rose-50 rounded">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      if (window.lucide) lucide.createIcons();
+    }
+
+    window.downloadPdfFile = function(orderId) {
+      const order = orders.find(o => o.id === orderId);
+      if (!order || !order.link) return;
+
+      const newTab = window.open();
+      if (newTab) {
+        newTab.document.write(`<iframe src="${order.link}" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>`);
+      } else {
+        const a = document.createElement('a');
+        a.href = order.link;
+        a.download = `${order.orderNo.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
+        a.click();
+      }
+    };
+
+    function filterMedia(cat) {
+      document.querySelectorAll('.media-filter-btn').forEach(b => {
+        b.classList.remove('active', 'bg-police-700', 'text-white');
+        b.classList.add('bg-slate-100', 'text-slate-600');
+      });
+      const activeBtn = document.getElementById(`mf-${cat}`);
+      if (activeBtn) {
+        activeBtn.classList.add('active', 'bg-police-700', 'text-white');
+        activeBtn.classList.remove('bg-slate-100', 'text-slate-600');
+      }
+      renderMediaList(cat);
+    }
+
+    function renderMediaList(category = 'ALL') {
+      const container = document.getElementById('mediaCardsGrid');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const filtered = category === 'ALL' ? mediaList : mediaList.filter(m => m.category === category);
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="col-span-full py-10 text-center text-slate-400">वर्तमान में कोई सामग्री उपलब्ध नहीं है।</div>`;
+        return;
+      }
+
+      const isAdmin = currentUser?.role === 'Admin';
+
+      filtered.forEach(m => {
+        const card = document.createElement('div');
+        card.className = 'bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col justify-between';
+        card.innerHTML = `
+          <div>
+            <div class="h-44 bg-slate-100 relative overflow-hidden">
+              <img src="${m.imageUrl}" alt="${m.title}" class="w-full h-full object-cover" onerror="this.src='PHOTO-2026-09-24-12-07-09.jpg';">
+              <span class="absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded bg-police-900/80 text-police-gold backdrop-blur-sm">
+                ${m.category === 'NEWS' ? 'समाचार' : m.category === 'EVENTS' ? 'आयोजन' : 'गैलरी'}
+              </span>
+              ${isAdmin ? `
+                <button onclick="deleteMediaItem('${m.id}')" title="हटाएं" class="absolute top-2 right-2 p-1.5 rounded-full bg-white/90 text-rose-600 shadow hover:bg-white">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+              ` : ''}
+            </div>
+            <div class="p-3.5 space-y-1.5">
+              <span class="text-[10px] text-slate-400 font-mono">${formatToIndianDate(m.date)}</span>
+              <h4 class="font-bold text-xs text-slate-900 leading-snug line-clamp-2">${m.title}</h4>
+              <p class="text-[11px] text-slate-600 line-clamp-3">${m.description || ''}</p>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function renderContactsList() {
+      const tbody = document.getElementById('contactsTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      const isAdmin = currentUser?.role === 'Admin';
+
+      contactsList.forEach((c, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-50 transition';
+        tr.innerHTML = `
+          <td class="p-3 text-center font-mono font-bold">${idx + 1}</td>
+          <td class="p-3 font-bold text-police-950">${c.designation}</td>
+          <td class="p-3 font-semibold text-slate-800">${c.name}</td>
+          <td class="p-3 font-mono font-bold text-police-700">${c.phone}</td>
+          <td class="p-3 font-mono text-slate-600">${c.email}</td>
+          <td class="p-3 text-center admin-action-col ${isAdmin ? '' : 'hidden'}">
+            <button onclick="deleteContactItem('${c.id}')" class="p-1 text-rose-600 hover:bg-rose-50 rounded">
+              <i data-lucide="trash-2" class="w-4 h-4"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      if (window.lucide) lucide.createIcons();
+    }
+
+    // ================= DASHBOARD & REGISTER =================
+    function getRegisteredBranches() {
+      const set = new Set();
+      users.forEach(u => {
+        if (u.role === 'Branch' && u.branch && u.branch.trim()) {
+          set.add(u.branch.trim());
+        }
+      });
+      return Array.from(set);
+    }
+
+    function updateBranchDropdown() {
+      const select = document.getElementById('filterBranch');
+      const modalSelect = document.getElementById('modalBranchSelect');
+      const branches = getRegisteredBranches();
+
+      if (select) {
+        select.innerHTML = '';
+        if (currentUser?.role === 'Admin' || currentUser?.role === 'IG_Sir') {
+          const optAll = document.createElement('option');
+          optAll.value = 'ALL';
+          optAll.textContent = 'समस्त पंजीकृत शाखाएं (All Active)';
+          select.appendChild(optAll);
+
+          branches.forEach(b => {
+            const opt = document.createElement('option');
+            opt.value = b;
+            opt.textContent = b;
+            select.appendChild(opt);
+          });
+          select.disabled = false;
+        } else if (currentUser?.role === 'Branch') {
+          const opt = document.createElement('option');
+          opt.value = currentUser.branch;
+          opt.textContent = currentUser.branch;
+          select.appendChild(opt);
+          select.disabled = true;
+        }
+      }
+
+      if (modalSelect) {
+        modalSelect.innerHTML = '';
+        if (currentUser?.role === 'Branch') {
+          const opt = document.createElement('option');
+          opt.value = currentUser.branch;
+          opt.textContent = currentUser.branch;
+          modalSelect.appendChild(opt);
+          modalSelect.disabled = true;
+        } else {
+          if (branches.length === 0) {
+            const opt = document.createElement('option');
+            opt.value = '';
+            opt.textContent = '-- कोई शाखा नहीं (पहले नई शाखा बनाएं) --';
+            modalSelect.appendChild(opt);
+          } else {
+            branches.forEach(b => {
+              const opt = document.createElement('option');
+              opt.value = b;
+              opt.textContent = b;
+              modalSelect.appendChild(opt);
+            });
+          }
+          modalSelect.disabled = false;
+        }
+      }
+    }
+
+    function setupDashboardFilterListeners() {
+      document.getElementById('filterFromDate')?.addEventListener('change', refreshDashboardData);
+      document.getElementById('filterToDate')?.addEventListener('change', refreshDashboardData);
+      document.getElementById('filterBranch')?.addEventListener('change', refreshDashboardData);
+      document.getElementById('filterStatus')?.addEventListener('change', refreshDashboardData);
+      document.getElementById('searchInput')?.addEventListener('input', refreshDashboardData);
+
+      document.getElementById('resetDateFilterBtn')?.addEventListener('click', () => {
+        document.getElementById('filterFromDate').value = '';
+        document.getElementById('filterToDate').value = '';
+        document.getElementById('filterStatus').value = 'ALL';
+        document.getElementById('searchInput').value = '';
+        refreshDashboardData();
+        showToast('रीसेट संपन्न', 'दिनांक एवं अन्य सभी फ़िल्टर रीसेट कर दिए गए हैं।');
+      });
+
+      const wrap = document.getElementById('downloadDropdownWrap');
+      const menu = document.getElementById('downloadMenu');
+      document.getElementById('downloadDropdownBtn')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('hidden');
+      });
+      document.addEventListener('click', (e) => {
+        if (!wrap?.contains(e.target)) menu?.classList.add('hidden');
+      });
+    }
+
+    function refreshDashboardData() {
+      const filtered = getFilteredTasks();
+      const total = filtered.length;
+      const completed = filtered.filter(t => t.status === 'COMPLETED').length;
+      const pending = filtered.filter(t => t.status === 'PENDING').length;
+      const pct = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+      document.getElementById('kpiTotal').textContent = total;
+      document.getElementById('kpiCompleted').textContent = completed;
+      document.getElementById('kpiPending').textContent = pending;
+      document.getElementById('ratePercentage').textContent = pct + '%';
+      document.getElementById('progressBar').style.width = pct + '%';
+
+      renderTable();
+      renderBranchOverviewGrid();
+    }
+
+    function renderTable() {
+      const filtered = getFilteredTasks();
+      const tbody = document.getElementById('taskTableBody');
+      const emptyState = document.getElementById('noTasksState');
+      document.getElementById('renderedCountBadge').textContent = `${filtered.length} कार्य`;
+
+      tbody.innerHTML = '';
+      if (filtered.length === 0) {
+        emptyState.classList.remove('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+      }
+
+      const isPrivileged = (currentUser?.role === 'Admin' || currentUser?.role === 'IG_Sir');
+
+      filtered.forEach((task, index) => {
+        const isLocked = task.isLocked || false;
+
+        let priorityBadge = task.priority === 'URGENT' 
+          ? '<span class="text-[11px] font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">अति आवश्यक</span>'
+          : task.priority === 'HIGH'
+          ? '<span class="text-[11px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">उच्च</span>'
+          : '<span
