@@ -14,11 +14,11 @@
 
   <!-- PapaParse for high-speed CSV parsing -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-  
-  <!-- Firebase Scripts (Compat Version) -->
+
+  <!-- Firebase Scripts (Compat Version for Realtime Cloud Sync) -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-  
+
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
@@ -664,7 +664,7 @@
         <div class="flex items-center gap-2 p-2 bg-slate-100 rounded-lg">
           <input type="checkbox" id="saveLocalCheckbox" checked class="w-4 h-4 text-blue-600 rounded">
           <label for="saveLocalCheckbox" class="text-slate-700 cursor-pointer text-xs font-medium">
-            डेटा को ब्राउज़र (Local Storage) में सुरक्षित रखें ताकि पेज रीफ्रेश होने पर न हटे
+            डेटा को केंद्रीय क्लाउड डेटाबेस (Firebase) में सुरक्षित रखें
           </label>
         </div>
 
@@ -718,7 +718,7 @@
   </div>
 
   <script>
-    // Firebase Realtime Database Configuration
+    // Firebase Realtime Database Connection
     const firebaseConfig = {
       databaseURL: "https://igp-kota-dms-default-rtdb.firebaseio.com"
     };
@@ -905,7 +905,7 @@
       }
     };
 
-    // 1. Access Control & Session Management
+    // 1. Session Detection
     function initSecurityAndRoles() {
       isPublicPublished = (localStorage.getItem('igp_public_visible') === 'true');
       
@@ -927,7 +927,7 @@
       applyRoleUI();
     }
 
-    // 2. UI Role Application (Clean & Single Function)
+    // 2. Role and UI Application
     function applyRoleUI() {
       const hasAdminRights = currentLoggedInUser && 
         (currentLoggedInUser.role === 'Admin' || currentLoggedInUser.role === 'IG' || (currentLoggedInUser.name && (currentLoggedInUser.name.includes('Admin') || currentLoggedInUser.name.includes('IG'))));
@@ -950,7 +950,7 @@
         document.getElementById('authRoleBadge').className = 'text-[10px] bg-slate-800 border border-slate-700 text-amber-300 font-bold px-2 py-0.5 rounded';
         document.getElementById('authBtnLabel').innerText = 'पुलिस लॉगिन';
 
-        // अगर पब्लिक हेतु खोला हुआ है, तो लॉगिन पॉपअप बंद रहेगा
+        // अगर एडमिन ने पब्लिक हेतु खोल दिया है तो आमजन को लॉगिन पॉपअप कभी न दिखे
         if (isPublicPublished) {
           document.getElementById('boothAuthModal').classList.add('hidden');
         } else {
@@ -958,7 +958,6 @@
         }
       }
 
-      // Publish Status Badge & Toggle Button Text
       const pubBadge = document.getElementById('pubStatusBadge');
       const pubBtnLabel = document.getElementById('publishToggleLabel');
       if (pubBadge) {
@@ -974,6 +973,7 @@
       }
     }
 
+    // 3. Online Publish Toggle (Firebase Synced)
     function togglePublicPublishState() {
       if (!currentLoggedInUser || (currentLoggedInUser.role !== 'Admin' && currentLoggedInUser.role !== 'IG')) {
         showToast('केवल IG Range अथवा Admin को पब्लिश करने का अधिकार है!');
@@ -1027,9 +1027,9 @@
       }
     }
 
-    // 3. Realtime Cloud Sync (Firebase Synchronizer)
+    // 4. Central Cloud Synchronizer (Firebase Live Updates on all devices)
     function initCloudSync() {
-      // Live Sync Police Stations
+      // 1. Live Sync Police Stations from Firebase Cloud
       db.ref('policeStations').on('value', (snapshot) => {
         const data = snapshot.val();
         if (data && Array.isArray(data) && data.length > 0) {
@@ -1044,7 +1044,7 @@
         updateStats();
       });
 
-      // Live Sync Polling Booths
+      // 2. Live Sync Booths from Firebase Cloud
       db.ref('pollingBooths').on('value', (snapshot) => {
         const data = snapshot.val();
         if (data && Array.isArray(data) && data.length > 0) {
@@ -1060,7 +1060,7 @@
         updateStats();
       });
 
-      // Live Sync Public Publish Toggle
+      // 3. Live Sync Public Publish Toggle
       db.ref('settings/publicBoothVisible').on('value', (snap) => {
         if (snap.exists()) {
           isPublicPublished = (snap.val() === true);
@@ -1071,12 +1071,14 @@
     }
 
     function savePoliceStationsToStorage() {
+      // Cloud + Local fallback
       db.ref('policeStations').set(policeStations);
       localStorage.setItem('KOTA_POLICE_STATIONS', JSON.stringify(policeStations));
       updateStats();
     }
 
     function saveBoothsToStorage() {
+      // Cloud + Local fallback
       db.ref('pollingBooths').set(pollingBooths);
       localStorage.setItem('KOTA_POLICE_BOOTHS', JSON.stringify(pollingBooths));
       updateStats();
@@ -1122,7 +1124,7 @@
 
         cancelCoordinatePicker();
         document.getElementById('singleEntryModal').classList.remove('hidden');
-        showToast(`📍 चयनित जीपीएस: ${lat},${lng}`);
+        showToast(`📍 चयनित जीपीएस: ${lat}, ${lng}`);
       });
 
       setTimeout(() => { if (map) map.invalidateSize(); }, 300);
@@ -1195,7 +1197,7 @@
 
       renderThanaManagerList();
       syncAllDropdowns();
-      showToast(`नया थाना '${name}' ऑनलाइन सुरक्षित किया गया!`);
+      showToast(`नया थाना '${name}' क्लाउड पर सुरक्षित हुआ!`);
     }
 
     function deletePoliceStation(id) {
@@ -1228,7 +1230,7 @@
               <span class="font-bold text-slate-900">${ps.name}</span>
               <span class="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded border">${ps.district}</span>
             </div>
-            <div class="text-[11px] text-slate-500 mt-0.5">${ps.sho} \vert{}${ps.phone}</div>
+            <div class="text-[11px] text-slate-500 mt-0.5">${ps.sho} | ${ps.phone}</div>
           </div>
           <button onclick="deletePoliceStation('${ps.id}')" class="p-1.5 text-rose-500 hover:text-rose-700 rounded-lg">
             <i class="fa-solid fa-trash-can"></i>
@@ -1452,7 +1454,7 @@
       document.getElementById('stat-normal').innerText = normalCount;
       document.getElementById('stat-sensitive').innerText = sensitiveCount;
       document.getElementById('stat-critical').innerText = criticalCount;
-      document.getElementById('filteredCountText').innerText = `प्रदर्शित: ${filtered.length} /${pollingBooths.length} बूथ`;
+      document.getElementById('filteredCountText').innerText = `प्रदर्शित: ${filtered.length} / ${pollingBooths.length} बूथ`;
 
       renderSidebarList(filtered);
 
@@ -1489,5 +1491,374 @@
         item.className = "p-2.5 bg-white hover:bg-blue-50/80 rounded-xl cursor-pointer transition border border-slate-200 shadow-sm";
         item.innerHTML = `
           <div class="flex items-start justify-between gap-1 mb-1">
-            <span class="font-bold text-xs text-slate-900">#${booth.number}${booth.name}</span>
-            <span class="text-[10px] px-2 py-0.
+            <span class="font-bold text-xs text-slate-900">#${booth.number} ${booth.name}</span>
+            <span class="text-[10px] px-2 py-0.5 rounded font-bold ${booth.category === 'अति-संवेदनशील' ? 'bg-rose-100 text-rose-700' : booth.category === 'संवेदनशील' ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700'}">${booth.category}</span>
+          </div>
+          <div class="text-[11px] text-slate-600 flex justify-between">
+            <span>${booth.thana} (${booth.district})</span>
+            <span class="font-bold text-blue-700">${booth.distanceFromPS}</span>
+          </div>
+          <div class="text-[11px] text-slate-600 mt-1 flex justify-between pt-1 border-t border-slate-100">
+            <span>बीट: ${booth.beatConstable.name}</span>
+            <div class="flex items-center gap-1.5">
+              ${hasAdminRights ? `
+                <button onclick="event.stopPropagation(); openEditBoothModal('${booth.id}')" class="text-amber-600 hover:text-amber-800 font-bold">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+              ` : ''}
+              <button onclick="event.stopPropagation(); focusBoothOnMap('${booth.id}')" class="text-blue-700 font-bold">
+                नक्शे पर &rarr;
+              </button>
+            </div>
+          </div>
+        `;
+        item.onclick = () => focusBoothOnMap(booth.id);
+        container.appendChild(item);
+      });
+    }
+
+    function focusBoothOnMap(id) {
+      const booth = pollingBooths.find(b => b.id === id);
+      const marker = markersMap.get(id);
+      if (booth && marker && map) {
+        if (window.innerWidth < 1024) toggleSidebar(false);
+        map.setView([booth.lat, booth.lng], 16, { animate: true });
+        marker.openPopup();
+      }
+    }
+
+    function resetMapView() {
+      if (map) map.setView(KOTA_RANGE_COORDS, DEFAULT_ZOOM);
+    }
+
+    function resetFilters() {
+      document.getElementById('districtFilter').value = 'ALL';
+      document.getElementById('statusFilter').value = 'ALL';
+      document.getElementById('searchInput').value = '';
+      populateFilterThanas();
+      document.getElementById('thanaFilter').value = 'ALL';
+      applyFilters();
+      resetMapView();
+    }
+
+    function toggleSidebar(forceState) {
+      const panel = document.getElementById('sidebarPanel');
+      if (typeof forceState === 'boolean') {
+        panel.classList.toggle('-translate-x-full', !forceState);
+      } else {
+        panel.classList.toggle('-translate-x-full');
+      }
+      setTimeout(() => { if (map) map.invalidateSize(); }, 300);
+    }
+
+    function showBoothDetails(id) {
+      const b = pollingBooths.find(item => item.id === id);
+      if (!b) return;
+
+      document.getElementById('modalCategoryBadge').textContent = b.category;
+      document.getElementById('modalBoothName').textContent = `बूथ संख्या ${b.number}: ${b.name}`;
+      document.getElementById('modalBoothDistrictThana').textContent = `जिला: ${b.district} | थाना: ${b.thana}`;
+
+      const modalBody = document.getElementById('modalBody');
+      modalBody.innerHTML = `
+        <div class="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
+          <div><span class="text-slate-500 text-[10px]">विधानसभा:</span> <div class="font-bold">${b.assembly}</div></div>
+          <div><span class="text-slate-500 text-[10px]">थाने से दूरी:</span> <div class="font-bold text-blue-700">${b.distanceFromPS}</div></div>
+          <div><span class="text-slate-500 text-[10px]">GPS Coordinates:</span> <div class="font-mono text-xs">${b.lat.toFixed(5)}, ${b.lng.toFixed(5)}</div></div>
+          <div><span class="text-slate-500 text-[10px]">मतदाता:</span> <div class="font-bold">${b.voters || '1000+'}</div></div>
+        </div>
+        <div class="space-y-2 mt-2">
+          <div class="flex justify-between items-center p-2 rounded-xl bg-blue-50 border border-blue-200">
+            <div><div class="text-[10px] text-blue-900 font-bold">बीट कांस्टेबल</div><div class="font-bold">${b.beatConstable.name}</div></div>
+            <a href="tel:${b.beatConstable.phone}" class="px-3 py-1 bg-blue-700 text-white rounded font-bold"><i class="fa-solid fa-phone"></i> ${b.beatConstable.phone}</a>
+          </div>
+          <div class="flex justify-between items-center p-2 rounded-xl bg-slate-50 border border-slate-200">
+            <div><div class="text-[10px] text-slate-500 font-bold">BLO अधिकारी</div><div class="font-bold">${b.blo.name}</div></div>
+            <a href="tel:${b.blo.phone}" class="px-3 py-1 bg-slate-800 text-white rounded font-bold"><i class="fa-solid fa-phone"></i> ${b.blo.phone}</a>
+          </div>
+          <div class="flex justify-between items-center p-2 rounded-xl bg-slate-50 border border-slate-200">
+            <div><div class="text-[10px] text-slate-500 font-bold">सेक्टर सुपरवाइजर</div><div class="font-bold">${b.supervisor.name}</div></div>
+            <a href="tel:${b.supervisor.phone}" class="px-3 py-1 bg-slate-800 text-white rounded font-bold"><i class="fa-solid fa-phone"></i> ${b.supervisor.phone}</a>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('modalEditBtn').onclick = () => { closeModal(); openEditBoothModal(b.id); };
+      document.getElementById('modalDeleteBtn').onclick = () => { deleteBoothById(b.id); };
+      document.getElementById('modalRouteBtn').href = `https://www.google.com/maps/dir/?api=1&destination=${b.lat},${b.lng}`;
+      document.getElementById('detailModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('detailModal').classList.add('hidden');
+    }
+
+    // Single Entry CRUD
+    function openAddBoothModal() {
+      document.getElementById('singleBoothForm').reset();
+      document.getElementById('entryBoothId').value = '';
+      document.getElementById('singleEntryModalTitle').innerText = 'नया पोलिंग बूथ जोड़ें';
+      cancelInlineNewThana();
+      if (map) {
+        const center = map.getCenter();
+        document.getElementById('entryLat').value = center.lat.toFixed(5);
+        document.getElementById('entryLng').value = center.lng.toFixed(5);
+      }
+      populateEntryThanaSelect();
+      document.getElementById('singleEntryModal').classList.remove('hidden');
+    }
+
+    function openEditBoothModal(id) {
+      const b = pollingBooths.find(item => item.id === id);
+      if (!b) return;
+
+      cancelInlineNewThana();
+      document.getElementById('entryBoothId').value = b.id;
+      document.getElementById('singleEntryModalTitle').innerText = `बूथ संपादित करें: #${b.number} ${b.name}`;
+
+      document.getElementById('entryDistrict').value = b.district;
+      populateEntryThanaSelect(b.thana);
+      document.getElementById('entryThanaSelect').value = b.thana;
+      document.getElementById('entryCategory').value = b.category;
+      document.getElementById('entryNumber').value = b.number;
+      document.getElementById('entryName').value = b.name;
+      document.getElementById('entryAssembly').value = b.assembly;
+      document.getElementById('entryDistance').value = b.distanceFromPS;
+      document.getElementById('entryVoters').value = b.voters || '';
+
+      document.getElementById('entryBloName').value = b.blo.name;
+      document.getElementById('entryBloPhone').value = b.blo.phone;
+      document.getElementById('entryBeatName').value = b.beatConstable.name;
+      document.getElementById('entryBeatPhone').value = b.beatConstable.phone;
+      document.getElementById('entrySupervisorName').value = b.supervisor.name;
+      document.getElementById('entrySupervisorPhone').value = b.supervisor.phone;
+
+      document.getElementById('entryLat').value = b.lat;
+      document.getElementById('entryLng').value = b.lng;
+
+      document.getElementById('singleEntryModal').classList.remove('hidden');
+    }
+
+    function closeAddBoothModal() {
+      document.getElementById('singleEntryModal').classList.add('hidden');
+      cancelInlineNewThana();
+      if (tempPickerMarker && map) {
+        map.removeLayer(tempPickerMarker);
+        tempPickerMarker = null;
+      }
+    }
+
+    function startPickingFromMap() {
+      document.getElementById('singleEntryModal').classList.add('hidden');
+      isPickingLocation = true;
+      document.getElementById('map').classList.add('map-picker-crosshair');
+      document.getElementById('mapPickerBanner').classList.remove('hidden');
+      showToast('नक्शे पर इच्छित स्थान पर क्लिक करें');
+    }
+
+    function cancelCoordinatePicker() {
+      isPickingLocation = false;
+      document.getElementById('map').classList.remove('map-picker-crosshair');
+      document.getElementById('mapPickerBanner').classList.add('hidden');
+    }
+
+    function handleSingleBoothSubmit(event) {
+      event.preventDefault();
+      const existingId = document.getElementById('entryBoothId').value;
+      const thanaVal = document.getElementById('entryThanaSelect').value;
+      const latVal = parseFloat(document.getElementById('entryLat').value);
+      const lngVal = parseFloat(document.getElementById('entryLng').value);
+
+      if (!thanaVal || thanaVal === '__ADD_NEW_THANA__') {
+        showToast('कृपया वैध पुलिस थाना चुनें!');
+        return;
+      }
+
+      const district = document.getElementById('entryDistrict').value;
+      const boothData = {
+        id: existingId || ('KB-SINGLE-' + Date.now().toString()),
+        number: document.getElementById('entryNumber').value.trim(),
+        name: document.getElementById('entryName').value.trim(),
+        district: district,
+        thana: thanaVal,
+        assembly: document.getElementById('entryAssembly').value.trim(),
+        distanceFromPS: document.getElementById('entryDistance').value.trim(),
+        category: document.getElementById('entryCategory').value,
+        lat: latVal,
+        lng: lngVal,
+        voters: parseInt(document.getElementById('entryVoters').value) || 1000,
+        blo: { name: document.getElementById('entryBloName').value.trim() || 'BLO', phone: document.getElementById('entryBloPhone').value.trim() || '-' },
+        supervisor: { name: document.getElementById('entrySupervisorName').value.trim() || 'पर्यवेक्षक', phone: document.getElementById('entrySupervisorPhone').value.trim() || '-' },
+        beatConstable: { name: document.getElementById('entryBeatName').value.trim() || 'बीट कांस्टेबल', phone: document.getElementById('entryBeatPhone').value.trim() || '-' }
+      };
+
+      if (existingId) {
+        const index = pollingBooths.findIndex(b => b.id === existingId);
+        if (index !== -1) pollingBooths[index] = boothData;
+      } else {
+        pollingBooths.unshift(boothData);
+      }
+
+      saveBoothsToStorage();
+      closeAddBoothModal();
+      syncAllDropdowns();
+      renderMarkers();
+      applyFilters();
+      showToast('बूथ विवरण सफलतापूर्वक क्लाउड पर सुरक्षित हुआ!');
+      focusBoothOnMap(boothData.id);
+    }
+
+    function deleteBoothById(id) {
+      if (!confirm('क्या आप वाकई इस बूथ को हटाना चाहते हैं?')) return;
+      pollingBooths = pollingBooths.filter(b => b.id !== id);
+      saveBoothsToStorage();
+      closeModal();
+      renderMarkers();
+      applyFilters();
+      showToast('बूथ हटा दिया गया');
+    }
+
+    // CSV Functions
+    function openCsvModal() { document.getElementById('csvModal').classList.remove('hidden'); }
+    function closeCsvModal() { document.getElementById('csvModal').classList.add('hidden'); }
+
+    function handleCsvFile(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      Papa.parse(file, {
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) { processParsedCsvData(results.data); },
+        error: function(err) { showToast('CSV त्रुटि: ' + err.message); }
+      });
+    }
+
+    function getColValue(row, possibleNames) {
+      for (const name of possibleNames) {
+        if (row[name] !== undefined && row[name] !== null && String(row[name]).trim() !== '') return String(row[name]).trim();
+        const lowerName = name.toLowerCase();
+        for (const key in row) {
+          if (key.toLowerCase().trim() === lowerName) return String(row[key]).trim();
+        }
+      }
+      return '';
+    }
+
+    function processParsedCsvData(rows) {
+      if (!rows || rows.length === 0) return;
+      const newBooths = [];
+      let newThanas = 0;
+
+      rows.forEach((row, idx) => {
+        const number = getColValue(row, ['Booth_No', 'BoothNo', 'बूथ_संख्या']) || (idx + 1).toString();
+        const name = getColValue(row, ['Booth_Name', 'BoothName', 'बूथ नाम']);
+        const district = getColValue(row, ['District', 'जिला']) || 'कोटा शहर';
+        let thana = getColValue(row, ['Police_Station', 'थाना']) || 'थाना कोतवाली';
+        const assembly = getColValue(row, ['Assembly', 'विधानसभा']) || 'कोटा';
+        const distance = getColValue(row, ['Distance_from_PS', 'दूरी']) || '1.0 किमी';
+        let category = getColValue(row, ['Category', 'श्रेणी']) || 'सामान्य';
+        const bloName = getColValue(row, ['BLO_Name', 'BLO']) || 'BLO';
+        const bloMobile = getColValue(row, ['BLO_Mobile']) || '-';
+        const supName = getColValue(row, ['Supervisor_Name']) || 'पर्यवेक्षक';
+        const supMobile = getColValue(row, ['Supervisor_Mobile']) || '-';
+        const beatName = getColValue(row, ['Beat_Constable_Name']) || 'कांस्टेबल';
+        const beatMobile = getColValue(row, ['Beat_Constable_Mobile']) || '-';
+        const latVal = parseFloat(getColValue(row, ['Latitude', 'Lat']));
+        const lngVal = parseFloat(getColValue(row, ['Longitude', 'Lng']));
+
+        if (!name || isNaN(latVal) || isNaN(lngVal)) return;
+        if (thana && !thana.startsWith('थाना')) thana = 'थाना ' + thana;
+
+        const psExists = policeStations.some(p => p.name.toLowerCase() === thana.toLowerCase() && p.district === district);
+        if (!psExists && thana) {
+          policeStations.push({ id: 'PS-CSV-' + Date.now() + '-' + idx, name: thana, district: district, sho: 'प्रभारी', phone: '-' });
+          newThanas++;
+        }
+
+        newBooths.push({
+          id: 'KB-CSV-' + Date.now() + '-' + idx,
+          number: number,
+          name: name,
+          district: district,
+          thana: thana,
+          assembly: assembly,
+          distanceFromPS: distance,
+          category: category,
+          lat: latVal,
+          lng: lngVal,
+          blo: { name: bloName, phone: bloMobile },
+          supervisor: { name: supName, phone: supMobile },
+          beatConstable: { name: beatName, phone: beatMobile },
+          voters: 1000
+        });
+      });
+
+      if (newBooths.length === 0) {
+        showToast('कोई वैध रिकॉर्ड नहीं मिला!');
+        return;
+      }
+
+      pollingBooths = newBooths;
+      saveBoothsToStorage();
+      if (newThanas > 0) savePoliceStationsToStorage();
+
+      closeCsvModal();
+      syncAllDropdowns();
+      renderMarkers();
+      applyFilters();
+      showToast(`${newBooths.length} बूथ सफलतापूर्वक ऑनलाइन अपलोड किए गए!`);
+    }
+
+    function downloadSampleCSV() {
+      const headers = ["Booth_No","Booth_Name","District","Police_Station","Assembly","Distance_from_PS","Category","BLO_Name","BLO_Mobile","Supervisor_Name","Supervisor_Mobile","Beat_Constable_Name","Beat_Constable_Mobile","Latitude","Longitude"];
+      const sample = [
+        ["101","राजकीय उच्च माध्यमिक विद्यालय नयापुरा","कोटा शहर","थाना नयापुरा","कोटा उत्तर","1.2 किमी","सामान्य","सुरेश शर्मा","9414011111","राकेश (RI)","9829022222","का. मुकेश (1120)","9784033333","25.1872","75.8431"],
+        ["45","राजकीय विद्यालय कैथून","कोटा ग्रामीण","थाना कैथून","लाडपुरा","1.8 किमी","संवेदनशील","रामगोपाल","9414123987","बृजमोहन","9829123988","का. कालूराम (312)","9784123989","25.1230","75.9860"]
+      ];
+      const csv = "\uFEFF" + [headers.join(","), ...sample.map(r => r.map(f => `"${f}"`).join(","))].join("\n");
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
+      a.download = "Kota_Police_Booth_Sample_Template.csv";
+      a.click();
+    }
+
+    function exportCurrentBoothsToCSV() {
+      if (pollingBooths.length === 0) return;
+      const headers = ["Booth_No","Booth_Name","District","Police_Station","Assembly","Distance_from_PS","Category","BLO_Name","BLO_Mobile","Supervisor_Name","Supervisor_Mobile","Beat_Constable_Name","Beat_Constable_Mobile","Latitude","Longitude"];
+      const rows = pollingBooths.map(b => [`"${b.number}"`,`"${b.name}"`,`"${b.district}"`,`"${b.thana}"`,`"${b.assembly}"`,`"${b.distanceFromPS}"`,`"${b.category}"`,`"${b.blo.name}"`,`"${b.blo.phone}"`,`"${b.supervisor.name}"`,`"${b.supervisor.phone}"`,`"${b.beatConstable.name}"`,`"${b.beatConstable.phone}"`,b.lat,b.lng]);
+      const csv = "\uFEFF" + [headers.join(","), ...rows.map(r => r.join(","))].join("\n");
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
+      a.download = `Kota_Range_Police_Booths_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+      showToast("वर्तमान डेटा CSV में डाउनलोड हो गया!");
+    }
+
+    function restoreDefaultBooths() {
+      pollingBooths = [...DEFAULT_KOTA_RANGE_BOOTHS];
+      saveBoothsToStorage();
+      closeCsvModal();
+      syncAllDropdowns();
+      renderMarkers();
+      applyFilters();
+      resetMapView();
+      showToast('डिफ़ॉल्ट कोटा रेंज डेटा पुनर्स्थापित किया गया');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').innerText = msg;
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+      setTimeout(() => { toast.classList.remove('opacity-100'); toast.classList.add('opacity-0'); }, 3500);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initSecurityAndRoles();
+      initMap();
+      initCloudSync();
+    });
+  </script>
+</body>
+</html>
