@@ -908,19 +908,22 @@
     };
 
     // Access Control & Synchronization with Main Portal
+    // Access Control & Synchronization with Main Portal
     function initSecurityAndRoles() {
       isPublicPublished = (localStorage.getItem('igp_public_visible') === 'true');
       
-      // Check either booth session OR main portal session
+      // चेक करें कि क्या बूथ सत्र या मुख्य पोर्टल का सक्रिय लॉगिन मौजूद है
       const boothSession = JSON.parse(sessionStorage.getItem('BOOTH_LOGGED_USER') || 'null');
       const mainPortalMobile = localStorage.getItem('ig_police_session_active');
 
       if (boothSession) {
         currentLoggedInUser = boothSession;
       } else if (mainPortalMobile) {
+        // Bal Kishan (Admin) या IG Sir दोनों को पूरे एडमिन अधिकार दें
+        const isAdmin = (mainPortalMobile === '9928165827' || mainPortalMobile === '9414000000');
         currentLoggedInUser = {
-          role: (mainPortalMobile === '9928165827' ? 'Admin' : (mainPortalMobile === '9414000000' ? 'IG' : 'Staff')),
-          name: (mainPortalMobile === '9928165827' ? 'Bal Kishan (Admin)' : 'IGP KOTA RANGE')
+          role: isAdmin ? 'Admin' : 'Staff',
+          name: (mainPortalMobile === '9928165827' ? 'Bal Kishan (Admin)' : (mainPortalMobile === '9414000000' ? 'IG Sir' : 'पुलिस अधिकारी'))
         };
       } else {
         currentLoggedInUser = null;
@@ -930,6 +933,58 @@
     }
 
     function applyRoleUI() {
+      // Admin या IG दोनों को एडमिन अधिकार
+      const hasAdminRights = currentLoggedInUser && 
+        (currentLoggedInUser.role === 'Admin' || currentLoggedInUser.role === 'IG' || currentLoggedInUser.name.includes('Admin') || currentLoggedInUser.name.includes('IG'));
+
+      const adminElements = document.querySelectorAll('.admin-only-action');
+
+      if (hasAdminRights) {
+        document.body.classList.add('is-admin-mode');
+        
+        // सभी एडमिन बटनों को जबरन दिखाएं
+        adminElements.forEach(el => {
+          el.style.setProperty('display', 'inline-flex', 'important');
+        });
+
+        document.getElementById('authRoleBadge').innerText = currentLoggedInUser.name;
+        document.getElementById('authRoleBadge').className = 'text-[10px] bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded';
+        document.getElementById('authBtnLabel').innerText = 'लॉगआउट';
+        document.getElementById('boothAuthModal').classList.add('hidden');
+      } else {
+        document.body.classList.remove('is-admin-mode');
+
+        // अगर एडमिन नहीं है तो बटन छिपाएं
+        adminElements.forEach(el => {
+          el.style.setProperty('display', 'none', 'important');
+        });
+
+        document.getElementById('authRoleBadge').innerText = 'पब्लिक दृश्य';
+        document.getElementById('authRoleBadge').className = 'text-[10px] bg-slate-800 border border-slate-700 text-amber-300 font-bold px-2 py-0.5 rounded';
+        document.getElementById('authBtnLabel').innerText = 'पुलिस लॉगिन';
+
+        if (isPublicPublished) {
+          document.getElementById('boothAuthModal').classList.add('hidden');
+        } else {
+          openBoothAuthModal();
+        }
+      }
+
+      // Publish Status Badge और Toggle Button
+      const pubBadge = document.getElementById('pubStatusBadge');
+      const pubBtnLabel = document.getElementById('publishToggleLabel');
+      if (pubBadge) {
+        if (isPublicPublished) {
+          pubBadge.className = 'text-[10px] bg-emerald-900/80 border border-emerald-500 text-emerald-200 px-2 py-0.5 rounded';
+          pubBadge.innerHTML = '<i class="fa-solid fa-globe"></i> लाइव (पब्लिक)';
+          if (pubBtnLabel) pubBtnLabel.innerText = 'पब्लिक से छिपाएं (Cancel)';
+        } else {
+          pubBadge.className = 'text-[10px] bg-rose-900/80 border border-rose-500 text-rose-200 px-2 py-0.5 rounded';
+          pubBadge.innerHTML = '<i class="fa-solid fa-lock"></i> अप्रकाशित (निजी)';
+          if (pubBtnLabel) pubBtnLabel.innerText = 'पब्लिक हेतु खोलें';
+        }
+      }
+    }
       const hasAdminRights = currentLoggedInUser && (currentLoggedInUser.role === 'Admin' || currentLoggedInUser.role === 'IG');
 
       if (hasAdminRights) {
