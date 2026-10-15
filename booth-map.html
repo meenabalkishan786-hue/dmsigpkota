@@ -937,12 +937,37 @@
         document.getElementById('authRoleBadge').innerText = currentLoggedInUser.name;
         document.getElementById('authRoleBadge').className = 'text-[10px] bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded';
         document.getElementById('authBtnLabel').innerText = 'लॉगआउट';
+        document.getElementById('boothAuthModal').classList.add('hidden'); // एडमिन को लॉगिन पॉपअप बंद रखें
       } else {
         document.body.classList.remove('is-admin-mode');
-        document.getElementById('authRoleBadge').innerText = 'For public';
+        document.getElementById('authRoleBadge').innerText = 'पब्लिक दृश्य';
         document.getElementById('authRoleBadge').className = 'text-[10px] bg-slate-800 border border-slate-700 text-amber-300 font-bold px-2 py-0.5 rounded';
         document.getElementById('authBtnLabel').innerText = 'पुलिस लॉगिन';
 
+        // अगर एडमिन ने पब्लिक के लिए खोल दिया है, तो लॉगिन पॉपअप बंद रहेगा!
+        if (isPublicPublished) {
+          document.getElementById('boothAuthModal').classList.add('hidden');
+        } else {
+          // केवल तभी लॉगिन पॉपअप दिखाएं जब एडमिन ने बंद (निजी) किया हुआ हो
+          openBoothAuthModal();
+        }
+      }
+
+      // Publish Status Badge & Toggle Button Text
+      const pubBadge = document.getElementById('pubStatusBadge');
+      const pubBtnLabel = document.getElementById('publishToggleLabel');
+      if (pubBadge) {
+        if (isPublicPublished) {
+          pubBadge.className = 'text-[10px] bg-emerald-900/80 border border-emerald-500 text-emerald-200 px-2 py-0.5 rounded';
+          pubBadge.innerHTML = '<i class="fa-solid fa-globe"></i> लाइव (पब्लिक)';
+          if (pubBtnLabel) pubBtnLabel.innerText = 'पब्लिक से छिपाएं (Cancel)';
+        } else {
+          pubBadge.className = 'text-[10px] bg-rose-900/80 border border-rose-500 text-rose-200 px-2 py-0.5 rounded';
+          pubBadge.innerHTML = '<i class="fa-solid fa-lock"></i> अप्रकाशित (निजी)';
+          if (pubBtnLabel) pubBtnLabel.innerText = 'पब्लिक हेतु खोलें';
+        }
+      }
+    }
         // If not published and not logged in, enforce login wall
         if (!isPublicPublished) {
           openBoothAuthModal();
@@ -1016,28 +1041,60 @@
       }
     }
 
-    // Storage Management
-    function loadSavedPoliceStations() {
-      try {
-        const saved = localStorage.getItem('KOTA_POLICE_STATIONS');
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            policeStations = parsed;
-            return;
-          }
+   // Firebase Cloud Realtime Sync for Police Stations & Booths
+    function initCloudSync() {
+      // 1. Live Sync Police Stations from Firebase
+      db.ref('policeStations').on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (data && Array.isArray(data) && data.length > 0) {
+          policeStations = data;
+        } else if (data && typeof data === 'object') {
+          policeStations = Object.values(data);
+        } else {
+          policeStations = [...DEFAULT_POLICE_STATIONS];
+          db.ref('policeStations').set(policeStations);
         }
-      } catch (e) {}
-      policeStations = [...DEFAULT_POLICE_STATIONS];
+        syncAllDropdowns();
+        updateStats();
+      });
+
+      // 2. Live Sync Booths from Firebase
+      db.ref('pollingBooths').on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (data && Array.isArray(data) && data.length > 0) {
+          pollingBooths = data;
+        } else if (data && typeof data === 'object') {
+          pollingBooths = Object.values(data);
+        } else {
+          pollingBooths = [...DEFAULT_KOTA_RANGE_BOOTHS];
+          db.ref('pollingBooths').set(pollingBooths);
+        }
+        renderMarkers();
+        applyFilters();
+        updateStats();
+      });
+
+      // 3. Live Sync Public Visibility Status from Firebase
+      db.ref('settings/publicBoothVisible').on('value', (snap) => {
+        isPublicPublished = (snap.val() === true);
+        localStorage.setItem('igp_public_visible', isPublicPublished ? 'true' : 'false');
+        applyRoleUI();
+      });
     }
 
     function savePoliceStationsToStorage() {
-      try {
-        localStorage.setItem('KOTA_POLICE_STATIONS', JSON.stringify(policeStations));
-      } catch (e) {}
+      // Save directly to Firebase Cloud
+      db.ref('policeStations').set(policeStations);
+      localStorage.setItem('KOTA_POLICE_STATIONS', JSON.stringify(policeStations));
       updateStats();
     }
 
+    function saveBoothsToStorage() {
+      // Save directly to Firebase Cloud
+      db.ref('pollingBooths').set(pollingBooths);
+      localStorage.setItem('KOTA_POLICE_BOOTHS', JSON.stringify(pollingBooths));
+      updateStats();
+    }
     function loadSavedBooths() {
       try {
         const saved = localStorage.getItem('KOTA_POLICE_BOOTHS');
@@ -1828,11 +1885,10 @@
       setTimeout(() => { toast.classList.remove('opacity-100'); toast.classList.add('opacity-0'); }, 3500);
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      loadSavedPoliceStations();
-      loadSavedBooths();
+   window.addEventListener('DOMContentLoaded', () => {
       initSecurityAndRoles();
       initMap();
+      initCloudSync(); // क्लाउड डेटा अपने आप लोड और सिंक करेगा
     });
   </script>
 </body>
