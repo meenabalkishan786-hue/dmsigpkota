@@ -1663,12 +1663,17 @@
       const officialNavs = document.querySelectorAll('.official-only-nav');
       const adminSuperBtn = document.getElementById('adminSuperControlBtn');
       const adminBranchBtn = document.getElementById('adminCreateBranchBtn');
-// Booth Tab Visibility Logic
+// Booth Tab Visibility Logic (Firebase Realtime Sync)
       const boothBtn = document.getElementById('boothNavBtn');
-      const isBoothPub = localStorage.getItem('igp_public_visible') === 'true';
       if (boothBtn) {
-        boothBtn.style.display = (isLoggedIn || isBoothPub) ? 'inline-flex' : 'none';
-        boothBtn.classList.toggle('hidden', !(isLoggedIn || isBoothPub));
+        db.ref('settings/publicBoothVisible').on('value', (snap) => {
+          const isFirebasePub = snap.val() === true;
+          const isLocalPub = localStorage.getItem('igp_public_visible') === 'true';
+          const shouldShow = isLoggedIn || isFirebasePub || isLocalPub;
+          
+          boothBtn.style.display = shouldShow ? 'inline-flex' : 'none';
+          boothBtn.classList.toggle('hidden', !shouldShow);
+        });
       }
       if (isLoggedIn && currentUser) {
         loginBtn.classList.add('hidden');
