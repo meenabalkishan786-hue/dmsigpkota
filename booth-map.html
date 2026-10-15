@@ -14,7 +14,9 @@
 
   <!-- PapaParse for high-speed CSV parsing -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-
+<!-- Firebase Scripts (Compat Version) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
@@ -714,6 +716,14 @@
   </div>
 
   <script>
+    // Firebase Realtime Database Configuration
+    const firebaseConfig = {
+      databaseURL: "https://igp-kota-dms-default-rtdb.firebaseio.com"
+    };
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.database();
     // Authentication & Access Credentials
     const AUTH_CREDS = {
       'ig_kota': { pass: 'Ig@Kota2026', role: 'IG', name: 'महानिरीक्षक पुलिस (IGP)' },
@@ -953,15 +963,18 @@
       }
     }
 
-    function togglePublicPublishState() {
+   function togglePublicPublishState() {
       if (!currentLoggedInUser || (currentLoggedInUser.role !== 'Admin' && currentLoggedInUser.role !== 'IG')) {
         showToast('केवल IG Range अथवा Admin को पब्लिश करने का अधिकार है!');
         return;
       }
       isPublicPublished = !isPublicPublished;
+      
       localStorage.setItem('igp_public_visible', isPublicPublished ? 'true' : 'false');
-      applyRoleUI();
-      showToast(isPublicPublished ? 'पोर्टल अब आमजन हेतु लाइव कर दिया गया है।' : 'पोर्टल अब केवल पुलिस अधिकारियों तक सीमित कर दिया गया है।');
+      db.ref('settings/publicBoothVisible').set(isPublicPublished).then(() => {
+        applyRoleUI();
+        showToast(isPublicPublished ? 'पोर्टल अब पूरे इंटरनेट पर आमजन हेतु लाइव है।' : 'पोर्टल अब केवल पुलिस अधिकारियों तक सीमित है।');
+      });
     }
 
     function handleAuthPortalClick() {
